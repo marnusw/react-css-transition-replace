@@ -1,6 +1,6 @@
 # React CSS Transition Replace
 
-A [React](http://facebook.github.io/react/) component for animating replacing one element with another.
+A [React](http://facebook.github.io/react/) component to animate replacing one element with another.
 
 While [`ReactCSSTransitionGroup`](https://facebook.github.io/react/docs/animation.html) does a great job
 of animating changes to a list of elements it does not allow removing an element, waiting for its leave
