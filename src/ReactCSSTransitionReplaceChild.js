@@ -1,11 +1,13 @@
 /**
  * Adapted from ReactCSSTransitionGroupChild.js by Facebook
  *
- * @providesModule CSSTransitionReplaceChild
+ * @providesModule ReactCSSTransitionReplaceChild
  */
 
 import React from 'react';
+
 import ReactTransitionEvents from 'react/lib/ReactTransitionEvents';
+import CSSCore from 'react/lib/CSSCore';
 
 // We don't remove the element from the DOM until we receive an animationend or
 // transitionend event. If the user screws up and forgets to add an animation
@@ -29,7 +31,7 @@ if ('production' !== process.env.NODE_ENV) {
   };
 }
 
-class CSSTransitionReplaceChild extends React.Component {
+class ReactCSSTransitionReplaceChild extends React.Component {
 
   constructor(props) {
     super(props);
@@ -50,8 +52,8 @@ class CSSTransitionReplaceChild extends React.Component {
         clearTimeout(noEventTimeout);
       }
 
-      node.classList.remove(className);
-      node.classList.remove(activeClassName);
+      CSSCore.removeClass(node, className);
+      CSSCore.removeClass(node, activeClassName);
 
       ReactTransitionEvents.removeEndEventListener(node, endListener);
 
@@ -64,7 +66,7 @@ class CSSTransitionReplaceChild extends React.Component {
 
     ReactTransitionEvents.addEndEventListener(node, endListener);
 
-    node.classList.add(className);
+    CSSCore.addClass(node, className);
 
     // Need to do this to actually trigger a transition.
     this.queueClass(activeClassName);
@@ -84,7 +86,7 @@ class CSSTransitionReplaceChild extends React.Component {
 
   flushClassNameQueue() {
     if (this._mounted) {
-      this.classNameQueue.forEach(className => React.findDOMNode(this).classList.add(className));
+      this.classNameQueue.forEach(className => CSSCore.addClass(React.findDOMNode(this), className));
     }
     this.classNameQueue.length = 0;
     this.timeout = null;
@@ -130,4 +132,4 @@ class CSSTransitionReplaceChild extends React.Component {
   }
 }
 
-export default CSSTransitionReplaceChild;
+export default ReactCSSTransitionReplaceChild;

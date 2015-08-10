@@ -1,19 +1,19 @@
 /**
  * Adapted from ReactCSSTransitionGroup.js by Facebook
  *
- * @providesModule CSSTransitionReplace
+ * @providesModule ReactReactCSSTransitionReplace
  */
 
 import React from 'react/addons';
 import classSet from 'classnames';
 
-import ReplaceChildComponent from './CSSTransitionReplaceChild';
+import ReplaceChildComponent from './ReactCSSTransitionReplaceChild';
 
-const CSSTransitionReplaceChild = React.createFactory(ReplaceChildComponent);
+const ReactCSSTransitionReplaceChild = React.createFactory(ReplaceChildComponent);
 const ReactTransitionGroup = React.addons.TransitionGroup;
 
 
-class CSSTransitionReplace extends React.Component {
+class ReactCSSTransitionReplace extends React.Component {
 
   constructor(props) {
     super(props);
@@ -89,9 +89,9 @@ class CSSTransitionReplace extends React.Component {
 
   _wrapChild(child) {
     // We need to provide this childFactory so that
-    // CSSTransitionReplaceChild can receive updates to name,
+    // ReactCSSTransitionReplaceChild can receive updates to name,
     // enter, and leave while it is leaving.
-    return CSSTransitionReplaceChild({
+    return ReactCSSTransitionReplaceChild({
         name: this.props.transitionName,
         appear: this.props.transitionAppear,
         enter: this.props.transitionEnter,
@@ -138,7 +138,7 @@ class CSSTransitionReplace extends React.Component {
   }
 }
 
-CSSTransitionReplace.propTypes = {
+ReactCSSTransitionReplace.propTypes = {
   transitionName: React.PropTypes.string.isRequired,
   transitionAppear: React.PropTypes.bool,
   transitionEnter: React.PropTypes.bool,
@@ -146,11 +146,11 @@ CSSTransitionReplace.propTypes = {
   transitionHeight: React.PropTypes.bool
 };
 
-CSSTransitionReplace.defaultProps = {
+ReactCSSTransitionReplace.defaultProps = {
   transitionAppear: false,
   transitionEnter: true,
   transitionLeave: true,
   transitionHeight: true
 };
 
-export default CSSTransitionReplace;
+export default ReactCSSTransitionReplace;
