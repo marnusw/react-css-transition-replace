@@ -9,6 +9,15 @@ designed to do exactly that with an API closely following the
 [`ReactCSSTransitionGroup`](https://facebook.github.io/react/docs/animation.html) API.
 
 
+## Installation
+
+Install via `npm`:
+
+```
+npm install --save react-css-transition-replace
+```
+
+
 ## Usage
 
 A `ReactCSSTransitionGroup` element can only have a single child. Other than that the basic usage 
