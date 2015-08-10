@@ -1,0 +1,19 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "comma-dangle": [1, "never"],
+    "eqeqeq": [1, "smart"],
+    "quotes": [1, "single"]
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "ecmaFeatures": {
+    "jsx": true
+  }
+}

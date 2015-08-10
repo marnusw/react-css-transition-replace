@@ -1,0 +1,40 @@
+{
+  "name": "react-css-transition-replace",
+  "version": "0.1.0",
+  "description": "A React component for animating replacing one element with another.",
+  "main": "lib/CSSTransitionReplace.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marnusw/react-css-transition-replace.git"
+  },
+  "scripts": {
+    "test": "echo \"No test implemented\" && exit 0",
+    "prebuild": "rm -rf lib && gulp eslint",
+    "build": "node_modules/.bin/babel ./src --out-dir ./lib",
+    "prepublish": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=0.13.0 <0.14.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.21",
+    "babel-eslint": "^4.0.5",
+    "eslint": "^1.1.0",
+    "eslint-plugin-react": "^3.2.1",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^1.0.0",
+    "react": "~0.13.3"
+  },
+  "author": "Marnus Weststrate <marnusw@gmail.com>",
+  "contributors": [],
+  "keywords": [
+    "react",
+    "transition",
+    "replace"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marnusw/react-css-transition-replace/issues"
+  },
+  "homepage": "https://github.com/marnusw/react-css-transition-replace"
+}
