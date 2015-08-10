@@ -14,7 +14,7 @@
     "prepublish": "npm run build"
   },
   "peerDependencies": {
-    "react": ">=0.13.0 <0.14.0"
+    "react": ">=0.13.0"
   },
   "devDependencies": {
     "babel": "^5.8.21",
@@ -22,8 +22,7 @@
     "eslint": "^1.1.0",
     "eslint-plugin-react": "^3.2.1",
     "gulp": "^3.9.0",
-    "gulp-eslint": "^1.0.0",
-    "react": "~0.13.3"
+    "gulp-eslint": "^1.0.0"
   },
   "author": "Marnus Weststrate <marnusw@gmail.com>",
   "contributors": [],
