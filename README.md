@@ -20,7 +20,7 @@ npm install --save react-css-transition-replace
 
 ## Usage
 
-A `ReactCSSTransitionGroup` element can only have a single child. Other than that the basic usage 
+A `ReactCSSTransitionReplace` element can only have a single child. Other than that, the basic usage 
 follows the exact same API as `ReactCSSTransitionGroup`:
 
 ```javascript
