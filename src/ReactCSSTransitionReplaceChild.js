@@ -19,7 +19,7 @@ const NO_EVENT_TIMEOUT = 5000;
 let noEventListener = null;
 
 
-if ('production' !== process.env.NODE_ENV) {
+if (process.env.NODE_ENV !== 'production') {
   noEventListener = function() {
     (process.env.NODE_ENV !== 'production' ? console.warn(
       'transition(): tried to perform an animation without ' +
@@ -39,16 +39,16 @@ class ReactCSSTransitionReplaceChild extends React.Component {
   }
 
   transition(animationType, finishCallback) {
-    let node = React.findDOMNode(this);
-    let className = this.props.name + '-' + animationType;
-    let activeClassName = className + '-active';
+    const node = React.findDOMNode(this);
+    const className = this.props.name + '-' + animationType;
+    const activeClassName = className + '-active';
     let noEventTimeout = null;
 
-    let endListener = function(e) {
+    const endListener = function(e) {
       if (e && e.target !== node) {
         return;
       }
-      if ('production' !== process.env.NODE_ENV) {
+      if (process.env.NODE_ENV !== 'production') {
         clearTimeout(noEventTimeout);
       }
 
@@ -71,7 +71,7 @@ class ReactCSSTransitionReplaceChild extends React.Component {
     // Need to do this to actually trigger a transition.
     this.queueClass(activeClassName);
 
-    if ('production' !== process.env.NODE_ENV) {
+    if (process.env.NODE_ENV !== 'production') {
       noEventTimeout = setTimeout(noEventListener, NO_EVENT_TIMEOUT);
     }
   }
