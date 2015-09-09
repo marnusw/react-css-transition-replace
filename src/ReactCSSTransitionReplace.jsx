@@ -6,6 +6,7 @@
 
 import React from 'react/addons';
 import classSet from 'classnames';
+import assign from 'react/lib/Object.assign';
 
 import ReplaceChildComponent from './ReactCSSTransitionReplaceChild';
 
@@ -117,7 +118,7 @@ class ReactCSSTransitionReplace extends React.Component {
 
       heightClassName = `${this.props.transitionName}-height`;
 
-      style = Object.assign(style || {}, {
+      style = assign(style || {}, {
         overflow: this.state.height !== 'auto' ? 'hidden' : 'visible',
         height: this.state.height,
         display: 'block'
