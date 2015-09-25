@@ -5,52 +5,64 @@
  */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 
+import CSSCore from 'fbjs/lib/CSSCore';
 import ReactTransitionEvents from 'react/lib/ReactTransitionEvents';
-import CSSCore from 'react/lib/CSSCore';
 
 // We don't remove the element from the DOM until we receive an animationend or
 // transitionend event. If the user screws up and forgets to add an animation
 // their node will be stuck in the DOM forever, so we detect if an animation
 // does not start and if it doesn't, we just call the end listener immediately.
 const TICK = 17;
-const NO_EVENT_TIMEOUT = 5000;
 
-let noEventListener = null;
+export default class ReactCSSTransitionReplaceChild extends React.Component {
 
+  static propTypes = {
+    name: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.shape({
+      enter: React.PropTypes.string,
+      leave: React.PropTypes.string,
+      active: React.PropTypes.string
+    }), React.PropTypes.shape({
+      enter: React.PropTypes.string,
+      enterActive: React.PropTypes.string,
+      leave: React.PropTypes.string,
+      leaveActive: React.PropTypes.string,
+      appear: React.PropTypes.string,
+      appearActive: React.PropTypes.string
+    })]).isRequired,
 
-if (process.env.NODE_ENV !== 'production') {
-  noEventListener = function() {
-    (process.env.NODE_ENV !== 'production' ? console.warn(
-      'transition(): tried to perform an animation without ' +
-      'an animationend or transitionend event after timeout (' +
-      NO_EVENT_TIMEOUT +
-      'ms). You should either disable this ' +
-      'transition in JS or add a CSS animation/transition.'
-    ) : null);
+    // Once we require timeouts to be specified, we can remove the
+    // boolean flags (appear etc.) and just accept a number
+    // or a bool for the timeout flags (appearTimeout etc.)
+    appear: React.PropTypes.bool,
+    enter: React.PropTypes.bool,
+    leave: React.PropTypes.bool,
+    appearTimeout: React.PropTypes.number,
+    enterTimeout: React.PropTypes.number,
+    leaveTimeout: React.PropTypes.number
   };
-}
 
-class ReactCSSTransitionReplaceChild extends React.Component {
+  transition(animationType, finishCallback, userSpecifiedDelay) {
+    const node = ReactDOM.findDOMNode(this);
 
-  constructor(props) {
-    super(props);
-    this.flushClassNameQueue = this.flushClassNameQueue.bind(this);
-  }
+    if (!node) {
+      if (finishCallback) {
+        finishCallback();
+      }
+      return;
+    }
 
-  transition(animationType, finishCallback) {
-    const node = React.findDOMNode(this);
-    const className = this.props.name + '-' + animationType;
-    const activeClassName = className + '-active';
-    let noEventTimeout = null;
+    const className = this.props.name[animationType] || this.props.name + '-' + animationType;
+    const activeClassName = this.props.name[animationType + 'Active'] || className + '-active';
+    let timeout = null;
 
     const endListener = function(e) {
       if (e && e.target !== node) {
         return;
       }
-      if (process.env.NODE_ENV !== 'production') {
-        clearTimeout(noEventTimeout);
-      }
+
+      clearTimeout(timeout);
 
       CSSCore.removeClass(node, className);
       CSSCore.removeClass(node, activeClassName);
@@ -64,15 +76,19 @@ class ReactCSSTransitionReplaceChild extends React.Component {
       }
     };
 
-    ReactTransitionEvents.addEndEventListener(node, endListener);
-
     CSSCore.addClass(node, className);
 
     // Need to do this to actually trigger a transition.
     this.queueClass(activeClassName);
 
-    if (process.env.NODE_ENV !== 'production') {
-      noEventTimeout = setTimeout(noEventListener, NO_EVENT_TIMEOUT);
+    // If the user specified a timeout delay.
+    if (userSpecifiedDelay) {
+      // Clean-up the animation after the specified delay
+      timeout = setTimeout(endListener, userSpecifiedDelay);
+    }
+    else {
+      // DEPRECATED: this listener will be removed in a future version of react
+      ReactTransitionEvents.addEndEventListener(node, endListener);
     }
   }
 
@@ -84,9 +100,9 @@ class ReactCSSTransitionReplaceChild extends React.Component {
     }
   }
 
-  flushClassNameQueue() {
+  flushClassNameQueue = () => {
     if (this._mounted) {
-      this.classNameQueue.forEach(className => CSSCore.addClass(React.findDOMNode(this), className));
+      this.classNameQueue.forEach(className => CSSCore.addClass(ReactDOM.findDOMNode(this), className));
     }
     this.classNameQueue.length = 0;
     this.timeout = null;
@@ -108,15 +124,30 @@ class ReactCSSTransitionReplaceChild extends React.Component {
   }
 
   componentWillAppear(done) {
-    this.props.appear ? this.transition('appear', done) : done();
+    if (this.props.appear) {
+      this.transition('appear', done, this.props.appearTimeout);
+    }
+    else {
+      done();
+    }
   }
 
   componentWillEnter(done) {
-    this.props.enter ? this.transition('enter', done) : done();
+    if (this.props.enter) {
+      this.transition('enter', done, this.props.enterTimeout);
+    }
+    else {
+      done();
+    }
   }
 
   componentWillLeave(done) {
-    this.props.leave ? this.transition('leave', done) : done();
+    if (this.props.leave) {
+      this.transition('leave', done, this.props.leaveTimeout);
+    }
+    else {
+      done();
+    }
   }
 
   componentDidEnter() {
@@ -131,5 +162,3 @@ class ReactCSSTransitionReplaceChild extends React.Component {
     return React.Children.only(this.props.children);
   }
 }
-
-export default ReactCSSTransitionReplaceChild;

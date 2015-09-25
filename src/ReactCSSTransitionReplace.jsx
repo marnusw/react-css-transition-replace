@@ -4,31 +4,64 @@
  * @providesModule ReactReactCSSTransitionReplace
  */
 
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import classSet from 'classnames';
-import assign from 'react/lib/Object.assign';
+import objectAssign from 'react/lib/Object.assign';
+import ReactTransitionGroup from 'react-addons-transition-group';
 
 import ReplaceChildComponent from './ReactCSSTransitionReplaceChild';
 
 const reactCSSTransitionReplaceChild = React.createFactory(ReplaceChildComponent);
-const ReactTransitionGroup = React.addons.TransitionGroup;
 
+function createTransitionTimeoutPropValidator(transitionType) {
+  const timeoutPropName = 'transition' + transitionType + 'Timeout';
+  const enabledPropName = 'transition' + transitionType;
 
-class ReactCSSTransitionReplace extends React.Component {
+  return function(props) {
+    // If the transition is enabled
+    if (props[enabledPropName]) {
+      // If no timeout duration is provided
+      if (!props[timeoutPropName]) {
+        return new Error(timeoutPropName + ' wasn\'t supplied to ReactCSSTransitionReplace: '
+                         + 'this can cause unreliable animations and won\'t be supported in '
+                         + 'a future version of React. See '
+                         + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.');
 
-  constructor(props) {
-    super(props);
+        // If the duration isn't a number
+      }
+      else if (typeof props[timeoutPropName] !== 'number') {
+        return new Error(timeoutPropName + ' must be a number (in milliseconds)');
+      }
+    }
+  };
+}
 
-    this._childEntered = this._childEntered.bind(this);
-    this._childLeft = this._childLeft.bind(this);
-    this._wrapChild = this._wrapChild.bind(this);
+export default class ReactCSSTransitionReplace extends React.Component {
 
-    this.state = {
-      currentChild: React.Children.only(props.children),
-      nextChild: null,
-      height: 'auto'
-    };
-  }
+  static propTypes = {
+    transitionName: React.PropTypes.string.isRequired,
+    transitionAppear: React.PropTypes.bool,
+    transitionEnter: React.PropTypes.bool,
+    transitionLeave: React.PropTypes.bool,
+    transitionHeight: React.PropTypes.bool,
+    transitionAppearTimeout: createTransitionTimeoutPropValidator('Appear'),
+    transitionEnterTimeout: createTransitionTimeoutPropValidator('Enter'),
+    transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave')
+  };
+
+  static defaultProps = {
+    transitionAppear: false,
+    transitionEnter: true,
+    transitionLeave: true,
+    transitionHeight: true
+  };
+
+  state = {
+    currentChild: React.Children.only(this.props.children),
+    nextChild: null,
+    height: 'auto'
+  };
 
   componentWillReceiveProps(nextProps) {
     const nextChild = nextProps.children ? React.Children.only(nextProps.children) : null;
@@ -42,7 +75,7 @@ class ReactCSSTransitionReplace extends React.Component {
     }
 
     const transitionHeight = nextProps.transitionHeight;
-    const currentHeight = transitionHeight ? React.findDOMNode(this.refs.container).offsetHeight : 'auto';
+    const currentHeight = transitionHeight ? ReactDOM.findDOMNode(this.refs.container).offsetHeight : 'auto';
 
     // The child was removed, so animate out.
     if (!nextChild) {
@@ -61,7 +94,7 @@ class ReactCSSTransitionReplace extends React.Component {
   }
 
   componentDidUpdate() {
-    const nextChild = React.findDOMNode(this.refs.nextChild);
+    const nextChild = ReactDOM.findDOMNode(this.refs.nextChild);
 
     // If there is a next child we'll be animating it in soon, so change to its height.
     if (nextChild && nextChild.offsetHeight !== this.state.height) {
@@ -71,7 +104,7 @@ class ReactCSSTransitionReplace extends React.Component {
     }
   }
 
-  _childLeft() {
+  _childLeft = () => {
     // Swap the children after the current child left.
     this.setState({
       currentChild: this.state.nextChild,
@@ -79,7 +112,7 @@ class ReactCSSTransitionReplace extends React.Component {
     });
   }
 
-  _childEntered() {
+  _childEntered = () => {
     // The height animation would have finished, so switch back to auto.
     if (this.props.transitionHeight) {
       this.setState({
@@ -88,7 +121,7 @@ class ReactCSSTransitionReplace extends React.Component {
     }
   }
 
-  _wrapChild(child) {
+  _wrapChild = (child) => {
     // We need to provide this childFactory so that
     // ReactCSSTransitionReplaceChild can receive updates to name,
     // enter, and leave while it is leaving.
@@ -97,6 +130,9 @@ class ReactCSSTransitionReplace extends React.Component {
       appear: this.props.transitionAppear,
       enter: this.props.transitionEnter,
       leave: this.props.transitionLeave,
+      appearTimeout: this.props.transitionAppearTimeout,
+      enterTimeout: this.props.transitionEnterTimeout,
+      leaveTimeout: this.props.transitionLeaveTimeout,
       onEntered: this._childEntered,
       onLeft: this._childLeft
     }, child);
@@ -118,7 +154,7 @@ class ReactCSSTransitionReplace extends React.Component {
 
       heightClassName = `${this.props.transitionName}-height`;
 
-      style = assign(style || {}, {
+      style = objectAssign(style || {}, {
         overflow: this.state.height !== 'auto' ? 'hidden' : 'visible',
         height: this.state.height,
         display: 'block'
@@ -136,20 +172,3 @@ class ReactCSSTransitionReplace extends React.Component {
     );
   }
 }
-
-ReactCSSTransitionReplace.propTypes = {
-  transitionName: React.PropTypes.string.isRequired,
-  transitionAppear: React.PropTypes.bool,
-  transitionEnter: React.PropTypes.bool,
-  transitionLeave: React.PropTypes.bool,
-  transitionHeight: React.PropTypes.bool
-};
-
-ReactCSSTransitionReplace.defaultProps = {
-  transitionAppear: false,
-  transitionEnter: true,
-  transitionLeave: true,
-  transitionHeight: true
-};
-
-export default ReactCSSTransitionReplace;
