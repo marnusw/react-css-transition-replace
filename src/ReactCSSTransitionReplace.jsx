@@ -6,7 +6,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import classSet from 'classnames';
 import objectAssign from 'react/lib/Object.assign';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
@@ -139,9 +138,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   render() {
-    let style = this.props.style;
+    let { style, className = '' } = this.props;
     let nextChildShadow;
-    let heightClassName;
 
     if (this.props.transitionHeight) {
       if (this.state.nextChild) {
@@ -152,10 +150,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
         );
       }
 
-      heightClassName = `${this.props.transitionName}-height`;
+      const animatingHeight = this.state.height !== 'auto';
+
+      if (animatingHeight) {
+        className = `${className} ${this.props.transitionName}-height`;
+      }
 
       style = objectAssign(style || {}, {
-        overflow: this.state.height !== 'auto' ? 'hidden' : 'visible',
+        overflow: animatingHeight ? 'hidden' : 'visible',
         height: this.state.height,
         display: 'block'
       });
@@ -164,8 +166,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
     return (
       <span>
         {nextChildShadow}
-        <ReactTransitionGroup ref="container" {...this.props} childFactory={this._wrapChild} style={style}
-                              className={classSet(this.props.className, heightClassName)}>
+        <ReactTransitionGroup ref="container" {...this.props} childFactory={this._wrapChild}
+                              style={style} className={className}>
           {this.state.currentChild}
         </ReactTransitionGroup>
       </span>
