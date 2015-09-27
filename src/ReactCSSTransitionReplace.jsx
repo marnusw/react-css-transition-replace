@@ -93,7 +93,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   componentDidUpdate() {
-    const nextChild = ReactDOM.findDOMNode(this.refs.nextChild);
+    const nextChild = this.refs.nextChild;
 
     // If there is a next child we'll be animating it in soon, so change to its height.
     if (nextChild && nextChild.offsetHeight !== this.state.height) {
