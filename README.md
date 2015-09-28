@@ -17,6 +17,8 @@ Install via `npm`:
 npm install --save react-css-transition-replace
 ```
 
+**Note:** This version requires `React 0.14.0-rc1`, for `React 0.13.x` use version `0.1.4` of this library.
+
 
 ## Usage
 
