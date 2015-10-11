@@ -1,0 +1,52 @@
+h2 {
+  margin-top: 50px;
+}
+
+
+/* Cross-fade transition */
+.cross-fade-leave {
+  opacity: 1;
+}
+.cross-fade-leave.cross-fade-leave-active {
+  opacity: 0;
+  transition: opacity .2s ease-in;
+}
+
+.cross-fade-enter {
+  opacity: 0;
+}
+.cross-fade-enter.cross-fade-enter-active {
+  opacity: 1;
+  transition: opacity .2s ease-in;
+}
+
+.cross-fade-height {
+  transition: height .15s ease-in-out;
+}
+
+
+/* Fade out, then fade in transition */
+
+.wait-fade-leave {
+  opacity: 1;
+}
+.wait-fade-leave.wait-fade-leave-active {
+  opacity: 0;
+  transition: opacity .1s ease-in;
+}
+
+.wait-fade-enter {
+  opacity: 0;
+}
+.wait-fade-enter.wait-fade-enter-active {
+  opacity: 1;
+  /* Delay the enter animation until the leave completes */
+  transition: opacity .2s ease-in .1s;
+}
+
+.wait-fade-height {
+  transition: height .15s ease-in-out;
+}
+
+
+/* Carousel-like transition */
