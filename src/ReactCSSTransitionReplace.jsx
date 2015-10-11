@@ -7,9 +7,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import objectAssign from 'react/lib/Object.assign';
-import ReactTransitionGroup from 'react-addons-transition-group';
-
-import emptyFunction from 'react/node_modules/fbjs/lib/emptyFunction';
 
 import ReplaceChildComponent from 'react/lib/ReactCSSTransitionGroupChild';
 
@@ -61,9 +58,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   state = {
     currentChild: React.Children.only(this.props.children),
-    nextChild: null,
-    height: 'auto'
+    nextChild: null
   };
+
+  componentDidMount() {
+    if (this.props.transitionAppear && this.state.currentChild) {
+      this.appearCurrent();
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     const nextChild = nextProps.children ? React.Children.only(nextProps.children) : null;
@@ -76,19 +78,26 @@ export default class ReactCSSTransitionReplace extends React.Component {
       });
     }
 
+    const { transitionHeight } = this.props;
+
+    // Set the next child to start the transition,
+    // also set the current and next height to trigger its transition.
     this.setState({
-      nextChild
-    });
+      nextChild,
+      height: transitionHeight ? ReactDOM.findDOMNode(this.refs.curr).offsetHeight : null
+    }, () => this.setState({
+      height: transitionHeight ? ReactDOM.findDOMNode(this.refs.next).offsetHeight : null
+    }));
   }
 
   componentDidUpdate() {
-    if (this.state.nextChild) {
+    if (this.state.nextChild && !this.isTransitioning) {
       this.enterNext();
       this.leaveCurrent();
     }
   }
 
-  _wrapChild = (child, moreProps) => {
+  _wrapChild(child, moreProps) {
     // We need to provide this childFactory so that
     // ReactCSSTransitionReplaceChild can receive updates to name,
     // enter, and leave while it is leaving.
@@ -105,14 +114,26 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }, moreProps), child);
   }
 
+  appearCurrent() {
+    this.refs.curr.componentWillAppear(this._handleDoneAppearing);
+    this.isTransitioning = true;
+  }
+
+  _handleDoneAppearing = () => {
+    this.isTransitioning = false;
+  }
+
   enterNext() {
     this.refs.next.componentWillEnter(this._handleDoneEntering);
+    this.isTransitioning = true;
   }
 
   _handleDoneEntering = () => {
+    this.isTransitioning = false;
     this.setState({
       currentChild: this.state.nextChild,
-      nextChild: null
+      nextChild: null,
+      height: null
     });
   }
 
@@ -121,9 +142,10 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   render() {
-    let { currentChild, nextChild } = this.state;
-    let containerProps = this.props;
+    const { currentChild, nextChild, height } = this.state;
     const childrenToRender = [];
+
+    let containerProps = this.props;
 
     if (currentChild) {
       childrenToRender.push(this._wrapChild(currentChild, {
@@ -134,11 +156,18 @@ export default class ReactCSSTransitionReplace extends React.Component {
     if (nextChild) {
       const style = objectAssign({}, this.props.style, {
         position: 'relative',
-        overflow: 'hidden',
         display: 'block'
       });
 
-      containerProps = objectAssign({}, this.props, {style});
+      if (this.props.transitionHeight) {
+        // Don't overwrite the height style if transitionHeight isn't active.
+        style.height = height;
+      }
+
+      containerProps = objectAssign({}, containerProps, {
+        className: `${containerProps.className || ''} ${containerProps.transitionName}-height`,
+        style
+      });
 
       const nextChildStyle = objectAssign({}, nextChild.props.style, {
         position: 'absolute',

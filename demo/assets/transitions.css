@@ -35,7 +35,7 @@ body {
 }
 .wait-fade-leave.wait-fade-leave-active {
   opacity: 0;
-  transition: opacity .1s ease-in;
+  transition: opacity .5s ease-in;
 }
 
 .wait-fade-enter {
@@ -44,19 +44,18 @@ body {
 .wait-fade-enter.wait-fade-enter-active {
   opacity: 1;
   /* Delay the enter animation until the leave completes */
-  transition: opacity .2s ease-in .1s;
+  transition: opacity .5s ease-in .5s;
 }
 
 .wait-fade-height {
-  transition: height .15s ease-in-out;
+  transition: height 1s ease-in-out;
 }
 
 
 /* Carousel-like transition */
 
 .carousel {
-  display: block;
-  width: 100%;
+  overflow: hidden;
 }
 
 .carousel-swap-leave {
