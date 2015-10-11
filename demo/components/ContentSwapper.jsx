@@ -1,27 +1,26 @@
 import React from 'react';
 import ReactCSSTransitionReplace from '../../src/ReactCSSTransitionReplace.jsx';
 
-import ContentLong from './ContentLong.jsx';
-import ContentShort from './ContentShort.jsx';
-
 
 class ContentSwapper extends React.Component {
 
   static propTypes = {
-    longContent: React.PropTypes.bool
+    swapped: React.PropTypes.bool
   };
 
-  state = {longContent: this.props.longContent};
+  state = {swapped: this.props.swapped};
 
   handleClick = () => {
-    this.setState({longContent: !this.state.longContent});
+    this.setState({swapped: !this.state.swapped});
   }
 
   render() {
+    const content = React.Children.toArray(this.props.children);
+
     return (
       <div onClick={this.handleClick} style={{cursor: 'pointer'}}>
         <ReactCSSTransitionReplace {...this.props}>
-          {this.state.longContent ? <ContentLong key="long" /> : <ContentShort key="short" />}
+          {this.state.swapped ? content[1] : content[0]}
         </ReactCSSTransitionReplace>
       </div>
     );

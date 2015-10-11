@@ -1,1 +1,2 @@
-# Override .gitignore so `lib` will be published.
+node_modules
+demo

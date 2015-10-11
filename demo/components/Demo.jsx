@@ -3,39 +3,68 @@ import { Navbar, NavBrand, Nav, NavItem, Grid } from 'react-bootstrap';
 
 import ContentSwapper from './ContentSwapper.jsx';
 
+import ContentLong from './ContentLong.jsx';
+import ContentShort from './ContentShort.jsx';
 
-function Demo() {
-  const transitionProps = {
-    transitionEnterTimeout: 500,
-    transitionLeaveTimeout: 300,
-    transitionHeight: false
-  };
+class Demo extends React.Component {
 
-  return (
-    <div>
-      <Navbar>
-        <NavBrand>ReactCSSTransitionReplace</NavBrand>
-        <Nav right>
-          <NavItem href="https://github.com/marnusw/react-css-transition-replace" target="_blank">GitHub</NavItem>
-        </Nav>
-      </Navbar>
+  componentDidMount() {
+    [
+      '/img/vista1.jpg',
+      '/img/vista2.jpg',
+      '/img/vista3.jpg',
+      '/img/vista4.jpg'
+    ].forEach(src => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }
 
-      <Grid>
-        <br/>
-        <p className="text-danger"><em>Click any content to trigger the transition.</em></p>
+  render() {
+    const transitionProps = {
+      transitionEnterTimeout: 500,
+      transitionLeaveTimeout: 300,
+      transitionHeight: false
+    };
 
-        <h2>Cross-fade transition</h2>
-        <ContentSwapper {...transitionProps} transitionName="cross-fade"/>
+    return (
+      <div>
+        <Navbar>
+          <NavBrand>ReactCSSTransitionReplace</NavBrand>
+          <Nav right>
+            <NavItem href="https://github.com/marnusw/react-css-transition-replace" target="_blank">GitHub</NavItem>
+          </Nav>
+        </Navbar>
 
-        <h2>Fade out, then fade in transition</h2>
-        <ContentSwapper {...transitionProps} transitionName="wait-fade"/>
+        <Grid>
+          <br/>
+          <p className="text-danger"><em>Click any content to trigger the transition.</em></p>
 
-        <h2>Carousel-like transition</h2>
-        <ContentSwapper {...transitionProps} transitionName="carousel"/>
+          <h2>Cross-fade transition</h2>
+          <ContentSwapper {...transitionProps} transitionName="cross-fade">
+            <img key="img1" src="/img/vista1.jpg"/>
+            <img key="img2" src="/img/vista2.jpg"/>
+          </ContentSwapper>
 
-      </Grid>
-    </div>
-  );
+          <h2>Fade out, then fade in transition</h2>
+          <ContentSwapper {...transitionProps} transitionName="wait-fade">
+            <ContentShort key="short"/>
+            <ContentLong key="long"/>
+          </ContentSwapper>
+
+          <h2>Carousel-like transition</h2>
+
+          <div style={{width: 600}}>
+            <ContentSwapper {...transitionProps} transitionName="carousel-swap" className="carousel">
+              <img key="img3" src="/img/vista3.jpg"/>
+              <img key="img4" src="/img/vista4.jpg"/>
+            </ContentSwapper>
+          </div>
+
+        </Grid>
+      </div>
+    );
+  }
 }
 
 export default Demo;
