@@ -15,9 +15,9 @@ class Demo extends React.Component {
       '/img/vista3.jpg',
       '/img/vista4.jpg'
     ].forEach(src => {
-      const img = new window.Image();
-      img.src = src;
-    });
+        const img = new window.Image();
+        img.src = src;
+      });
   }
 
   render() {
@@ -41,15 +41,17 @@ class Demo extends React.Component {
           <p className="text-danger"><em>Click any content to trigger the transition.</em></p>
 
           <h2>Cross-fade transition</h2>
-          <ContentSwapper {...transitionProps} transitionName="cross-fade">
+          <ContentSwapper transitionName="cross-fade" transitionHeight={false}
+                          transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
             <img key="img1" src="/img/vista1.jpg"/>
             <img key="img2" src="/img/vista2.jpg"/>
           </ContentSwapper>
 
           <h2>Fade out, then fade in transition</h2>
-          <ContentSwapper {...transitionProps} transitionName="wait-fade">
-            <ContentShort key="short"/>
+          <ContentSwapper transitionName="cross-fade" transitionHeight={false}
+                          transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
             <ContentLong key="long"/>
+            <ContentShort key="short"/>
           </ContentSwapper>
 
           <h2>Carousel-like transition</h2>

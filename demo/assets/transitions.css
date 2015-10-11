@@ -12,7 +12,7 @@ body {
 }
 .cross-fade-leave.cross-fade-leave-active {
   opacity: 0;
-  transition: opacity .2s ease-in;
+  transition: opacity 1s ease-in;
 }
 
 .cross-fade-enter {
@@ -20,11 +20,11 @@ body {
 }
 .cross-fade-enter.cross-fade-enter-active {
   opacity: 1;
-  transition: opacity .2s ease-in;
+  transition: opacity 1s ease-in;
 }
 
 .cross-fade-height {
-  transition: height .15s ease-in-out;
+  transition: height 1s ease-in-out;
 }
 
 
@@ -55,8 +55,6 @@ body {
 /* Carousel-like transition */
 
 .carousel {
-  position: relative;
-  overflow: hidden;
   display: block;
   width: 100%;
 }
