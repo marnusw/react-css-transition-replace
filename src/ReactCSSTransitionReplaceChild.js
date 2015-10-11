@@ -7,7 +7,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CSSCore from 'fbjs/lib/CSSCore';
+import CSSCore from 'react/node_modules/fbjs/lib/CSSCore';
 import ReactTransitionEvents from 'react/lib/ReactTransitionEvents';
 
 // We don't remove the element from the DOM until we receive an animationend or

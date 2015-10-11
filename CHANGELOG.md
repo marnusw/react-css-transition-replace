@@ -1,9 +1,13 @@
+### v0.2.1 (10 October 2015)
+
+* [UPGRADE] Upgrade React.js to v0.14.0.
+ 
 ### v0.2.0 (28 September 2015)
 
 * [DEPENDENCY] Removed the `classnames` dependency. 
 * [ENHANCEMENT] The `${transitionName}-height` class is only added while the height transition is active.
 * [ENHANCEMENT] The `ReactCSSTransitionReplace` component require `transitionEnterTimeout` etc. props like `ReactCSSTransitionGroup`.
-* [UPGRADE] Upgrade React.js to v0.14.0.
+* [UPGRADE] Upgrade React.js to v0.14.0-rc1.
 
 ### v0.1.4 (9 September 2015)
 
