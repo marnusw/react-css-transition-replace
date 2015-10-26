@@ -21,7 +21,6 @@ var notify = require('gulp-notify');
 var flatten = require('gulp-flatten');
 var stream = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
-var reload = require('browser-sync').reload;
 var browserify = require('browserify');
 var watchify = require('watchify');
 var babelify = require('babelify');
@@ -63,8 +62,9 @@ gulp.task('demo', ['demo:bundleAndWatch'], function() {
   });
 
   // Watch JavaScript and lint changes
-  gulp.watch(['src/**', 'demo/app.js', 'demo/components/*.jsx'], ['lint']); // We already reload after bundling.
+  gulp.watch(['src/**', 'demo/app.js', 'demo/components/*.jsx'], ['lint']);
 
+  // Reload when the app CSS or bundled JS changes
   gulp.watch('demo/assets/transitions.css').on('change', reload);
   gulp.watch('demo/assets/app.js').on('change', reload);
 });

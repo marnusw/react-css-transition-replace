@@ -30,25 +30,25 @@ body {
 
 /* Fade out, then fade in transition */
 
-.wait-fade-leave {
+.fade-wait-leave {
   opacity: 1;
 }
-.wait-fade-leave.wait-fade-leave-active {
+.fade-wait-leave.fade-wait-leave-active {
   opacity: 0;
   transition: opacity .5s ease-in;
 }
 
-.wait-fade-enter {
+.fade-wait-enter {
   opacity: 0;
 }
-.wait-fade-enter.wait-fade-enter-active {
+.fade-wait-enter.fade-wait-enter-active {
   opacity: 1;
   /* Delay the enter animation until the leave completes */
   transition: opacity .5s ease-in .5s;
 }
 
-.wait-fade-height {
-  transition: height 1s ease-in-out;
+.fade-wait-height {
+  transition: height .6s ease-in-out;
 }
 
 

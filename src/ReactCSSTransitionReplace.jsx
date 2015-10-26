@@ -1,16 +1,16 @@
 /**
  * Adapted from ReactCSSTransitionGroup.js by Facebook
  *
- * @providesModule ReactReactCSSTransitionReplace
+ * @providesModule ReactCSSTransitionReplace
  */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import objectAssign from 'react/lib/Object.assign';
 
-import ReplaceChildComponent from 'react/lib/ReactCSSTransitionGroupChild';
+import ReactCSSTransitionGroupChild from 'react/lib/ReactCSSTransitionGroupChild';
 
-const reactCSSTransitionReplaceChild = React.createFactory(ReplaceChildComponent);
+const reactCSSTransitionGroupChild = React.createFactory(ReactCSSTransitionGroupChild);
 
 function createTransitionTimeoutPropValidator(transitionType) {
   const timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -101,16 +101,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
     // We need to provide this childFactory so that
     // ReactCSSTransitionReplaceChild can receive updates to name,
     // enter, and leave while it is leaving.
-    return reactCSSTransitionReplaceChild(objectAssign({
+    return reactCSSTransitionGroupChild(objectAssign({
       name: this.props.transitionName,
       appear: this.props.transitionAppear,
       enter: this.props.transitionEnter,
       leave: this.props.transitionLeave,
       appearTimeout: this.props.transitionAppearTimeout,
       enterTimeout: this.props.transitionEnterTimeout,
-      leaveTimeout: this.props.transitionLeaveTimeout,
-      onEntered: this._childEntered,
-      onLeft: this._childLeft
+      leaveTimeout: this.props.transitionLeaveTimeout
     }, moreProps), child);
   }
 
@@ -138,7 +136,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   leaveCurrent() {
-    this.refs.curr.componentWillLeave(this._handleDoneLeaving);
+    this.refs.curr.componentWillLeave();
   }
 
   render() {
