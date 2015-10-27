@@ -1,3 +1,9 @@
+### v1.0.0 (26 October 2015)
+
+* [ENHANCEMENT] Added a demo page; to view run `npm install` and `gulp demo`.
+* [ENHANCEMENT] Allow in place transitions fully configurable in CSS.
+* [ENHANCEMENT] More stable implementation which does not call `setState` in `componentDidUpdate` among other improvements.
+ 
 ### v0.2.1 (10 October 2015)
 
 * [UPGRADE] Upgrade React.js to v0.14.0.
