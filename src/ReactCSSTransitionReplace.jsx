@@ -136,8 +136,18 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   leaveCurrent() {
-    this.refs.curr.componentWillLeave();
+    this.refs.curr.componentWillLeave(this._handleDoneLeaving);
   }
+
+  // When the leave transition timeOut expires the animation classes are removed, so the
+  // element must be removed from the DOM if the enter transition is still in progress.
+  _handleDoneLeaving = () => {
+    if (this.isTransitioning) {
+      this.setState({
+        currentChild: null
+      });
+    }
+  };
 
   render() {
     const { currentChild, nextChild, height } = this.state;
@@ -154,6 +164,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     if (nextChild) {
       const style = objectAssign({}, this.props.style, {
         position: 'relative',
+        overflow: 'hidden',
         display: 'block'
       });
 

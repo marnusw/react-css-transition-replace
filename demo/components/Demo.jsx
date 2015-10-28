@@ -44,7 +44,7 @@ class Demo extends React.Component {
           </ContentSwapper>
 
           <h2>Fade out, then fade in transition</h2>
-          <ContentSwapper transitionName="fade-wait" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+          <ContentSwapper transitionName="fade-wait" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
             <ContentLong key="long"/>
             <ContentShort key="short"/>
           </ContentSwapper>
