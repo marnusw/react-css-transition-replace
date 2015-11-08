@@ -54,10 +54,6 @@ body {
 
 /* Carousel-like transition */
 
-.carousel {
-  overflow: hidden;
-}
-
 .carousel-swap-leave {
   transition: transform .3s ease-in-out;
   transform: translate(0, 0);
@@ -72,4 +68,8 @@ body {
 }
 .carousel-swap-enter-active {
   transform: translate(0, 0);
+}
+
+.carousel-swap-height {
+  transition: height .3s ease-in-out;
 }

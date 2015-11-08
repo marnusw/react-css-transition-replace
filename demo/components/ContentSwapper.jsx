@@ -4,11 +4,7 @@ import ReactCSSTransitionReplace from '../../src/ReactCSSTransitionReplace.jsx';
 
 class ContentSwapper extends React.Component {
 
-  static propTypes = {
-    swapped: React.PropTypes.bool
-  };
-
-  state = {swapped: this.props.swapped};
+  state = {swapped: false};
 
   handleClick = () => {
     this.setState({swapped: !this.state.swapped});
@@ -16,13 +12,14 @@ class ContentSwapper extends React.Component {
 
   render() {
     const content = React.Children.toArray(this.props.children);
+    const { style = {} } = this.props;
+
+    style.cursor = 'pointer';
 
     return (
-      <div onClick={this.handleClick} style={{cursor: 'pointer'}}>
-        <ReactCSSTransitionReplace {...this.props}>
-          {this.state.swapped ? content[1] : content[0]}
-        </ReactCSSTransitionReplace>
-      </div>
+      <ReactCSSTransitionReplace {...this.props} style={style} onClick={this.handleClick}>
+        {this.state.swapped ? content[1] : content[0]}
+      </ReactCSSTransitionReplace>
     );
   }
 }

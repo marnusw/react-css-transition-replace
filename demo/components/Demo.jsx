@@ -44,21 +44,18 @@ class Demo extends React.Component {
           </ContentSwapper>
 
           <h2>Fade out, then fade in transition</h2>
-          <ContentSwapper transitionName="fade-wait" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+          <ContentSwapper transitionName="fade-wait" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
             <ContentLong key="long"/>
             <ContentShort key="short"/>
           </ContentSwapper>
 
-          <h2>Carousel-like transition</h2>
-
-          <div style={{width: 600}}>
-            <ContentSwapper className="carousel"
-                            transitionName="carousel-swap" transitionEnterTimeout={500} transitionLeaveTimeout={500}
-                            transitionHeight={false}>
-              <img key="img3" src="/img/vista3.jpg" width="600" height="280"/>
-              <img key="img4" src="/img/vista4.jpg" width="600" height="280"/>
-            </ContentSwapper>
-          </div>
+          <h2>Carousel transition</h2>
+          <ContentSwapper style={{width: 600}}
+                          transitionName="carousel-swap" transitionEnterTimeout={500} transitionLeaveTimeout={500}
+                          transitionHeight={false}>
+            <img key="img3" src="/img/vista3.jpg" width="600" height="280"/>
+            <img key="img4" src="/img/vista4.jpg" width="600" height="280"/>
+          </ContentSwapper>
 
         </Grid>
       </div>
