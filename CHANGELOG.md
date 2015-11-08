@@ -1,5 +1,6 @@
 ### v1.0.0 (8 November 2015)
 
+* [ENHANCEMENT] Publish the demo page on [`gh-pages`](http://marnusw.github.io/react-css-transition-replace/).
 * [ENHANCEMENT] Added a demo page; to view run `npm install` and `gulp demo`.
 * [ENHANCEMENT] Allow in place transitions fully configurable in CSS.
 * [ENHANCEMENT] Use `ReactCSSTransitionGroupChild` rather than defining yet another child wrapper.
