@@ -37,23 +37,21 @@ class Demo extends React.Component {
           <p className="text-danger"><em>Click any content to trigger the transition.</em></p>
 
           <h2>Cross-fade transition</h2>
-          <ContentSwapper transitionName="cross-fade" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}
-                          transitionHeight={false}>
-            <img key="img1" src="/img/vista1.jpg" width="600" height="280"/>
+          <ContentSwapper transitionName="cross-fade" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+            <img key="img1" src="/img/vista1.jpg" width="600" height="235"/>
             <img key="img2" src="/img/vista2.jpg" width="600" height="280"/>
           </ContentSwapper>
 
           <h2>Fade out, then fade in transition</h2>
-          <ContentSwapper transitionName="fade-wait" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+          <ContentSwapper transitionName="fade-wait" transitionEnterTimeout={1000} transitionLeaveTimeout={400}>
             <ContentLong key="long"/>
             <ContentShort key="short"/>
           </ContentSwapper>
 
           <h2>Carousel transition</h2>
-          <ContentSwapper style={{width: 600}}
-                          transitionName="carousel-swap" transitionEnterTimeout={500} transitionLeaveTimeout={500}
-                          transitionHeight={false}>
-            <img key="img3" src="/img/vista3.jpg" width="600" height="280"/>
+          <ContentSwapper transitionName="carousel-swap" transitionEnterTimeout={500} transitionLeaveTimeout={500}
+                          style={{width: 600}}>
+            <img key="img3" src="/img/vista3.jpg" width="600" height="255"/>
             <img key="img4" src="/img/vista4.jpg" width="600" height="280"/>
           </ContentSwapper>
 

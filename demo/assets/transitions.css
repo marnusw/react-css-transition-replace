@@ -35,7 +35,7 @@ body {
 }
 .fade-wait-leave.fade-wait-leave-active {
   opacity: 0;
-  transition: opacity .5s ease-in;
+  transition: opacity .4s ease-in;
 }
 
 .fade-wait-enter {
@@ -44,7 +44,7 @@ body {
 .fade-wait-enter.fade-wait-enter-active {
   opacity: 1;
   /* Delay the enter animation until the leave completes */
-  transition: opacity .5s ease-in .5s;
+  transition: opacity .4s ease-in .6s;
 }
 
 .fade-wait-height {
