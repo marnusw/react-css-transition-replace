@@ -1,8 +1,15 @@
-Upgrade Guide
-=============
+# Upgrade Guide
 
-0.2.x -> 1.0.0
---------------
+## 0.2.x -> 1.0.0
+
+#### Specify the transition delay
+
+With the upgrade of React.js from `0.13.x` to `0.14.0` the API has been updated to match
+that of `ReactCSSTransitionGroup` in that it requires specifying the transition duration
+in JS with the timeout props: `transitionEnterTimeout`, `transitionLeaveTimeout` and 
+`transitionAppearTimeout`.
+
+#### Waiting for `leave` before starting `enter`
 
 If you were using this component to expressly wait for the leaving child to transition
 out completely before the entering child transitions in you simply need to add a delay
