@@ -118,32 +118,29 @@ add a delay to the `enter` transition.
 the duration of the transition. In this case:
 
 ```javascript
-<ReactCSSTransitionReplace transitionName="fade-wait" transitionEnterTimeout={1000} transitionLeaveTimeout={400}>
+<ReactCSSTransitionReplace transitionName="fade-wait" 
+                           transitionEnterTimeout={1000} transitionLeaveTimeout={400}>
 ```
-
-
-#### Disabling the height transition
-
-If the `.*-height` class is not specified the change in container height will not be animated but rather 
-jump to the height of the entering component instantaneously. While this is probably not a very useful 
-scenario in practice, doing so does not break anything and still avoids absolute positioning related 
-height issues.
 
 
 ## Tips
 
- - In general animating `block` or `inline-block` level elements is more stable that `inline` elements. If the
-   height changes in random ways ensure that there isn't a `span` or other inline element used as the outer 
-   element of the components being animated.
- - The `overflow` of the container is set to `'hidden'` automatically, which changes the behaviour of 
-   [collapsing margins](https://css-tricks.com/what-you-should-know-about-collapsing-margins/) from the default 
-   `'visible'`. This may cause a glitch in the height at the start or end of animations. To avoid this you can:
-     - Keep the overflow hidden permanently with custom styles/classes if there won't be adverse side-effects.
-     - Only use 
-       [Single-direction margin declarations](http://csswizardry.com/2012/06/single-direction-margin-declarations/)
-       to avoid any collapsing margins.
-     - Turn this feature off by setting the `overflowHidden={false}` prop when hidden overflow is not needed,
-       for example when transitions are in place and content is of the same height.
+ 1. In general animating `block` or `inline-block` level elements is more stable that `inline` elements. If the
+    height changes in random ways ensure that there isn't a `span` or other inline element used as the outer 
+    element of the components being animated.
+ 2. The `overflow` of the container is set to `'hidden'` automatically, which changes the behaviour of 
+    [collapsing margins](https://css-tricks.com/what-you-should-know-about-collapsing-margins/) from the default 
+    `'visible'`. This may cause a glitch in the height at the start or end of animations. To avoid this you can:
+      - Keep the overflow hidden permanently with custom styles/classes if that will not cause undesired side-effects.
+      - Only use 
+        [Single-direction margin declarations](http://csswizardry.com/2012/06/single-direction-margin-declarations/)
+        to avoid collapsing margins overall.
+      - Turn this feature off by setting the `overflowHidden={false}` prop when hidden overflow is not needed,
+        for example when transitions are in place and content is of the same height.
+ 3. If the `.*-height` class is not specified the change in container height will not be animated but instead 
+    jump to the height of the entering component instantaneously. It can, therefore, be omitted if all content 
+    is known to be of the same height without any adverse side-effects, and absolute positioning related height 
+    issues will still be avoided.
 
 
 ## Contributing
