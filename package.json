@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"No test implemented\" && exit 0",
     "prebuild": "rm -rf lib && gulp lint",
-    "build": "node_modules/.bin/babel ./src --out-dir ./lib",
+    "build": "./node_modules/.bin/babel ./src --out-dir ./lib",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "babelify": "^6.3.0",
     "browser-sync": "^2.9.11",
     "browserify": "^11.2.0",
+    "del": "^2.0.2",
     "eslint": "^1.6.0",
     "eslint-plugin-react": "^3.5.1",
     "gulp": "^3.9.0",

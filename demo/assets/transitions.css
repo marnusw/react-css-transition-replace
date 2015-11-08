@@ -1,12 +1,6 @@
-h2 {
-  margin-top: 50px;
-}
-body {
-  padding-bottom: 100px;
-}
-
 
 /* Cross-fade transition */
+
 .cross-fade-leave {
   opacity: 1;
 }

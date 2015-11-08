@@ -68,3 +68,9 @@ gulp.task('demo', ['demo:bundleAndWatch'], function() {
   gulp.watch('demo/assets/transitions.css').on('change', reload);
   gulp.watch('demo/assets/app.js').on('change', reload);
 });
+
+gulp.task('gh-pages', ['demo:bundle'], function() {
+  require('del').sync(['gh-pages/**/*.*', '!gh-pages', '!gh-pages/.git']);
+  return gulp.src('demo/assets/**/*.*')
+    .pipe(gulp.dest('gh-pages'));
+});
