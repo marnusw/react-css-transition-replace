@@ -22,9 +22,9 @@ function createTransitionTimeoutPropValidator(transitionType) {
       // If no timeout duration is provided
       if (!props[timeoutPropName]) {
         return new Error(timeoutPropName + ' wasn\'t supplied to ReactCSSTransitionReplace: '
-                         + 'this can cause unreliable animations and won\'t be supported in '
-                         + 'a future version of React. See '
-                         + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.');
+          + 'this can cause unreliable animations and won\'t be supported in '
+          + 'a future version of React. See '
+          + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.');
 
         // If the duration isn't a number
       }
@@ -42,17 +42,17 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionAppear: React.PropTypes.bool,
     transitionEnter: React.PropTypes.bool,
     transitionLeave: React.PropTypes.bool,
-    transitionHeight: React.PropTypes.bool,
     transitionAppearTimeout: createTransitionTimeoutPropValidator('Appear'),
     transitionEnterTimeout: createTransitionTimeoutPropValidator('Enter'),
-    transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave')
+    transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave'),
+    overflowHidden: React.PropTypes.bool
   };
 
   static defaultProps = {
     transitionAppear: false,
     transitionEnter: true,
     transitionLeave: true,
-    transitionHeight: true,
+    overflowHidden: true,
     component: 'span'
   };
 
@@ -78,15 +78,13 @@ export default class ReactCSSTransitionReplace extends React.Component {
       });
     }
 
-    const { transitionHeight } = this.props;
-
     // Set the next child to start the transition,
     // also set the current and next height to trigger its transition.
     this.setState({
       nextChild,
-      height: transitionHeight ? ReactDOM.findDOMNode(this.refs.curr).offsetHeight : null
+      height: ReactDOM.findDOMNode(this.refs.curr).offsetHeight
     }, () => this.setState({
-      height: transitionHeight ? ReactDOM.findDOMNode(this.refs.next).offsetHeight : null
+      height: ReactDOM.findDOMNode(this.refs.next).offsetHeight
     }));
   }
 
@@ -153,7 +151,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     const { currentChild, nextChild, height } = this.state;
     const childrenToRender = [];
 
-    let containerProps = this.props;
+    const { overflowHidden, ...containerProps } = this.props;
 
     if (currentChild) {
       childrenToRender.push(this._wrapChild(currentChild, {
@@ -162,33 +160,31 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
 
     if (nextChild) {
-      const style = objectAssign({}, this.props.style, {
-        position: 'relative',
-        overflow: 'hidden',
-        display: 'block'
+      objectAssign(containerProps, {
+        className: `${containerProps.className || ''} ${containerProps.transitionName}-height`,
+        style: objectAssign({}, containerProps.style, {
+          position: 'relative',
+          display: 'block',
+          height
+        })
       });
 
-      if (this.props.transitionHeight) {
-        // Don't overwrite the height style if transitionHeight isn't active.
-        style.height = height;
+      if (overflowHidden) {
+        containerProps.style.overflow = 'hidden';
       }
 
-      containerProps = objectAssign({}, containerProps, {
-        className: `${containerProps.className || ''} ${containerProps.transitionName}-height`,
-        style
-      });
-
-      const nextChildStyle = objectAssign({}, nextChild.props.style, {
-        position: 'absolute',
-        left: 0,
-        top: 0
-      });
-
       childrenToRender.push(
-        React.createElement('span', {
-          style: nextChildStyle,
-          key: 'next'
-        }, this._wrapChild(nextChild, {ref: 'next'}))
+        React.createElement('span',
+          {
+            style: {
+              position: 'absolute',
+              left: 0,
+              top: 0
+            },
+            key: 'next'
+          },
+          this._wrapChild(nextChild, {ref: 'next'})
+        )
       );
     }
 

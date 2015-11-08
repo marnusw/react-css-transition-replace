@@ -14,7 +14,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "react-addons-transition-group": "^0.14.0"
+    "react-addons-css-transition-group": "^0.14.0"
   },
   "peerDependencies": {
     "react": "^0.14.0",
