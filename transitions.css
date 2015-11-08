@@ -1,0 +1,69 @@
+
+/* Cross-fade transition */
+
+.cross-fade-leave {
+  opacity: 1;
+}
+.cross-fade-leave.cross-fade-leave-active {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+.cross-fade-enter {
+  opacity: 0;
+}
+.cross-fade-enter.cross-fade-enter-active {
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+
+.cross-fade-height {
+  transition: height 1s ease-in-out;
+}
+
+
+/* Fade out, then fade in transition */
+
+.fade-wait-leave {
+  opacity: 1;
+}
+.fade-wait-leave.fade-wait-leave-active {
+  opacity: 0;
+  transition: opacity .4s ease-in;
+}
+
+.fade-wait-enter {
+  opacity: 0;
+}
+.fade-wait-enter.fade-wait-enter-active {
+  opacity: 1;
+  /* Delay the enter animation until the leave completes */
+  transition: opacity .4s ease-in .6s;
+}
+
+.fade-wait-height {
+  transition: height .6s ease-in-out;
+}
+
+
+/* Carousel-like transition */
+
+.carousel-swap-leave {
+  transition: transform .3s ease-in-out;
+  transform: translate(0, 0);
+}
+.carousel-swap-leave-active {
+  transform: translate(-100%, 0);
+}
+
+.carousel-swap-enter {
+  transition: transform .3s ease-in-out;
+  transform: translate(100%, 0);
+}
+.carousel-swap-enter-active {
+  transform: translate(0, 0);
+}
+
+.carousel-swap-height {
+  transition: height .3s ease-in-out;
+}
