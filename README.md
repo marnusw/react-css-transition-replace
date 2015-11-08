@@ -18,6 +18,8 @@ the leaving component's animation completes. Following suit with the
 [React.js API](https://facebook.github.io/react/docs/animation.html#getting-started) the one caveat is 
 that the transition duration must be specified in JavaScript as well as CSS.
 
+[Live Examples](http://marnusw.github.io/react-css-transition-replace)
+
 
 ## Installation
 
@@ -79,7 +81,7 @@ transitions in the associated CSS classes:
 }
 
 .cross-fade-height {
-  transition: height 1s ease-in-out;
+  transition: height .5s ease-in-out;
 }
 ```
 

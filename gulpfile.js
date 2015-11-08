@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 
-gulp.task('lint', function () {
+gulp.task('lint', function() {
   return gulp.src(['src/**', 'demo/app.js', 'demo/components/*.jsx'])
     // eslint() attaches the lint output to the eslint property
     // of the file object so it can be used by other modules.
@@ -65,9 +65,11 @@ gulp.task('demo', ['demo:bundleAndWatch'], function() {
   gulp.watch(['src/**', 'demo/app.js', 'demo/components/*.jsx'], ['lint']);
 
   // Reload when the app CSS or bundled JS changes
-  gulp.watch('demo/assets/transitions.css').on('change', reload);
+  gulp.watch('demo/assets/*.css').on('change', reload);
   gulp.watch('demo/assets/app.js').on('change', reload);
 });
+
+// gh-pages related tasks
 
 gulp.task('gh-pages', ['demo:bundle'], function() {
   require('del').sync(['gh-pages/**/*.*', '!gh-pages', '!gh-pages/.git']);
