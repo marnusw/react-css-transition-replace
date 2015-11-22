@@ -9,7 +9,7 @@ is designed to do exactly that with an API closely following that of `ReactCSSTr
 
 Using `react-css-transition-replace` provides two distinct benefits:
 
- - It automatically handles the positioning of the animated components internally, and
+ - It automatically handles the positioning of the animated components, and
  - *allows changes in the height of container to be handled and animated with ease when 
    various content heights differ, even when absolute positioning is used.*
 
@@ -18,7 +18,9 @@ the leaving component's animation completes. Following suit with the
 [React.js API](https://facebook.github.io/react/docs/animation.html#getting-started) the one caveat is 
 that the transition duration must be specified in JavaScript as well as CSS.
 
-[Live Examples](http://marnusw.github.io/react-css-transition-replace)
+[Live Examples](http://marnusw.github.io/react-css-transition-replace) | 
+[Change Log](/CHANGELOG.md) | 
+[Upgrade Guide](/UPGRADE_GUIDE.md) 
 
 
 ## Installation
@@ -41,7 +43,11 @@ previous component is animated out and the new component animated in. During thi
  - The height of the container is set to that of the leaving component, and then immediately to that of the 
    entering component, and the `{animation-name}-height` class is applied to it.
 
-This provides many possibilities for animating the replacement as illustrated in the following examples.
+This provides many possibilities for animating the replacement as illustrated in the examples below.
+
+It is also possible to remove the child component (i.e. leave `ReactCSSTransitionReplace` with no children)
+which will animate the `height` going to zero along with the `leave` transition. Similarly, a single child 
+can be added to an empty `ReactCSSTransitionReplace`, triggering the inverse animation.
 
 ### Cross-fading two components
 
@@ -86,7 +92,8 @@ transitions in the associated CSS classes:
 ```
 
 Note the additional `.cross-fade-height` class. This indicates how the container height is to be
-animated if the heights of the entering and leaving components are not the same. 
+animated if the heights of the entering and leaving components are not the same. You can see this
+in action [here](http://marnusw.github.io/react-css-transition-replace#cross-fade).
 
 ### Fade out, then fade in
 
@@ -123,6 +130,8 @@ the duration of the transition. In this case:
 <ReactCSSTransitionReplace transitionName="fade-wait" 
                            transitionEnterTimeout={1000} transitionLeaveTimeout={400}>
 ```
+
+See the live example [here](http://marnusw.github.io/react-css-transition-replace#fade-wait).
 
 
 ## Tips

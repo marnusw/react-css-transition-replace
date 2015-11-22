@@ -1,3 +1,8 @@
+### v1.0.1 (22 November 2015)
+
+* [ENHANCEMENT] Support no children so the child component can be removed / added. (Fixes #4)
+* [ENHANCEMENT] Added an add/remove content section to the demo and docs.
+
 ### v1.0.0 (8 November 2015)
 
 * [ENHANCEMENT] Publish the demo page on [`gh-pages`](http://marnusw.github.io/react-css-transition-replace/).
