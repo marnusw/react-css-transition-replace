@@ -1,4 +1,4 @@
-### v1.0.1 (22 November 2015)
+### v1.0.1 (24 November 2015)
 
 * [ENHANCEMENT] Support no children so the child component can be removed / added. (Fixes #4)
 * [ENHANCEMENT] Added an add/remove content section to the demo and docs.
