@@ -1,3 +1,8 @@
+### v1.1.0 (24 November 2015)
+
+* [ENHANCEMENT] The entering component, which is absolutely positioned, is not only positioned with `top:0` and `left:0`
+                styles, but also `right:0` and `bottom:0` so smaller content fills the entire container.
+
 ### v1.0.1 (24 November 2015)
 
 * [ENHANCEMENT] Support no children so the child component can be removed / added. (Fixes #4)

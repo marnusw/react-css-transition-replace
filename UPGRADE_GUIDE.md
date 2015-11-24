@@ -1,5 +1,20 @@
 # Upgrade Guide
 
+## 1.0.x -> 1.1.0
+
+The entering component use to be positioned on top of the leaving component with 
+`position: absolute`, `top:0` and `left:0` styles. If this component has narrow content
+and depends on its outer element to fill its parent's width this will no longer happen
+one it is absolutely positioned and thus the content will be narrow while animating and
+then jump to the proper width when the animation completes. By also specifying `right:0` 
+and `bottom:0` styles the entering component now remains stretched to its parent's width.
+
+This change should go unnoticed in most use cases, but it is conceivable that it might
+be a breaking change and thus the minor version bump. If there is a use case that 
+absolutely requires not setting `right` and `bottom` styles open an issue or PR and we 
+can look at adding a prop to disable this.
+
+
 ## 0.2.x -> 1.0.0
 
 #### Specify the transition delay
