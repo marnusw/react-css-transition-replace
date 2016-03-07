@@ -136,7 +136,7 @@ See the live example [here](http://marnusw.github.io/react-css-transition-replac
 
 ### Hardware acceleration for smoother transitions
 
-For even smoother transitions, try to use hardware acceleration whenever possible. Here is an example of what you could do for a mobile app transition between pages:
+For even smoother transitions, try to trigger hardware acceleration whenever possible. Here is an example of what you could do for a mobile app transition between pages:
 
 ```css
 .page-enter, .page-leave {
@@ -146,23 +146,19 @@ For even smoother transitions, try to use hardware acceleration whenever possibl
 }
 
 .page-enter {
-  opacity: 0;
   left: 100vw;
 }
 
 .page-enter.page-enter-active {
-  opacity: 1;
   -webkit-transform: translate3d(-100vw, 0, 0);
   transform: translate3d(-100vw, 0, 0);
 }
 
 .page-leave {
-  opacity: 1;
   left: 0;
 }
 
 .page-leave.page-leave-active {
-  opacity: 0;
   -webkit-transform: translate3d(-100vw, 0, 0);
   transform: translate3d(-100vw, 0, 0);
 }
@@ -176,6 +172,7 @@ For even smoother transitions, try to use hardware acceleration whenever possibl
 </ReactCSSTransitionReplace>
 ```
 
+The use of translate3d instead of 2D translate will trigger hardware acceleration and make your transition even smoother.
 
 ## Tips
 
