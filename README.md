@@ -134,6 +134,46 @@ the duration of the transition. In this case:
 See the live example [here](http://marnusw.github.io/react-css-transition-replace#fade-wait).
 
 
+### Hardware acceleration for smoother transitions
+
+For even smoother transitions, try to trigger hardware acceleration whenever possible. Here is an example of what you could do for a mobile app transition between pages:
+
+```css
+.page-enter, .page-leave {
+  position: absolute;
+  -webkit-transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
+  transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
+}
+
+.page-enter {
+  left: 100vw;
+}
+
+.page-enter.page-enter-active {
+  -webkit-transform: translate3d(-100vw, 0, 0);
+  transform: translate3d(-100vw, 0, 0);
+}
+
+.page-leave {
+  left: 0;
+}
+
+.page-leave.page-leave-active {
+  -webkit-transform: translate3d(-100vw, 0, 0);
+  transform: translate3d(-100vw, 0, 0);
+}
+```
+
+```
+<ReactCSSTransitionReplace transitionName="page" transitionEnterTimeout={250} transitionLeaveTimeout={250} >
+  <div key="page01">
+    My page 01 content
+  </div>
+</ReactCSSTransitionReplace>
+```
+
+The use of translate3d instead of 2D translate will trigger hardware acceleration and make your transition even smoother.
+
 ## Tips
 
  1. In general animating `block` or `inline-block` level elements is more stable that `inline` elements. If the
