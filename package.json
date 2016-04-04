@@ -2,7 +2,7 @@
   "name": "react-css-transition-replace",
   "version": "1.1.0",
   "description": "A React component to animate replacing one element with another.",
-  "main": "lib/CSSTransitionReplace.js",
+  "main": "lib/ReactCSSTransitionReplace.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/marnusw/react-css-transition-replace.git"
