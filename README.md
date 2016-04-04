@@ -28,15 +28,16 @@ that the transition duration must be specified in JavaScript as well as CSS.
 Install via `npm`:
 
 ```
-npm install --save react-css-transition-replace
+npm install react-css-transition-replace
 ```
 
 
 ## Usage
 
 A `ReactCSSTransitionReplace` component can only have a single child. Other than that, the basic usage 
-follows the exact same API as `ReactCSSTransitionGroup`. When the `key` of the child component changes, the 
-previous component is animated out and the new component animated in. During this process:
+follows the exact same API as `ReactCSSTransitionGroup`, with support for `transitionEnter`, `transitionLeave`
+and `transitionAppear`. When the `key` of the child component changes, the previous component is animated out 
+and the new component animated in. During this process:
 
  - The leaving component continues to be rendered as usual with `static` positioning.
  - The entering component is positioned on top of the leaving component with `absolute` positioning.
@@ -136,7 +137,9 @@ See the live example [here](http://marnusw.github.io/react-css-transition-replac
 
 ### Hardware acceleration for smoother transitions
 
-For even smoother transitions, try to trigger hardware acceleration whenever possible. Here is an example of what you could do for a mobile app transition between pages:
+For smoother transitions hardware acceleration, which is achieved by using translate3d instead of the 2D 
+translations, should be used whenever possible. For example, to realize a mobile app transition between 
+pages one might use:
 
 ```css
 .page-enter, .page-leave {
@@ -164,7 +167,7 @@ For even smoother transitions, try to trigger hardware acceleration whenever pos
 }
 ```
 
-```
+```javascript
 <ReactCSSTransitionReplace transitionName="page" transitionEnterTimeout={250} transitionLeaveTimeout={250} >
   <div key="page01">
     My page 01 content
@@ -172,7 +175,6 @@ For even smoother transitions, try to trigger hardware acceleration whenever pos
 </ReactCSSTransitionReplace>
 ```
 
-The use of translate3d instead of 2D translate will trigger hardware acceleration and make your transition even smoother.
 
 ## Tips
 

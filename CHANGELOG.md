@@ -1,3 +1,10 @@
+### v1.1.1 (4 April 2016)
+
+* [BUGFIX] Corrected the file name in the `main` field of package.json. (#13)
+* [BUGFIX] Allow prop `transitionName` to be type of `object`. (#9,#12)
+* [DOCUMENTATION] Added a Hardware Acceleration example to the README. (#8)
+* [DOCUMENTATION] Add a note that `transitionAppear` is also supported. (#7)
+
 ### v1.1.0 (24 November 2015)
 
 * [ENHANCEMENT] The entering component, which is absolutely positioned, is not only positioned with `top:0` and `left:0`
@@ -5,7 +12,7 @@
 
 ### v1.0.1 (24 November 2015)
 
-* [ENHANCEMENT] Support no children so the child component can be removed / added. (Fixes #4)
+* [ENHANCEMENT] Support no children so the child component can be removed / added. (#4)
 * [ENHANCEMENT] Added an add/remove content section to the demo and docs.
 
 ### v1.0.0 (8 November 2015)
