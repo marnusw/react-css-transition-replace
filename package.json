@@ -14,6 +14,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
+    "object-assign": "^4.0.1",
     "react-addons-css-transition-group": "^0.14.0"
   },
   "peerDependencies": {
@@ -29,7 +30,7 @@
     "del": "^2.0.2",
     "eslint": "^1.6.0",
     "eslint-plugin-react": "^3.5.1",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-eslint": "^1.0.0",
     "gulp-flatten": "^0.2.0",
     "gulp-notify": "^2.2.0",

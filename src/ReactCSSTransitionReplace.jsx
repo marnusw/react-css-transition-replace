@@ -6,7 +6,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import objectAssign from 'react/lib/Object.assign';
+import objectAssign from 'object-assign';
 
 import ReactCSSTransitionGroupChild from 'react/lib/ReactCSSTransitionGroupChild';
 

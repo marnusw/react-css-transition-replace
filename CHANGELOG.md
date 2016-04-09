@@ -1,3 +1,8 @@
+### v1.1.2 (9 April 2016)
+
+* [UPGRADE] Use the `object-assign` lib, as [React 15 does](https://github.com/facebook/react/pull/6376), rather
+            than `react/lib/Object.assign` which has been removed. (#14)
+
 ### v1.1.1 (4 April 2016)
 
 * [BUGFIX] Corrected the file name in the `main` field of package.json. (#13)
