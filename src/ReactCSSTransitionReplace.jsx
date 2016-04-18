@@ -40,6 +40,8 @@ function createTransitionTimeoutPropValidator(transitionType) {
 
 export default class ReactCSSTransitionReplace extends React.Component {
 
+  static displayName = 'ReactCSSTransitionReplace';
+
   static propTypes = {
     transitionName: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.shape({
       enter: React.PropTypes.string,
@@ -166,7 +168,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
       this.setState(state);
     }
-  };
+  }
 
   _wrapChild(child, moreProps) {
     // We need to provide this childFactory so that
