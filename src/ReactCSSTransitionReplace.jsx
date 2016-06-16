@@ -6,7 +6,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import objectAssign from 'object-assign';
 
 import ReactCSSTransitionGroupChild from 'react/lib/ReactCSSTransitionGroupChild';
 
@@ -172,15 +171,16 @@ export default class ReactCSSTransitionReplace extends React.Component {
     // We need to provide this childFactory so that
     // ReactCSSTransitionReplaceChild can receive updates to name,
     // enter, and leave while it is leaving.
-    return reactCSSTransitionGroupChild(objectAssign({
+    return reactCSSTransitionGroupChild({
       name: this.props.transitionName,
       appear: this.props.transitionAppear,
       enter: this.props.transitionEnter,
       leave: this.props.transitionLeave,
       appearTimeout: this.props.transitionAppearTimeout,
       enterTimeout: this.props.transitionEnterTimeout,
-      leaveTimeout: this.props.transitionLeaveTimeout
-    }, moreProps), child);
+      leaveTimeout: this.props.transitionLeaveTimeout,
+      ...moreProps
+    }, child);
   }
 
   render() {
@@ -197,7 +197,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
     if (height !== null) {
       containerProps.className = `${containerProps.className || ''} ${containerProps.transitionName}-height`;
-      containerProps.style = objectAssign({}, containerProps.style, {
+      containerProps.style = {
+        ...containerProps.style,
         position: 'relative',
         display: 'block',
         height
