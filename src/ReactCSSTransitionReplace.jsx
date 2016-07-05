@@ -202,7 +202,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
         position: 'relative',
         display: 'block',
         height
-      });
+      };
 
       if (overflowHidden) {
         containerProps.style.overflow = 'hidden';
