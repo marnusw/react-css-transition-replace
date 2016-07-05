@@ -1,3 +1,10 @@
+### v1.2.0-beta (18 April 2016)
+
+* [UPGRADE] Add peer dependency `react@15.0.1`.
+  *Note: When adding/removing content completely in rapid successions strange things happen with this change. 
+  (Thus beta status)*
+* [ENHANCEMENT] Add a `displayName` field.
+
 ### v1.1.2 (9 April 2016)
 
 * [UPGRADE] Use the `object-assign` lib, as [React 15 does](https://github.com/facebook/react/pull/6376), rather
