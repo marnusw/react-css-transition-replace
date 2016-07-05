@@ -1,3 +1,8 @@
+### v2.0.0 (5 July 2016)
+
+* [UPGRADE] Use `react@15.2.0`. (This may be a breaking change in some ways, requiring a major version upgrade.)
+* [ENHANCEMENT] Use the spread operator rather than `object-assign`. (#16)
+
 ### v1.2.0-beta (18 April 2016)
 
 * [UPGRADE] Add peer dependency `react@15.0.1`.

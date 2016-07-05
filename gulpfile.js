@@ -28,6 +28,14 @@ var assign = require('lodash.assign');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 
+var BABELIFY_OPTIONS = {
+  ignore: /node_modules/,
+  presets: [
+    'es2015',
+    'stage-0', // Stage 0 used to enable `es7.objectRestSpread`
+    'react'
+  ]
+};
 
 function bundleJs(bundler) {
   return bundler.bundle()
@@ -40,12 +48,12 @@ function bundleJs(bundler) {
 
 gulp.task('demo:bundle', function() {
   return bundleJs(browserify('./demo/app.js', {debug: true}) // Append a source map
-    .transform(babelify));
+    .transform(babelify, BABELIFY_OPTIONS));
 });
 
 gulp.task('demo:bundleAndWatch', function() {
   var bundler = watchify(browserify('./demo/app.js', assign({debug: true}, watchify.args)))
-    .transform(babelify);
+    .transform(babelify, BABELIFY_OPTIONS);
 
   bundler.on('update', bundleJs.bind(null, bundler));
 
