@@ -189,7 +189,17 @@ export default class ReactCSSTransitionReplace extends React.Component {
     const { currentChild, nextChild, height } = this.state;
     const childrenToRender = [];
 
-    const { overflowHidden, ...containerProps } = this.props;
+    const {
+      overflowHidden,
+      transitionName,
+      transitionEnterTimeout,
+      transitionLeaveTimeout,
+      transitionAppear,
+      transitionEnter,
+      transitionLeave,
+      component,
+      ...containerProps
+    } = this.props;
 
     if (currentChild) {
       childrenToRender.push(this._wrapChild(currentChild, {
