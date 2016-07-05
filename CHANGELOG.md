@@ -1,5 +1,6 @@
 ### v2.0.0 (5 July 2016)
 
+* [ENHANCEMENT] Don't pass non-standard DOM props to the component as required by `react 15.2.0`. (#17)
 * [UPGRADE] Use `react@15.2.0`. (This may be a breaking change in some ways, requiring a major version upgrade.)
 * [ENHANCEMENT] Use the spread operator rather than `object-assign`. (#16)
 

@@ -189,7 +189,10 @@ export default class ReactCSSTransitionReplace extends React.Component {
     const { currentChild, nextChild, height } = this.state;
     const childrenToRender = [];
 
-    const { overflowHidden, ...containerProps } = this.props;
+    const { overflowHidden, transitionName, component,
+            transitionAppear, transitionEnter, transitionLeave,
+            transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
+            ...containerProps } = this.props;
 
     if (currentChild) {
       childrenToRender.push(this._wrapChild(currentChild, {
@@ -198,7 +201,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
 
     if (height !== null) {
-      containerProps.className = `${containerProps.className || ''} ${containerProps.transitionName}-height`;
+      containerProps.className = `${containerProps.className || ''} ${transitionName}-height`;
       containerProps.style = {
         ...containerProps.style,
         position: 'relative',
@@ -229,6 +232,6 @@ export default class ReactCSSTransitionReplace extends React.Component {
       );
     }
 
-    return React.createElement(this.props.component, containerProps, childrenToRender);
+    return React.createElement(component, containerProps, childrenToRender);
   }
 }
