@@ -9,8 +9,8 @@
   },
   "scripts": {
     "test": "echo \"No test implemented\" && exit 0",
-    "prebuild": "rm -rf lib && gulp lint",
-    "build": "./node_modules/.bin/babel ./src --out-dir ./lib",
+    "prebuild": "./node_modules/.bin/rimraf lib && gulp lint",
+    "build": "./node_modules/.bin/babel ./src --out-dir ./lib --presets es2015,stage-0,react",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -21,7 +21,7 @@
     "react-dom": "^0.14.0 || ^15.0.0"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
+    "babel-cli": "^6.10.1",
     "babel-eslint": "^6.1.0",
     "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
@@ -41,6 +41,7 @@
     "react": "^15.2.0",
     "react-bootstrap": "^0.29.5",
     "react-dom": "^15.2.0",
+    "rimraf": "^2.5.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
