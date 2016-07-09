@@ -85,9 +85,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
+    clearTimeout(this.timeout);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -109,10 +107,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     });
 
     // Enqueue setting the next height to trigger the height transition.
-    this.timeout = setTimeout(() => {
-      this.setState({height: this.state.nextChild ? ReactDOM.findDOMNode(this.refs.next).offsetHeight : 0});
-      this.timeout = null;
-    }, TICK);
+    this.enqueueHeightTransition(nextChild);
   }
 
   componentDidUpdate() {
@@ -124,6 +119,26 @@ export default class ReactCSSTransitionReplace extends React.Component {
         this.leaveCurrent();
       }
     }
+  }
+
+  enqueueHeightTransition(nextChild, tickCount = 0) {
+    this.timeout = setTimeout(() => {
+      if (!nextChild) {
+        return this.setState({height: 0});
+      }
+
+      const nextNode = ReactDOM.findDOMNode(this.refs.next);
+      if (nextNode) {
+        this.setState({height: nextNode.offsetHeight});
+      }
+      else {
+        // The DOM hasn't rendered the entering element yet, so wait another tick.
+        // Getting stuck in a loop shouldn't happen, but it's better to be safe.
+        if (tickCount < 10) {
+          this.enqueueHeightTransition(nextChild, tickCount + 1);
+        }
+      }
+    }, TICK);
   }
 
   appearCurrent() {
