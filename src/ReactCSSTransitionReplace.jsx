@@ -100,6 +100,13 @@ export default class ReactCSSTransitionReplace extends React.Component {
       });
     }
 
+    if (!currentChild && !nextChild && this.state.nextChild) {
+      // The container was empty before and the entering element is being removed again while
+      // transitioning in. Since a CSS transition can't be reversed cleanly midway the height
+      // is just forced back to zero immediately and the child removed.
+      return this.cancelTransition();
+    }
+
     // Set the next child to start the transition, and set the current height.
     this.setState({
       nextChild,
@@ -182,6 +189,15 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
       this.setState(state);
     }
+  }
+
+  cancelTransition() {
+    this.isTransitioning = false;
+    clearTimeout(this.timeout);
+    return this.setState({
+      nextChild: null,
+      height: null
+    });
   }
 
   _wrapChild(child, moreProps) {
