@@ -14,11 +14,11 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "react-addons-css-transition-group": "^15.2.0"
+    "react-addons-css-transition-group": "^15.0.0"
   },
   "peerDependencies": {
-    "react": "^15.2.0",
-    "react-dom": "^15.2.0"
+    "react": "^0.14.0 || ^15.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",

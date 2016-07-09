@@ -1,14 +1,14 @@
-### v2.0.0 (5 July 2016)
+### v1.3.0 (9 July 2016)
 
+* [ENHANCEMENT] When removing an element just added to an empty container transitions are reset to avoid getting stuck.
+* [ENHANCEMENT] When starting a height transition and the entering element hasn't rendered wait another tick. (#6,#10)
 * [ENHANCEMENT] Don't pass non-standard DOM props to the component as required by `react 15.2.0`. (#17)
-* [UPGRADE] Use `react@15.2.0`. (This may be a breaking change in some ways, requiring a major version upgrade.)
+* [UPGRADE] Use `react@15.2.0` and upgraded dev dependencies. (Should still work with `react@0.14` with `npm` warnings)
 * [ENHANCEMENT] Use the spread operator rather than `object-assign`. (#16)
 
 ### v1.2.0-beta (18 April 2016)
 
 * [UPGRADE] Add peer dependency `react@15.0.1`.
-  *Note: When adding/removing content completely in rapid successions strange things happen with this change. 
-  (Thus beta status)*
 * [ENHANCEMENT] Add a `displayName` field.
 
 ### v1.1.2 (9 April 2016)
@@ -19,7 +19,7 @@
 ### v1.1.1 (4 April 2016)
 
 * [BUGFIX] Corrected the file name in the `main` field of package.json. (#13)
-* [BUGFIX] Allow prop `transitionName` to be type of `object`. (#9,#12)
+* [BUGFIX] Allow prop `transitionName` to be of type `object`. (#9,#12)
 * [DOCUMENTATION] Added a Hardware Acceleration example to the README. (#8)
 * [DOCUMENTATION] Add a note that `transitionAppear` is also supported. (#7)
 
