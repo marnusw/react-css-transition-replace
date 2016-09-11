@@ -75,9 +75,9 @@ export default class ReactCSSTransitionReplace extends React.Component {
   };
 
   state = {
-    currentChild: this.props.children ? React.Children.only(this.props.children) : null,
+    currentChild: this.props.children ? React.Children.only(this.props.children) : undefined,
     currentChildKey: this.props.children ? '1' : '',
-    nextChild: null,
+    nextChild: undefined,
     nextChildKey: '',
     height: null,
     isLeaving: false
@@ -179,7 +179,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     this.setState({
       currentChild: state.nextChild,
       currentChildKey: state.nextChildKey,
-      nextChild: null,
+      nextChild: undefined,
       nextChildKey: '',
       height: null
     });
@@ -195,7 +195,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   // element must be removed from the DOM if the enter transition is still in progress.
   _handleDoneLeaving = () => {
     if (this.isTransitioning) {
-      const state = {currentChild: null, isLeaving: false};
+      const state = {currentChild: undefined, isLeaving: false};
 
       if (!this.state.nextChild) {
         this.isTransitioning = false;
@@ -210,7 +210,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     this.isTransitioning = false;
     clearTimeout(this.timeout);
     return this.setState({
-      nextChild: null,
+      nextChild: undefined,
       nextChildKey: '',
       height: null
     });
