@@ -76,8 +76,11 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   state = {
     currentChild: this.props.children ? React.Children.only(this.props.children) : null,
+    currentChildKey: this.props.children ? '1' : '',
     nextChild: null,
-    height: null
+    nextChildKey: '',
+    height: null,
+    isLeaving: false
   };
 
   componentDidMount() {
@@ -109,10 +112,13 @@ export default class ReactCSSTransitionReplace extends React.Component {
       return this.cancelTransition();
     }
 
+    const { state } = this;
+
     // Set the next child to start the transition, and set the current height.
     this.setState({
       nextChild,
-      height: this.state.currentChild ? ReactDOM.findDOMNode(this.refs.curr).offsetHeight : 0
+      nextChildKey: state.currentChildKey ? String(Number(state.currentChildKey) + 1) : '1',
+      height: state.currentChild ? ReactDOM.findDOMNode(this.refs.curr).offsetHeight : 0
     });
 
     // Enqueue setting the next height to trigger the height transition.
@@ -120,12 +126,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   componentDidUpdate() {
-    if (!this.isTransitioning) {
-      if (this.state.nextChild) {
-        this.enterNext();
-      }
-      if (this.state.currentChild && (this.state.nextChild || this.state.nextChild === false)) {
+    if (!this.isTransitioning && !this.state.isLeaving) {
+      const { currentChild, nextChild } = this.state;
+
+      if (currentChild && (nextChild || nextChild === false || nextChild === null)) {
         this.leaveCurrent();
+      }
+      if (nextChild) {
+        this.enterNext();
       }
     }
   }
@@ -165,10 +173,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   _handleDoneEntering = () => {
+    const { state } = this;
+
     this.isTransitioning = false;
     this.setState({
-      currentChild: this.state.nextChild,
+      currentChild: state.nextChild,
+      currentChildKey: state.nextChildKey,
       nextChild: null,
+      nextChildKey: '',
       height: null
     });
   }
@@ -176,13 +188,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
   leaveCurrent() {
     this.refs.curr.componentWillLeave(this._handleDoneLeaving);
     this.isTransitioning = true;
+    this.setState({ isLeaving: true });
   }
 
   // When the leave transition time-out expires the animation classes are removed, so the
   // element must be removed from the DOM if the enter transition is still in progress.
   _handleDoneLeaving = () => {
     if (this.isTransitioning) {
-      const state = {currentChild: null};
+      const state = {currentChild: null, isLeaving: false};
 
       if (!this.state.nextChild) {
         this.isTransitioning = false;
@@ -198,6 +211,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     clearTimeout(this.timeout);
     return this.setState({
       nextChild: null,
+      nextChildKey: '',
       height: null
     });
   }
@@ -226,7 +240,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   render() {
-    const { currentChild, nextChild, height } = this.state;
+    const { currentChild, currentChildKey, nextChild, nextChildKey, height, isLeaving } = this.state;
     const childrenToRender = [];
 
     const { overflowHidden, transitionName, component,
@@ -235,9 +249,15 @@ export default class ReactCSSTransitionReplace extends React.Component {
             ...containerProps } = this.props;
 
     if (currentChild) {
-      childrenToRender.push(this._wrapChild(currentChild, {
-        ref: 'curr', key: 'curr'
-      }));
+      childrenToRender.push(
+        React.createElement(
+          'span',
+          { key: currentChildKey },
+          this._wrapChild(React.cloneElement(currentChild, { isLeaving }), {
+            ref: 'curr'
+          })
+        )
+      );
     }
 
 
@@ -270,9 +290,9 @@ export default class ReactCSSTransitionReplace extends React.Component {
               right: 0,
               bottom: 0
             },
-            key: 'next'
+            key: nextChildKey
           },
-          this._wrapChild(nextChild, {ref: 'next'})
+          this._wrapChild(nextChild, {ref: 'next' })
         )
       );
     }
