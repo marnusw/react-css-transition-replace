@@ -42,10 +42,9 @@ and the new component animated in. During this process:
  - The leaving component continues to be rendered as usual with `static` positioning.
  - The entering component is positioned on top of the leaving component with `absolute` positioning.
  - The height of the container is set to that of the leaving component, and then immediately to that of the 
-   entering component, and the `{animation-name}-height` class is applied to it, if type of `transitionName` is 
-   `String`. If type of `transitionName` is `Object`, `transitionName.height` class will be used without modifications, 
-   if present.
- - The leaving component will be passed `isLeaving` prop while transitioning out.
+   entering component. If the `transitionName` is a `String` the `{animation-name}-height` class name is applied 
+   to it, and if `transitionName` is an `Object` the `transitionName.height` class will be used if present.
+ - The leaving component will be passed an `isLeaving` prop while transitioning out.
 
 This provides many possibilities for animating the replacement as illustrated in the examples below.
 

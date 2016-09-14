@@ -1,4 +1,8 @@
-### v2.0.0 (11 September 2016)
+### v2.0.1 (14 September 2016)
+
+* [DOCUMENTATION] Minor grammar improvement in the README.
+
+### v2.0.0 (14 September 2016)
 
 * [ENHANCEMENT] Add support for IE<=11 (thanks @le0nik) (#22, #23)
 * [ENHANCEMENT] Provide an `isLeaving` prop on the current child component while it is leaving. (thanks @le0nik)

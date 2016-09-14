@@ -262,9 +262,9 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
 
     if (height !== null) {
-      const heightClassName = (typeof transitionName == 'object' && transitionName !== null) ?
-        transitionName.height || '' :
-        `${transitionName}-height`;
+      const heightClassName = (typeof transitionName == 'object' && transitionName !== null)
+        ? transitionName.height || ''
+        : `${transitionName}-height`;
 
       containerProps.className = `${containerProps.className || ''} ${heightClassName}`;
       containerProps.style = {
