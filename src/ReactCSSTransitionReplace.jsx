@@ -30,7 +30,7 @@ function createTransitionTimeoutPropValidator(transitionType) {
 
         // If the duration isn't a number
       }
-      else if (typeof props[timeoutPropName] !== 'number') {
+      else if (typeof props[timeoutPropName] != 'number') {
         return new Error(timeoutPropName + ' must be a number (in milliseconds)');
       }
     }
@@ -219,7 +219,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   _wrapChild(child, moreProps) {
     let transitionName = this.props.transitionName;
 
-    if (typeof transitionName === 'object' && transitionName !== null) {
+    if (typeof transitionName == 'object' && transitionName !== null) {
       transitionName = { ...transitionName };
       delete transitionName.height;
     }
@@ -253,16 +253,16 @@ export default class ReactCSSTransitionReplace extends React.Component {
         React.createElement(
           'span',
           { key: currentChildKey },
-          this._wrapChild(React.cloneElement(currentChild, { isLeaving }), {
-            ref: 'curr'
-          })
+          this._wrapChild(
+            typeof currentChild.type == 'string' ? currentChild : React.cloneElement(currentChild, { isLeaving }),
+            {ref: 'curr'})
         )
       );
     }
 
 
     if (height !== null) {
-      const heightClassName = (typeof transitionName === 'object' && transitionName !== null) ?
+      const heightClassName = (typeof transitionName == 'object' && transitionName !== null) ?
         transitionName.height || '' :
         `${transitionName}-height`;
 

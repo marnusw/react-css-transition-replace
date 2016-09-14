@@ -1,9 +1,9 @@
 import React from 'react';
 
 
-function ContentShort(props) {
+function ContentShort({className}) {
   return (
-    <div {...props}>
+    <div className={className}>
       <b>Some shorter content</b>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pulvinar pharetra magna ac rhoncus. Pellentesque

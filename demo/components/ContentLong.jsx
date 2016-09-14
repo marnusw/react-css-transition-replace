@@ -1,9 +1,9 @@
 import React from 'react';
 
 
-function ContentLong(props) {
+function ContentLong({className}) {
   return (
-    <div {...props}>
+    <div className={className}>
       <b>Some longer content</b>
       <p>
         Suspendisse non ante dui. Phasellus tempor sem non cursus feugiat. Pellentesque quis justo neque. Proin est

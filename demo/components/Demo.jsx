@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar, Nav, NavItem, Grid } from 'react-bootstrap';
+const NavbarBrand = Navbar.Brand;
 
 import PageHead from './PageHead.jsx';
 import ContentSwapper from './ContentSwapper.jsx';
@@ -28,7 +29,7 @@ class Demo extends React.Component {
     return (
       <div>
         <Navbar>
-          <Navbar.Brand>ReactCSSTransitionReplace</Navbar.Brand>
+          <NavbarBrand>ReactCSSTransitionReplace</NavbarBrand>
           <Nav right>
             <NavItem href="https://github.com/marnusw/react-css-transition-replace" target="_blank">GitHub</NavItem>
           </Nav>
