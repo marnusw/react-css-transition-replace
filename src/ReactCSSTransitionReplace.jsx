@@ -45,14 +45,16 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionName: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.shape({
       enter: React.PropTypes.string,
       leave: React.PropTypes.string,
-      active: React.PropTypes.string
+      active: React.PropTypes.string,
+      height: React.PropTypes.string
     }), React.PropTypes.shape({
       enter: React.PropTypes.string,
       enterActive: React.PropTypes.string,
       leave: React.PropTypes.string,
       leaveActive: React.PropTypes.string,
       appear: React.PropTypes.string,
-      appearActive: React.PropTypes.string
+      appearActive: React.PropTypes.string,
+      height: React.PropTypes.string
     })]).isRequired,
 
     transitionAppear: React.PropTypes.bool,
@@ -201,11 +203,18 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   _wrapChild(child, moreProps) {
+    let transitionName = this.props.transitionName;
+
+    if (typeof transitionName === 'object' && transitionName !== null) {
+      transitionName = { ...transitionName };
+      delete transitionName.height;
+    }
+
     // We need to provide this childFactory so that
     // ReactCSSTransitionReplaceChild can receive updates to name,
     // enter, and leave while it is leaving.
     return reactCSSTransitionGroupChild({
-      name: this.props.transitionName,
+      name: transitionName,
       appear: this.props.transitionAppear,
       enter: this.props.transitionEnter,
       leave: this.props.transitionLeave,
@@ -231,8 +240,13 @@ export default class ReactCSSTransitionReplace extends React.Component {
       }));
     }
 
+
     if (height !== null) {
-      containerProps.className = `${containerProps.className || ''} ${transitionName}-height`;
+      const heightClassName = (typeof transitionName === 'object' && transitionName !== null) ?
+        transitionName.height || '' :
+        `${transitionName}-height`;
+
+      containerProps.className = `${containerProps.className || ''} ${heightClassName}`;
       containerProps.style = {
         ...containerProps.style,
         position: 'relative',
