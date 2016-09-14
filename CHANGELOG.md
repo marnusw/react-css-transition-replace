@@ -1,3 +1,10 @@
+### v2.0.0 (11 September 2016)
+
+* [ENHANCEMENT] Add support for IE<=11 (thanks @le0nik) (#22, #23)
+* [ENHANCEMENT] Add ability to provide custom `height` className (useful for `css-modules`) (thanks @le0nik) (#20, #21)
+* [BUGFIX] Fix multiple remounts of children (thanks @le0nik) (#24)
+* [BUGFIX] Allow the child, that is leaving, to be `null` (thanks @le0nik)
+
 ### v1.3.0 (9 July 2016)
 
 * [ENHANCEMENT] When removing an element just added to an empty container transitions are reset to avoid getting stuck.

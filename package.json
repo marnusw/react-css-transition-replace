@@ -76,7 +76,10 @@
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   },
-  "author": "Marnus Weststrate <marnusw@gmail.com>",
+  "authors": [
+    "Marnus Weststrate <marnusw@gmail.com>",
+    "Leonid Nikiforenko <leo.nikiforenko@gmail.com"
+  ],
   "contributors": [],
   "keywords": [
     "react",

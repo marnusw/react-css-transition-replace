@@ -28,7 +28,7 @@ that the transition duration must be specified in JavaScript as well as CSS.
 Install via `npm`:
 
 ```
-npm install react-css-transition-replace
+npm install --save react-css-transition-replace
 ```
 
 
@@ -43,7 +43,9 @@ and the new component animated in. During this process:
  - The entering component is positioned on top of the leaving component with `absolute` positioning.
  - The height of the container is set to that of the leaving component, and then immediately to that of the 
    entering component, and the `{animation-name}-height` class is applied to it, if type of `transitionName` is 
-   `String`. If type of `transitionName` is `Object`, `transitionName.height` class will be used without modifications.
+   `String`. If type of `transitionName` is `Object`, `transitionName.height` class will be used without modifications, 
+   if present.
+ - The leaving component will be passed `isLeaving` prop while transitioning out.
 
 This provides many possibilities for animating the replacement as illustrated in the examples below.
 
@@ -191,10 +193,10 @@ pages one might use:
         to avoid collapsing margins overall.
       - Turn this feature off by setting the `overflowHidden={false}` prop when hidden overflow is not needed,
         for example when transitions are in place and content is of the same height.
- 3. If the `.*-height` class is not specified the change in container height will not be animated but instead 
-    jump to the height of the entering component instantaneously. It can, therefore, be omitted if all content 
-    is known to be of the same height without any adverse side-effects, and absolute positioning related height 
-    issues will still be avoided.
+ 3. If the `.*-height` class (or `transitionName.height`) is not specified the change in container height will not 
+    be animated but instead jump to the height of the entering component instantaneously. It can, therefore, be 
+    omitted if all content is known to be of the same height without any adverse side-effects, and absolute positioning
+    related height issues will still be avoided.
 
 
 ## Contributing

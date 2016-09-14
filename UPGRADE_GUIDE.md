@@ -1,5 +1,17 @@
 # Upgrade Guide
 
+## 1.3.0 -> 2.0.0
+
+Components no longer unnecessarily unmount/mount during transition.
+They work just like regular React components now.
+
+You can pass `transitionName={{ height: 'my-height-className' }}` now, if
+you need to use a custom className (useful for `css-modules`).
+
+The leaving component will receive `isLeaving={true}` prop during it's leaving transition.
+You can use it in your child components to prevent their rerendering during that period, for example.
+
+
 ## 1.0.x -> 1.1.0
 
 The entering component use to be positioned on top of the leaving component with 
