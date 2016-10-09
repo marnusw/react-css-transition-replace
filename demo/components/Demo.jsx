@@ -30,7 +30,7 @@ class Demo extends React.Component {
       <div>
         <Navbar>
           <NavbarBrand>ReactCSSTransitionReplace</NavbarBrand>
-          <Nav right>
+          <Nav pullRight>
             <NavItem href="https://github.com/marnusw/react-css-transition-replace" target="_blank">GitHub</NavItem>
           </Nav>
         </Navbar>

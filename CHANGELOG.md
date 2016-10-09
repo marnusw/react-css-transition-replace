@@ -1,3 +1,7 @@
+### v2.0.2 (9 October 2016)
+
+* [UPGRADE] Upgrade dev dependencies to latest versions; `react-bootstrap@0.30.5` fixes the demo unknown props warnings.
+
 ### v2.0.1 (14 September 2016)
 
 * [DOCUMENTATION] Minor grammar improvement in the README.
