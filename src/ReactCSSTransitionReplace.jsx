@@ -63,7 +63,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionAppearTimeout: createTransitionTimeoutPropValidator('Appear'),
     transitionEnterTimeout: createTransitionTimeoutPropValidator('Enter'),
     transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave'),
-    overflowHidden: React.PropTypes.bool
+    overflowHidden: React.PropTypes.bool,
+    changeWidth: React.PropTypes.bool
   };
 
   static defaultProps = {
@@ -71,7 +72,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionEnter: true,
     transitionLeave: true,
     overflowHidden: true,
-    component: 'span'
+    component: 'span',
+    changeWidth: false
   };
 
   state = {
@@ -80,6 +82,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     nextChild: undefined,
     nextChildKey: '',
     height: null,
+    width: null,
     isLeaving: false
   };
 
@@ -118,7 +121,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
     this.setState({
       nextChild,
       nextChildKey: state.currentChildKey ? String(Number(state.currentChildKey) + 1) : '1',
-      height: state.currentChild ? ReactDOM.findDOMNode(this.refs.curr).offsetHeight : 0
+      height: state.currentChild ? ReactDOM.findDOMNode(this.refs.curr).offsetHeight : 0,
+      width: state.currentChild && this.props.changeWidth ? ReactDOM.findDOMNode(this.refs.curr).offsetWidth : null
     });
 
     // Enqueue setting the next height to trigger the height transition.
@@ -141,12 +145,18 @@ export default class ReactCSSTransitionReplace extends React.Component {
   enqueueHeightTransition(nextChild, tickCount = 0) {
     this.timeout = setTimeout(() => {
       if (!nextChild) {
-        return this.setState({height: 0});
+        return this.setState({
+          height: 0,
+          width: this.props.changeWidth ? 0 : null
+        });
       }
 
       const nextNode = ReactDOM.findDOMNode(this.refs.next);
       if (nextNode) {
-        this.setState({height: nextNode.offsetHeight});
+        this.setState({
+          height: nextNode.offsetHeight,
+          width: this.props.changeWidth ? nextNode.offsetWidth : null
+        });
       }
       else {
         // The DOM hasn't rendered the entering element yet, so wait another tick.
@@ -181,7 +191,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
       currentChildKey: state.nextChildKey,
       nextChild: undefined,
       nextChildKey: '',
-      height: null
+      height: null,
+      width: null
     });
   }
 
@@ -200,6 +211,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       if (!this.state.nextChild) {
         this.isTransitioning = false;
         state.height = null;
+        state.width = null;
       }
 
       this.setState(state);
@@ -212,7 +224,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
     return this.setState({
       nextChild: undefined,
       nextChildKey: '',
-      height: null
+      height: null,
+      width: null
     });
   }
 
@@ -240,11 +253,11 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   render() {
-    const { currentChild, currentChildKey, nextChild, nextChildKey, height, isLeaving } = this.state;
+    const { currentChild, currentChildKey, nextChild, nextChildKey, height, width, isLeaving } = this.state;
     const childrenToRender = [];
 
     const { overflowHidden, transitionName, component,
-            transitionAppear, transitionEnter, transitionLeave,
+            transitionAppear, transitionEnter, transitionLeave, changeWidth,
             transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
             ...containerProps } = this.props;
 
@@ -276,6 +289,10 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
       if (overflowHidden) {
         containerProps.style.overflow = 'hidden';
+      }
+
+      if (changeWidth) {
+        containerProps.style.width = width;
       }
     }
 

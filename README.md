@@ -48,6 +48,10 @@ and the new component animated in. During this process:
 
 This provides many possibilities for animating the replacement as illustrated in the examples below.
 
+Additionally, `changeWidth` can be used to animate changing the width of the component. This change
+will happen at the same time as changing the height. Animating this change should be done using
+the same class name as is used for animating the change of height.
+
 It is also possible to remove the child component (i.e. leave `ReactCSSTransitionReplace` with no children)
 which will animate the `height` going to zero along with the `leave` transition. Similarly, a single child 
 can be added to an empty `ReactCSSTransitionReplace`, triggering the inverse animation.
