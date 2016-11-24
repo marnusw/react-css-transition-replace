@@ -133,7 +133,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     if (!this.isTransitioning && !this.state.isLeaving) {
       const {currentChild, nextChild } = this.state
 
-      if (currentChild && (nextChild || nextChild === false || nextChild === null)) {
+      if (currentChild && (nextChild || nextChild === false || nextChild === null) && this.props.transitionLeave) {
         this.leaveCurrent()
       }
       if (nextChild) {
@@ -263,7 +263,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       ...containerProps,
     } = this.props
 
-    if (currentChild) {
+    if (currentChild && !nextChild && !transitionLeave || currentChild && transitionLeave) {
       childrenToRender.push(
         React.createElement(
           'span',
