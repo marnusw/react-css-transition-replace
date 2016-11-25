@@ -117,12 +117,17 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
     const {state } = this
 
+    // When transitionLeave is set to false, it might happen that current component is not yet
+    // rendered when a new component reaches this part of the code. At this point we want to
+    // use the height and width of the latest rendered elment.
+    const ref = this.refs.curr || this.refs.next
+
     // Set the next child to start the transition, and set the current height.
     this.setState({
       nextChild,
       nextChildKey: state.currentChildKey ? String(Number(state.currentChildKey) + 1) : '1',
-      height: state.currentChild ? ReactDOM.findDOMNode(this.refs.curr).offsetHeight : 0,
-      width: state.currentChild && this.props.changeWidth ? ReactDOM.findDOMNode(this.refs.curr).offsetWidth : null,
+      height: state.currentChild ? ReactDOM.findDOMNode(ref).offsetHeight : 0,
+      width: state.currentChild && this.props.changeWidth ? ReactDOM.findDOMNode(ref).offsetWidth : null,
     })
 
     // Enqueue setting the next height to trigger the height transition.
@@ -260,7 +265,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       overflowHidden, transitionName, changeWidth, component,
       transitionAppear, transitionEnter, transitionLeave,
       transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
-      ...containerProps,
+      ...containerProps
     } = this.props
 
     if (currentChild && !nextChild && !transitionLeave || currentChild && transitionLeave) {
