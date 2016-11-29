@@ -101,7 +101,9 @@ export default class ReactCSSTransitionReplace extends React.Component {
     const nextChild = nextProps.children ? React.Children.only(nextProps.children) : false
     const currentChild = this.state.currentChild
 
-    if (currentChild && nextChild && nextChild.key === currentChild.key) {
+    // Avoid silencing the transition when this.state.nextChild exists because it means that there’s
+    // already a transition ongoing that has to be replaced.
+    if (currentChild && nextChild && nextChild.key === currentChild.key && !this.state.nextChild) {
       // Nothing changed, but we are re-rendering so update the currentChild.
       return this.setState({
         currentChild: nextChild,
@@ -117,9 +119,10 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
     const {state } = this
 
-    // When transitionLeave is set to false, it might happen that current component is not yet
-    // rendered when a new component reaches this part of the code. At this point we want to
-    // use the height and width of the latest rendered elment.
+    // When transitionLeave is set to false, refs.curr does not exist when refs.next is being
+    // transitioned into existence. When another child is set for this component at the point
+    // where only refs.next exists, we want to use the width/height of refs.next instead of
+    // refs.curr.
     const ref = this.refs.curr || this.refs.next
 
     // Set the next child to start the transition, and set the current height.
