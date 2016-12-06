@@ -1,5 +1,5 @@
-var gulp = require('gulp');
-var eslint = require('gulp-eslint');
+var gulp = require('gulp')
+var eslint = require('gulp-eslint')
 
 gulp.task('lint', function() {
   return gulp.src(['src/**', 'demo/app.js', 'demo/components/*.jsx'])
@@ -11,22 +11,22 @@ gulp.task('lint', function() {
     .pipe(eslint.format())
     // To have the process exit with an error code (1) on
     // lint error, return the stream and pipe to failOnError last.
-    .pipe(eslint.failOnError());
-});
+    .pipe(eslint.failOnError())
+})
 
 
 // Demo related tasks
 
-var notify = require('gulp-notify');
-var flatten = require('gulp-flatten');
-var stream = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var babelify = require('babelify');
-var assign = require('lodash.assign');
-var browserSync = require('browser-sync').create();
-var reload = browserSync.reload;
+var notify = require('gulp-notify')
+var flatten = require('gulp-flatten')
+var stream = require('vinyl-source-stream')
+var buffer = require('vinyl-buffer')
+var browserify = require('browserify')
+var watchify = require('watchify')
+var babelify = require('babelify')
+var assign = require('lodash.assign')
+var browserSync = require('browser-sync').create()
+var reload = browserSync.reload
 
 function bundleJs(bundler) {
   return bundler.bundle()
@@ -39,17 +39,17 @@ function bundleJs(bundler) {
 
 gulp.task('demo:bundle', function() {
   return bundleJs(browserify('./demo/app.js', {debug: true}) // Append a source map
-    .transform(babelify));
-});
+    .transform(babelify))
+})
 
 gulp.task('demo:bundleAndWatch', function() {
   var bundler = watchify(browserify('./demo/app.js', assign({debug: true}, watchify.args)))
-    .transform(babelify);
+    .transform(babelify)
 
-  bundler.on('update', bundleJs.bind(null, bundler));
+  bundler.on('update', bundleJs.bind(null, bundler))
 
-  return bundleJs(bundler);
-});
+  return bundleJs(bundler)
+})
 
 gulp.task('demo', ['demo:bundleAndWatch'], function() {
   browserSync.init({
@@ -58,20 +58,20 @@ gulp.task('demo', ['demo:bundleAndWatch'], function() {
     server: {
       baseDir: "demo/assets"
     }
-  });
+  })
 
   // Watch JavaScript and lint changes
-  gulp.watch(['src/**', 'demo/app.js', 'demo/components/*.jsx'], ['lint']);
+  gulp.watch(['src/**', 'demo/app.js', 'demo/components/*.jsx'], ['lint'])
 
   // Reload when the app CSS or bundled JS changes
-  gulp.watch('demo/assets/*.css').on('change', reload);
-  gulp.watch('demo/assets/app.js').on('change', reload);
-});
+  gulp.watch('demo/assets/*.css').on('change', reload)
+  gulp.watch('demo/assets/app.js').on('change', reload)
+})
 
 // gh-pages related tasks
 
 gulp.task('gh-pages', ['demo:bundle'], function() {
-  require('del').sync(['gh-pages/**/*.*', '!gh-pages', '!gh-pages/.git']);
+  require('del').sync(['gh-pages/**/*.*', '!gh-pages', '!gh-pages/.git'])
   return gulp.src('demo/assets/**/*.*')
-    .pipe(gulp.dest('gh-pages'));
-});
+    .pipe(gulp.dest('gh-pages'))
+})

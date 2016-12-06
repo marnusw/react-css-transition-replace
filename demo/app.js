@@ -3,14 +3,14 @@
  */
 /*global document, window */
 
-import 'babel-polyfill';
+import 'babel-polyfill'
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import Demo from './components/Demo.jsx';
+import Demo from './components/Demo.jsx'
 
 
-window.React = React; // for chrome dev tool support
+window.React = React // for chrome dev tool support
 
-ReactDOM.render(React.createElement(Demo), document.getElementById('demo'));
+ReactDOM.render(React.createElement(Demo), document.getElementById('demo'))

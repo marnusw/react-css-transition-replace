@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 
 function ContentLong({className}) {
@@ -15,7 +15,7 @@ function ContentLong({className}) {
         non scelerisque libero ipsum a ipsum.
       </p>
     </div>
-  );
+  )
 }
 
-export default ContentLong;
+export default ContentLong

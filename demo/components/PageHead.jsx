@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 
 function PageHead() {
@@ -21,7 +21,7 @@ function PageHead() {
       <p>For a full motivation and usage docs see the <a href="https://github.com/marnusw/react-css-transition-replace"
                                                          target="_blank">README on GitHub</a>.</p>
     </div>
-  );
+  )
 }
 
-export default PageHead;
+export default PageHead

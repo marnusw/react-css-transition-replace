@@ -1,13 +1,13 @@
-import React from 'react';
-import { Navbar, Nav, NavItem, Grid } from 'react-bootstrap';
-const NavbarBrand = Navbar.Brand;
+import React from 'react'
+import { Navbar, Nav, NavItem, Grid } from 'react-bootstrap'
+const NavbarBrand = Navbar.Brand
 
-import PageHead from './PageHead.jsx';
-import ContentSwapper from './ContentSwapper.jsx';
-import ContentAddRemove from './ContentAddRemove.jsx';
+import PageHead from './PageHead.jsx'
+import ContentSwapper from './ContentSwapper.jsx'
+import ContentAddRemove from './ContentAddRemove.jsx'
 
-import ContentLong from './ContentLong.jsx';
-import ContentShort from './ContentShort.jsx';
+import ContentLong from './ContentLong.jsx'
+import ContentShort from './ContentShort.jsx'
 
 class Demo extends React.Component {
 
@@ -16,13 +16,13 @@ class Demo extends React.Component {
       'img/vista1.jpg',
       'img/vista2.jpg',
       'img/vista3.jpg',
-      'img/vista4.jpg'
-    ];
+      'img/vista4.jpg',
+    ]
 
     images.forEach(src => {
-      const img = new window.Image();
-      img.src = src;
-    });
+      const img = new window.Image()
+      img.src = src
+    })
   }
 
   render() {
@@ -91,8 +91,8 @@ class Demo extends React.Component {
           </div>
         </Grid>
       </div>
-    );
+    )
   }
 }
 
-export default Demo;
+export default Demo

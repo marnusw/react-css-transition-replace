@@ -4,19 +4,19 @@
  * @providesModule ReactCSSTransitionReplace
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import ReactCSSTransitionGroupChild from 'react/lib/ReactCSSTransitionGroupChild';
+import ReactCSSTransitionGroupChild from 'react/lib/ReactCSSTransitionGroupChild'
 
-const reactCSSTransitionGroupChild = React.createFactory(ReactCSSTransitionGroupChild);
+const reactCSSTransitionGroupChild = React.createFactory(ReactCSSTransitionGroupChild)
 
-const TICK = 17;
+const TICK = 17
 
 
 function createTransitionTimeoutPropValidator(transitionType) {
-  const timeoutPropName = 'transition' + transitionType + 'Timeout';
-  const enabledPropName = 'transition' + transitionType;
+  const timeoutPropName = 'transition' + transitionType + 'Timeout'
+  const enabledPropName = 'transition' + transitionType
 
   return function(props) {
     // If the transition is enabled
@@ -26,27 +26,27 @@ function createTransitionTimeoutPropValidator(transitionType) {
         return new Error(timeoutPropName + ' wasn\'t supplied to ReactCSSTransitionReplace: '
           + 'this can cause unreliable animations and won\'t be supported in '
           + 'a future version of React. See '
-          + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.');
+          + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.')
 
         // If the duration isn't a number
       }
       else if (typeof props[timeoutPropName] != 'number') {
-        return new Error(timeoutPropName + ' must be a number (in milliseconds)');
+        return new Error(timeoutPropName + ' must be a number (in milliseconds)')
       }
     }
-  };
+  }
 }
 
 export default class ReactCSSTransitionReplace extends React.Component {
 
-  static displayName = 'ReactCSSTransitionReplace';
+  static displayName = 'ReactCSSTransitionReplace'
 
   static propTypes = {
     transitionName: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.shape({
       enter: React.PropTypes.string,
       leave: React.PropTypes.string,
       active: React.PropTypes.string,
-      height: React.PropTypes.string
+      height: React.PropTypes.string,
     }), React.PropTypes.shape({
       enter: React.PropTypes.string,
       enterActive: React.PropTypes.string,
@@ -54,8 +54,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
       leaveActive: React.PropTypes.string,
       appear: React.PropTypes.string,
       appearActive: React.PropTypes.string,
-      height: React.PropTypes.string
-    })]).isRequired,
+      height: React.PropTypes.string,
+    }) ]).isRequired,
 
     transitionAppear: React.PropTypes.bool,
     transitionEnter: React.PropTypes.bool,
@@ -64,8 +64,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionEnterTimeout: createTransitionTimeoutPropValidator('Enter'),
     transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave'),
     overflowHidden: React.PropTypes.bool,
-    changeWidth: React.PropTypes.bool
-  };
+    changeWidth: React.PropTypes.bool,
+  }
 
   static defaultProps = {
     transitionAppear: false,
@@ -73,8 +73,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionLeave: true,
     overflowHidden: true,
     component: 'span',
-    changeWidth: false
-  };
+    changeWidth: false,
+  }
 
   state = {
     currentChild: this.props.children ? React.Children.only(this.props.children) : undefined,
@@ -83,61 +83,61 @@ export default class ReactCSSTransitionReplace extends React.Component {
     nextChildKey: '',
     height: null,
     width: null,
-    isLeaving: false
-  };
+    isLeaving: false,
+  }
 
   componentDidMount() {
     if (this.props.transitionAppear && this.state.currentChild) {
-      this.appearCurrent();
+      this.appearCurrent()
     }
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeout);
+    clearTimeout(this.timeout)
   }
 
   componentWillReceiveProps(nextProps) {
     // Setting false indicates that the child has changed, but it is a removal so there is no next child.
-    const nextChild = nextProps.children ? React.Children.only(nextProps.children) : false;
-    const currentChild = this.state.currentChild;
+    const nextChild = nextProps.children ? React.Children.only(nextProps.children) : false
+    const currentChild = this.state.currentChild
 
     if (currentChild && nextChild && nextChild.key === currentChild.key) {
       // Nothing changed, but we are re-rendering so update the currentChild.
       return this.setState({
-        currentChild: nextChild
-      });
+        currentChild: nextChild,
+      })
     }
 
     if (!currentChild && !nextChild && this.state.nextChild) {
       // The container was empty before and the entering element is being removed again while
       // transitioning in. Since a CSS transition can't be reversed cleanly midway the height
       // is just forced back to zero immediately and the child removed.
-      return this.cancelTransition();
+      return this.cancelTransition()
     }
 
-    const { state } = this;
+    const {state } = this
 
     // Set the next child to start the transition, and set the current height.
     this.setState({
       nextChild,
       nextChildKey: state.currentChildKey ? String(Number(state.currentChildKey) + 1) : '1',
       height: state.currentChild ? ReactDOM.findDOMNode(this.refs.curr).offsetHeight : 0,
-      width: state.currentChild && this.props.changeWidth ? ReactDOM.findDOMNode(this.refs.curr).offsetWidth : null
-    });
+      width: state.currentChild && this.props.changeWidth ? ReactDOM.findDOMNode(this.refs.curr).offsetWidth : null,
+    })
 
     // Enqueue setting the next height to trigger the height transition.
-    this.enqueueHeightTransition(nextChild);
+    this.enqueueHeightTransition(nextChild)
   }
 
   componentDidUpdate() {
     if (!this.isTransitioning && !this.state.isLeaving) {
-      const { currentChild, nextChild } = this.state;
+      const {currentChild, nextChild } = this.state
 
       if (currentChild && (nextChild || nextChild === false || nextChild === null)) {
-        this.leaveCurrent();
+        this.leaveCurrent()
       }
       if (nextChild) {
-        this.enterNext();
+        this.enterNext()
       }
     }
   }
@@ -147,94 +147,94 @@ export default class ReactCSSTransitionReplace extends React.Component {
       if (!nextChild) {
         return this.setState({
           height: 0,
-          width: this.props.changeWidth ? 0 : null
-        });
+          width: this.props.changeWidth ? 0 : null,
+        })
       }
 
-      const nextNode = ReactDOM.findDOMNode(this.refs.next);
+      const nextNode = ReactDOM.findDOMNode(this.refs.next)
       if (nextNode) {
         this.setState({
           height: nextNode.offsetHeight,
-          width: this.props.changeWidth ? nextNode.offsetWidth : null
-        });
+          width: this.props.changeWidth ? nextNode.offsetWidth : null,
+        })
       }
       else {
         // The DOM hasn't rendered the entering element yet, so wait another tick.
         // Getting stuck in a loop shouldn't happen, but it's better to be safe.
         if (tickCount < 10) {
-          this.enqueueHeightTransition(nextChild, tickCount + 1);
+          this.enqueueHeightTransition(nextChild, tickCount + 1)
         }
       }
-    }, TICK);
+    }, TICK)
   }
 
   appearCurrent() {
-    this.refs.curr.componentWillAppear(this._handleDoneAppearing);
-    this.isTransitioning = true;
+    this.refs.curr.componentWillAppear(this._handleDoneAppearing)
+    this.isTransitioning = true
   }
 
   _handleDoneAppearing = () => {
-    this.isTransitioning = false;
+    this.isTransitioning = false
   }
 
   enterNext() {
-    this.refs.next.componentWillEnter(this._handleDoneEntering);
-    this.isTransitioning = true;
+    this.refs.next.componentWillEnter(this._handleDoneEntering)
+    this.isTransitioning = true
   }
 
   _handleDoneEntering = () => {
-    const { state } = this;
+    const {state } = this
 
-    this.isTransitioning = false;
+    this.isTransitioning = false
     this.setState({
       currentChild: state.nextChild,
       currentChildKey: state.nextChildKey,
       nextChild: undefined,
       nextChildKey: '',
       height: null,
-      width: null
-    });
+      width: null,
+    })
   }
 
   leaveCurrent() {
-    this.refs.curr.componentWillLeave(this._handleDoneLeaving);
-    this.isTransitioning = true;
-    this.setState({ isLeaving: true });
+    this.refs.curr.componentWillLeave(this._handleDoneLeaving)
+    this.isTransitioning = true
+    this.setState({isLeaving: true })
   }
 
   // When the leave transition time-out expires the animation classes are removed, so the
   // element must be removed from the DOM if the enter transition is still in progress.
   _handleDoneLeaving = () => {
     if (this.isTransitioning) {
-      const state = {currentChild: undefined, isLeaving: false};
+      const state = {currentChild: undefined, isLeaving: false }
 
       if (!this.state.nextChild) {
-        this.isTransitioning = false;
-        state.height = null;
-        state.width = null;
+        this.isTransitioning = false
+        state.height = null
+        state.width = null
       }
 
-      this.setState(state);
+      this.setState(state)
     }
   }
 
   cancelTransition() {
-    this.isTransitioning = false;
-    clearTimeout(this.timeout);
+    this.isTransitioning = false
+    clearTimeout(this.timeout)
     return this.setState({
       nextChild: undefined,
       nextChildKey: '',
       height: null,
-      width: null
-    });
+      width: null,
+    })
   }
 
   _wrapChild(child, moreProps) {
-    let transitionName = this.props.transitionName;
+    let transitionName = this.props.transitionName
 
     if (typeof transitionName == 'object' && transitionName !== null) {
-      transitionName = { ...transitionName };
-      delete transitionName.height;
+      transitionName = {...transitionName }
+      delete transitionName.height
     }
 
     // We need to provide this childFactory so that
@@ -248,51 +248,53 @@ export default class ReactCSSTransitionReplace extends React.Component {
       appearTimeout: this.props.transitionAppearTimeout,
       enterTimeout: this.props.transitionEnterTimeout,
       leaveTimeout: this.props.transitionLeaveTimeout,
-      ...moreProps
-    }, child);
+      ...moreProps,
+    }, child)
   }
 
   render() {
-    const { currentChild, currentChildKey, nextChild, nextChildKey, height, width, isLeaving } = this.state;
-    const childrenToRender = [];
+    const {currentChild, currentChildKey, nextChild, nextChildKey, height, width, isLeaving} = this.state
+    const childrenToRender = []
 
-    const { overflowHidden, transitionName, component,
-            transitionAppear, transitionEnter, transitionLeave, changeWidth,
-            transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
-            ...containerProps } = this.props;
+    const {
+      overflowHidden, transitionName, changeWidth, component,
+      transitionAppear, transitionEnter, transitionLeave,
+      transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
+      ...containerProps,
+    } = this.props
 
     if (currentChild) {
       childrenToRender.push(
         React.createElement(
           'span',
-          { key: currentChildKey },
+          {key: currentChildKey},
           this._wrapChild(
-            typeof currentChild.type == 'string' ? currentChild : React.cloneElement(currentChild, { isLeaving }),
-            {ref: 'curr'})
+            typeof currentChild.type == 'string' ? currentChild : React.cloneElement(currentChild, {isLeaving }),
+            {ref: 'curr' })
         )
-      );
+      )
     }
 
 
     if (height !== null) {
       const heightClassName = (typeof transitionName == 'object' && transitionName !== null)
         ? transitionName.height || ''
-        : `${transitionName}-height`;
+        : `${transitionName}-height`
 
-      containerProps.className = `${containerProps.className || ''} ${heightClassName}`;
+      containerProps.className = `${containerProps.className || ''} ${heightClassName}`
       containerProps.style = {
         ...containerProps.style,
         position: 'relative',
         display: 'block',
-        height
-      };
+        height,
+      }
 
       if (overflowHidden) {
-        containerProps.style.overflow = 'hidden';
+        containerProps.style.overflow = 'hidden'
       }
 
       if (changeWidth) {
-        containerProps.style.width = width;
+        containerProps.style.width = width
       }
     }
 
@@ -305,15 +307,15 @@ export default class ReactCSSTransitionReplace extends React.Component {
               top: 0,
               left: 0,
               right: 0,
-              bottom: 0
+              bottom: 0,
             },
-            key: nextChildKey
+            key: nextChildKey,
           },
           this._wrapChild(nextChild, {ref: 'next' })
         )
-      );
+      )
     }
 
-    return React.createElement(component, containerProps, childrenToRender);
+    return React.createElement(component, containerProps, childrenToRender)
   }
 }

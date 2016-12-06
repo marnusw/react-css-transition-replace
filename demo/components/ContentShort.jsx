@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 
 function ContentShort({className}) {
@@ -11,7 +11,7 @@ function ContentShort({className}) {
         eget aliquam tellus scelerisque ac. Pellentesque sollicitudin tellus eu malesuada fringilla.
       </p>
     </div>
-  );
+  )
 }
 
-export default ContentShort;
+export default ContentShort
