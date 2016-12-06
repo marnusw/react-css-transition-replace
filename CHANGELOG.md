@@ -1,5 +1,6 @@
-### v2.0.2 (9 October 2016)
+### v2.1.0 (6 December 2016)
 
+* [FEATURE] Add the `changeWidth` prop to have the container width animated along with the height. (thanks @wifilinker) (#31)
 * [UPGRADE] Upgrade dev dependencies to latest versions; `react-bootstrap@0.30.5` fixes the demo unknown props warnings.
 
 ### v2.0.1 (14 September 2016)
