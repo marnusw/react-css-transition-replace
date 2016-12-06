@@ -29,8 +29,7 @@ function createTransitionTimeoutPropValidator(transitionType) {
           + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.')
 
         // If the duration isn't a number
-      }
-      else if (typeof props[timeoutPropName] != 'number') {
+      } else if (typeof props[timeoutPropName] != 'number') {
         return new Error(timeoutPropName + ' must be a number (in milliseconds)')
       }
     }
@@ -64,7 +63,6 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionEnterTimeout: createTransitionTimeoutPropValidator('Enter'),
     transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave'),
     overflowHidden: React.PropTypes.bool,
-    changeWidth: React.PropTypes.bool,
   }
 
   static defaultProps = {
@@ -73,23 +71,25 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionLeave: true,
     overflowHidden: true,
     component: 'span',
-    changeWidth: false,
+    childComponent: 'span',
   }
 
   state = {
+    currentKey: '1',
     currentChild: this.props.children ? React.Children.only(this.props.children) : undefined,
-    currentChildKey: this.props.children ? '1' : '',
-    nextChild: undefined,
-    activeHeightTransition: false,
-    nextChildKey: '',
+    prevChildren: {},
     height: null,
-    width: null,
-    isLeaving: false,
+  }
+
+  componentWillMount() {
+    this.shouldEnterCurrent = false
+    this.keysToLeave = []
+    this.transitioningKeys = {}
   }
 
   componentDidMount() {
     if (this.props.transitionAppear && this.state.currentChild) {
-      this.appearCurrent()
+      this.performAppear(this.state.currentKey)
     }
   }
 
@@ -98,152 +98,115 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // Setting false indicates that the child has changed, but it is a removal so there is no next child.
-    const nextChild = nextProps.children ? React.Children.only(nextProps.children) : false
-    const currentChild = this.state.currentChild
+    const nextChild = nextProps.children ? React.Children.only(nextProps.children) : null
+    const {currentChild} = this.state
 
-    // Avoid silencing the transition when this.state.nextChild exists because it means that there’s
-    // already a transition ongoing that has to be replaced.
-    if (currentChild && nextChild && nextChild.key === currentChild.key && !this.state.nextChild) {
-      // Nothing changed, but we are re-rendering so update the currentChild.
-      return this.setState({
-        currentChild: nextChild,
-      })
-    }
-
-    if (!currentChild && !nextChild && this.state.nextChild) {
-      // The container was empty before and the entering element is being removed again while
-      // transitioning in. Since a CSS transition can't be reversed cleanly midway the height
-      // is just forced back to zero immediately and the child removed.
-      return this.cancelTransition()
+    if ((!currentChild && !nextChild) || (currentChild && nextChild && currentChild.key === nextChild.key)) {
+      return
     }
 
     const {state} = this
+    const {currentKey} = state
 
-    // When transitionLeave is set to false, refs.curr does not exist when refs.next is being
-    // transitioned into existence. When another child is set for this component at the point
-    // where only refs.next exists, we want to use the width/height of refs.next instead of
-    // refs.curr.
-    const ref = this.refs.curr || this.refs.next
+    const nextState = {
+      currentKey: String(Number(currentKey) + 1),
+      currentChild: nextChild,
+      height: 0,
+    }
 
-    // Set the next child to start the transition, and set the current height.
-    this.setState({
-      nextChild,
-      activeHeightTransition: false,
-      nextChildKey: state.currentChildKey ? String(Number(state.currentChildKey) + 1) : '1',
-      height: state.currentChild ? ReactDOM.findDOMNode(ref).offsetHeight : 0,
-      width: state.currentChild && this.props.changeWidth ? ReactDOM.findDOMNode(ref).offsetWidth : null,
-    })
+    if (nextChild) {
+      this.shouldEnterCurrent = true
+    }
 
-    // Enqueue setting the next height to trigger the height transition.
-    this.enqueueHeightTransition(nextChild)
+    if (currentChild) {
+      nextState.height = ReactDOM.findDOMNode(this.refs[currentKey]).offsetHeight
+      nextState.prevChildren = {
+        ...state.prevChildren,
+        [currentKey]: currentChild,
+      }
+      if (!this.transitioningKeys[currentKey]) {
+        this.keysToLeave.push(currentKey)
+      }
+    }
+
+    this.setState(nextState)
   }
 
   componentDidUpdate() {
-    if (!this.isTransitioning && !this.state.isLeaving) {
-      const {currentChild, nextChild} = this.state
+    if (this.shouldEnterCurrent) {
+      this.shouldEnterCurrent = false
+      this.performEnter(this.state.currentKey)
+    }
 
-      if (currentChild && (nextChild || nextChild === false || nextChild === null) && this.props.transitionLeave) {
-        this.leaveCurrent()
-      }
-      if (nextChild) {
-        this.enterNext()
-      }
+    const keysToLeave = this.keysToLeave
+    this.keysToLeave = []
+    keysToLeave.forEach(this.performLeave)
+  }
+
+  performAppear(key) {
+    this.transitioningKeys[key] = true
+    this.refs[key].componentWillAppear(this.handleDoneAppearing.bind(this, key))
+  }
+
+  handleDoneAppearing = (key) => {
+    delete this.transitioningKeys[key]
+    if (key !== this.state.currentKey) {
+      // This child was removed before it had fully appeared. Remove it.
+      this.performLeave(key)
     }
   }
 
-  enqueueHeightTransition(nextChild, tickCount = 0) {
-    this.timeout = setTimeout(() => {
-      if (!nextChild) {
-        return this.setState({
-          activeHeightTransition: true,
-          height: 0,
-          width: this.props.changeWidth ? 0 : null,
-        })
-      }
+  performEnter(key) {
+    this.transitioningKeys[key] = true
+    this.refs[key].componentWillEnter(this.handleDoneEntering.bind(this, key))
+    this.enqueueHeightTransition()
+  }
 
-      const nextNode = ReactDOM.findDOMNode(this.refs.next)
-      if (nextNode) {
-        this.setState({
-          activeHeightTransition: true,
-          height: nextNode.offsetHeight,
-          width: this.props.changeWidth ? nextNode.offsetWidth : null,
-        })
+  handleDoneEntering(key) {
+    delete this.transitioningKeys[key]
+    if (key === this.state.currentKey) {
+      // The current child has finished entering so the height transition is also cleared.
+      this.setState({height: null})
+    } else {
+      // This child was removed before it had fully appeared. Remove it.
+      this.performLeave(key)
+    }
+  }
+
+  performLeave = (key) => {
+    this.transitioningKeys[key] = true
+    this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key))
+    if (!this.state.currentChild) {
+      // The enter transition dominates, but if there is no
+      // entering component the height is set to zero.
+      this.enqueueHeightTransition()
+    }
+  }
+
+  handleDoneLeaving(key) {
+    delete this.transitioningKeys[key]
+
+    const nextState = {prevChildren: {...this.state.prevChildren}}
+    delete nextState.prevChildren[key]
+
+    if (!this.state.currentChild) {
+      nextState.height = null
+    }
+
+    this.setState(nextState)
+  }
+
+  enqueueHeightTransition() {
+    const {state} = this
+    this.timeout = setTimeout(() => {
+      if (!state.currentChild) {
+        return this.setState({height: 0})
       }
-      else {
-        // The DOM hasn't rendered the entering element yet, so wait another tick.
-        // Getting stuck in a loop shouldn't happen, but it's better to be safe.
-        if (tickCount < 10) {
-          this.enqueueHeightTransition(nextChild, tickCount + 1)
-        }
-      }
+      this.setState({height: ReactDOM.findDOMNode(this.refs[state.currentKey]).offsetHeight})
     }, TICK)
   }
 
-  appearCurrent() {
-    this.refs.curr.componentWillAppear(this._handleDoneAppearing)
-    this.isTransitioning = true
-  }
-
-  _handleDoneAppearing = () => {
-    this.isTransitioning = false
-  }
-
-  enterNext() {
-    this.refs.next.componentWillEnter(this._handleDoneEntering)
-    this.isTransitioning = true
-  }
-
-  _handleDoneEntering = () => {
-    const {state} = this
-
-    this.isTransitioning = false
-    this.setState({
-      currentChild: state.nextChild,
-      currentChildKey: state.nextChildKey,
-      activeHeightTransition: false,
-      nextChild: undefined,
-      nextChildKey: '',
-      height: null,
-      width: null,
-    })
-  }
-
-  leaveCurrent() {
-    this.refs.curr.componentWillLeave(this._handleDoneLeaving)
-    this.isTransitioning = true
-    this.setState({isLeaving: true})
-  }
-
-  // When the leave transition time-out expires the animation classes are removed, so the
-  // element must be removed from the DOM if the enter transition is still in progress.
-  _handleDoneLeaving = () => {
-    if (this.isTransitioning) {
-      const state = {currentChild: undefined, isLeaving: false}
-
-      if (!this.state.nextChild) {
-        this.isTransitioning = false
-        state.height = null
-        state.width = null
-      }
-
-      this.setState(state)
-    }
-  }
-
-  cancelTransition() {
-    this.isTransitioning = false
-    clearTimeout(this.timeout)
-    return this.setState({
-      nextChild: undefined,
-      activeHeightTransition: false,
-      nextChildKey: '',
-      height: null,
-      width: null,
-    })
-  }
-
-  _wrapChild(child, moreProps) {
+  wrapChild(child, moreProps) {
     let transitionName = this.props.transitionName
 
     if (typeof transitionName == 'object' && transitionName !== null) {
@@ -267,42 +230,22 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   render() {
-    const {currentChild, currentChildKey, nextChild, nextChildKey, height, width, isLeaving, activeHeightTransition} = this.state
+    const {currentKey, currentChild, prevChildren, height} = this.state
     const childrenToRender = []
 
     const {
-      overflowHidden, transitionName, changeWidth, component,
+      overflowHidden, transitionName, component, childComponent,
       transitionAppear, transitionEnter, transitionLeave,
       transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
       ...containerProps
     } = this.props
-
-    if (currentChild && !nextChild && !transitionLeave || currentChild && transitionLeave) {
-      childrenToRender.push(
-        React.createElement(
-          'span',
-          {key: currentChildKey},
-          this._wrapChild(
-            typeof currentChild.type == 'string' ? currentChild : React.cloneElement(currentChild, {isLeaving}),
-            {ref: 'curr'})
-        )
-      )
-    }
-
 
     if (height !== null) {
       const heightClassName = (typeof transitionName == 'object' && transitionName !== null)
         ? transitionName.height || ''
         : `${transitionName}-height`
 
-      // Similarly to ReactCSSTransitionGroup, adding `-height-active` suffix to the
-      // container when we are transitioning height.
-      const activeHeightClassName = (nextChild && activeHeightTransition && heightClassName)
-        ? `${heightClassName}-active`
-        : ''
-
-      containerProps.className = `${containerProps.className || ''} ${heightClassName} ${activeHeightClassName}`
-
+      containerProps.className = `${containerProps.className || ''} ${heightClassName}`
       containerProps.style = {
         ...containerProps.style,
         position: 'relative',
@@ -313,16 +256,13 @@ export default class ReactCSSTransitionReplace extends React.Component {
       if (overflowHidden) {
         containerProps.style.overflow = 'hidden'
       }
-
-      if (changeWidth) {
-        containerProps.style.width = width
-      }
     }
 
-    if (nextChild) {
+    Object.keys(prevChildren).forEach(key => {
       childrenToRender.push(
-        React.createElement('span',
+        React.createElement(childComponent,
           {
+            key,
             style: {
               position: 'absolute',
               top: 0,
@@ -330,9 +270,21 @@ export default class ReactCSSTransitionReplace extends React.Component {
               right: 0,
               bottom: 0,
             },
-            key: nextChildKey,
           },
-          this._wrapChild(nextChild, {ref: 'next'})
+          this.wrapChild(
+            typeof prevChildren[key].type == 'string'
+              ? prevChildren[key]
+              : React.cloneElement(prevChildren[key], {isLeaving: true}),
+            {ref: key})
+        )
+      )
+    })
+
+    if (currentChild) {
+      childrenToRender.push(
+        React.createElement(childComponent,
+          {key: currentKey},
+          this.wrapChild(currentChild, {ref: currentKey})
         )
       )
     }

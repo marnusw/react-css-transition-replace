@@ -124,7 +124,7 @@
      */
     "indent": [1, 2, {"SwitchCase": 1}], // http://eslint.org/docs/rules/indent
     "brace-style": [2,               // http://eslint.org/docs/rules/brace-style
-      "stroustrup", {
+      "1tbs", {
         "allowSingleLine": true
       }],
     "quotes": [
