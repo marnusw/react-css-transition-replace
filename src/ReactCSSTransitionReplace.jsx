@@ -80,6 +80,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     currentChild: this.props.children ? React.Children.only(this.props.children) : undefined,
     currentChildKey: this.props.children ? '1' : '',
     nextChild: undefined,
+    activeHeightTransition: false,
     nextChildKey: '',
     height: null,
     width: null,
@@ -128,6 +129,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     // Set the next child to start the transition, and set the current height.
     this.setState({
       nextChild,
+      activeHeightTransition: false,
       nextChildKey: state.currentChildKey ? String(Number(state.currentChildKey) + 1) : '1',
       height: state.currentChild ? ReactDOM.findDOMNode(ref).offsetHeight : 0,
       width: state.currentChild && this.props.changeWidth ? ReactDOM.findDOMNode(ref).offsetWidth : null,
@@ -154,6 +156,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     this.timeout = setTimeout(() => {
       if (!nextChild) {
         return this.setState({
+          activeHeightTransition: true,
           height: 0,
           width: this.props.changeWidth ? 0 : null,
         })
@@ -162,6 +165,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       const nextNode = ReactDOM.findDOMNode(this.refs.next)
       if (nextNode) {
         this.setState({
+          activeHeightTransition: true,
           height: nextNode.offsetHeight,
           width: this.props.changeWidth ? nextNode.offsetWidth : null,
         })
@@ -197,6 +201,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     this.setState({
       currentChild: state.nextChild,
       currentChildKey: state.nextChildKey,
+      activeHeightTransition: false,
       nextChild: undefined,
       nextChildKey: '',
       height: null,
@@ -231,6 +236,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     clearTimeout(this.timeout)
     return this.setState({
       nextChild: undefined,
+      activeHeightTransition: false,
       nextChildKey: '',
       height: null,
       width: null,
@@ -261,7 +267,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   render() {
-    const {currentChild, currentChildKey, nextChild, nextChildKey, height, width, isLeaving} = this.state
+    const {currentChild, currentChildKey, nextChild, nextChildKey, height, width, isLeaving, activeHeightTransition} = this.state
     const childrenToRender = []
 
     const {
@@ -289,7 +295,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
         ? transitionName.height || ''
         : `${transitionName}-height`
 
-      containerProps.className = `${containerProps.className || ''} ${heightClassName}`
+      // Similarly to ReactCSSTransitionGroup, adding `-height-active` suffix to the
+      // container when we are transitioning height.
+      const activeHeightClassName = (nextChild && activeHeightTransition && heightClassName)
+        ? `${heightClassName}-active`
+        : ''
+
+      containerProps.className = `${containerProps.className || ''} ${heightClassName} ${activeHeightClassName}`
+
       containerProps.style = {
         ...containerProps.style,
         position: 'relative',
