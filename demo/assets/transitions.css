@@ -49,7 +49,7 @@
 /* Carousel-like transition */
 
 .carousel-swap-leave {
-  transition: transform .3s ease-in-out;
+  transition: transform 2s ease-in-out;
   transform: translate(0, 0);
 }
 .carousel-swap-leave-active {
@@ -57,7 +57,7 @@
 }
 
 .carousel-swap-enter {
-  transition: transform .3s ease-in-out;
+  transition: transform 2s ease-in-out;
   transform: translate(100%, 0);
 }
 .carousel-swap-enter-active {
@@ -65,7 +65,7 @@
 }
 
 .carousel-swap-height {
-  transition: height .3s ease-in-out;
+  transition: height 2s ease-in-out;
 }
 
 

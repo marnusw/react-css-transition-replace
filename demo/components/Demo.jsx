@@ -71,10 +71,11 @@ class Demo extends React.Component {
               <code>{'<ReactCSSTransitionReplace transitionName="carousel-swap" /*...*/  style={{width: 600}}>'}</code>.
             </p>
 
-            <ContentSwapper transitionName="carousel-swap" transitionEnterTimeout={500} transitionLeaveTimeout={500}
+            <ContentSwapper transitionName="carousel-swap" transitionEnterTimeout={2000} transitionLeaveTimeout={2000}
                             style={{width: 600}}>
-              <img key="img3" src="img/vista3.jpg" width="600" height="255"/>
-              <img key="img4" src="img/vista4.jpg" width="600" height="280"/>
+              <img key="img1" src="img/vista3.jpg" width="600" height="255"/>
+              <img key="img2" src="img/vista4.jpg" width="600" height="280"/>
+              <img key="img3" src="img/vista2.jpg" width="600" height="290"/>
             </ContentSwapper>
 
             <h3 id="roll-up">Add/Remove Content</h3>
