@@ -54,6 +54,7 @@ gulp.task('demo:bundleAndWatch', function() {
 gulp.task('demo', ['demo:bundleAndWatch'], function() {
   browserSync.init({
     browser: ['google chrome'],
+    open: false,
     notify: false,
     server: {
       baseDir: "demo/assets"
