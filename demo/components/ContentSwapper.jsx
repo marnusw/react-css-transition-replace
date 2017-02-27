@@ -4,10 +4,11 @@ import ReactCSSTransitionReplace from '../../src/ReactCSSTransitionReplace.jsx'
 
 class ContentSwapper extends React.Component {
 
-  state = {swapped: false}
+  state = {index: 0}
 
   handleClick = () => {
-    this.setState({swapped: !this.state.swapped})
+    const index = this.state.index + 1
+    this.setState({index: index >= React.Children.count(this.props.children) ? 0 : index})
   }
 
   render() {
@@ -18,7 +19,7 @@ class ContentSwapper extends React.Component {
 
     return (
       <ReactCSSTransitionReplace {...this.props} style={style} onClick={this.handleClick}>
-        {this.state.swapped ? content[1] : content[0]}
+        {content[this.state.index]}
       </ReactCSSTransitionReplace>
     )
   }
