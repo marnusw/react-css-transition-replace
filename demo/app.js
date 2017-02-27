@@ -1,6 +1,3 @@
-/**
- * Fluxible client-side routing, rendering and rehydration of the React Application.
- */
 /*global document, window */
 
 import 'babel-polyfill'

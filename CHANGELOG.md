@@ -1,3 +1,8 @@
+### v2.1.1 (27 February 2017)
+
+* [BUGFIX] Exclude `gh-pages` from the npm package. (#37)
+* [BUGFIX] Remove comma dangle after rest property. (#39)
+
 ### v2.1.0 (6 December 2016)
 
 * [FEATURE] Add the `changeWidth` prop to have the container width animated along with the height. (thanks @wifilinker) (#31)
