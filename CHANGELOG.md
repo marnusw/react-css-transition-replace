@@ -1,5 +1,9 @@
-### v2.1.1 (27 February 2017)
+### v2.2.0 (27 February 2017)
 
+* [FEATURE] Remove element at once when transitionLeave is false. (thanks @wifilinker) (#34)
+* [FEATURE] Use next component sizes when current does not exist. (thanks @wifilinker) (#34)
+* [BUGFIX] Avoid silencing transition when this.state.nextChild exists. (thanks @wifilinker) (#34)
+* [FEATURE] Add class with `-height-active` suffix when transitioning. (thanks @wifilinker) (#34)
 * [BUGFIX] Exclude `gh-pages` from the npm package. (#37)
 * [BUGFIX] Remove comma dangle after rest property. (#39)
 
