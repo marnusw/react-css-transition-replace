@@ -1,5 +1,16 @@
 # Upgrade Guide
 
+## 2.1.0 -> 2.2.0
+
+The library has always had a bug causing subsequent changes while an animation is in 
+progress to be ignored. This has been fixed in v2.2.0. While the functioning of the 
+library is now technically more correct, this but may have been a feature used to 
+smooth over multiple transitions by some which will no longer be the case.
+
+If this causes problems it might be worthwhile to introduce a flag that could direct
+the component to ignore changes during transitions to restore the previous behaviour.
+
+
 ## 1.3.0 -> 2.0.0
 
 Components no longer unnecessarily unmount/mount during transition.
