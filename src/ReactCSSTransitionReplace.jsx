@@ -55,7 +55,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       appear: React.PropTypes.string,
       appearActive: React.PropTypes.string,
       height: React.PropTypes.string,
-    }) ]).isRequired,
+    })]).isRequired,
 
     transitionAppear: React.PropTypes.bool,
     transitionEnter: React.PropTypes.bool,
@@ -118,7 +118,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       return this.cancelTransition()
     }
 
-    const {state } = this
+    const {state} = this
 
     // When transitionLeave is set to false, refs.curr does not exist when refs.next is being
     // transitioned into existence. When another child is set for this component at the point
@@ -141,7 +141,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   componentDidUpdate() {
     if (!this.isTransitioning && !this.state.isLeaving) {
-      const {currentChild, nextChild } = this.state
+      const {currentChild, nextChild} = this.state
 
       if (currentChild && (nextChild || nextChild === false || nextChild === null) && this.props.transitionLeave) {
         this.leaveCurrent()
@@ -195,7 +195,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   _handleDoneEntering = () => {
-    const {state } = this
+    const {state} = this
 
     this.isTransitioning = false
     this.setState({
@@ -212,14 +212,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
   leaveCurrent() {
     this.refs.curr.componentWillLeave(this._handleDoneLeaving)
     this.isTransitioning = true
-    this.setState({isLeaving: true })
+    this.setState({isLeaving: true})
   }
 
   // When the leave transition time-out expires the animation classes are removed, so the
   // element must be removed from the DOM if the enter transition is still in progress.
   _handleDoneLeaving = () => {
     if (this.isTransitioning) {
-      const state = {currentChild: undefined, isLeaving: false }
+      const state = {currentChild: undefined, isLeaving: false}
 
       if (!this.state.nextChild) {
         this.isTransitioning = false
@@ -247,7 +247,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     let transitionName = this.props.transitionName
 
     if (typeof transitionName == 'object' && transitionName !== null) {
-      transitionName = {...transitionName }
+      transitionName = {...transitionName}
       delete transitionName.height
     }
 
@@ -283,8 +283,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
           'span',
           {key: currentChildKey},
           this._wrapChild(
-            typeof currentChild.type == 'string' ? currentChild : React.cloneElement(currentChild, {isLeaving }),
-            {ref: 'curr' })
+            typeof currentChild.type == 'string' ? currentChild : React.cloneElement(currentChild, {isLeaving}),
+            {ref: 'curr'})
         )
       )
     }
@@ -332,7 +332,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
             },
             key: nextChildKey,
           },
-          this._wrapChild(nextChild, {ref: 'next' })
+          this._wrapChild(nextChild, {ref: 'next'})
         )
       )
     }
