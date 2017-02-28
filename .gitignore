@@ -2,8 +2,8 @@
 /node_modules
 npm-debug.log
 
-# Exclude compiled files
-/lib
+# Exclude compiled files (include `next` build for use from GitHub)
+# /lib
 
 /demo/assets/app.js
 /gh-pages
