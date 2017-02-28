@@ -71,6 +71,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionLeave: true,
     overflowHidden: true,
     component: 'span',
+    childComponent: 'span',
   }
 
   state = {
@@ -233,7 +234,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     const childrenToRender = []
 
     const {
-      overflowHidden, transitionName, component,
+      overflowHidden, transitionName, component, childComponent,
       transitionAppear, transitionEnter, transitionLeave,
       transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
       ...containerProps
@@ -259,7 +260,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
     Object.keys(prevChildren).forEach(key => {
       childrenToRender.push(
-        React.createElement('span',
+        React.createElement(childComponent,
           {
             key,
             style: {
@@ -281,7 +282,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
     if (currentChild) {
       childrenToRender.push(
-        React.createElement('span',
+        React.createElement(childComponent,
           {key: currentKey},
           this.wrapChild(currentChild, {ref: currentKey})
         )
