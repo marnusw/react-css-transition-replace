@@ -15,7 +15,7 @@ Using `react-css-transition-replace` provides two distinct benefits:
 
 Animations are fully configurable with CSS, including having the entering component wait to enter until 
 the leaving component's animation completes. Following suit with the 
-[React.js API](https://facebook.github.io/react/docs/animation.html#getting-started) the one caveat is 
+[React.js API](https://facebook.github.io/react/docs/animation.html) the one caveat is 
 that the transition duration must be specified in JavaScript as well as CSS.
 
 [Live Examples](http://marnusw.github.io/react-css-transition-replace) | 
@@ -55,6 +55,10 @@ the same class name as is used for animating the change in height.
 It is also possible to remove the child component (i.e. leave `ReactCSSTransitionReplace` with no children)
 which will animate the `height` going to zero along with the `leave` transition. Similarly, a single child 
 can be added to an empty `ReactCSSTransitionReplace`, triggering the inverse animation.
+
+By default a `span` is rendered as a wrapper of the child components. Each child is also wrapped in a `span`
+used in the positioning of the actual rendered child. These can be overridden with the `component` and 
+`childComponent` props respectively.
 
 ### Cross-fading two components
 
