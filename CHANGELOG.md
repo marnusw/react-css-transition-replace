@@ -1,5 +1,6 @@
 ### v2.2.1 (29 April 2017)
 
+* [UPGRADE] Add a `yarn` lock file.
 * [UPGRADE] Use `prop-types` instead of `React.PropTypes` for React `15.5.0`.
 * [UPGRADE] Use `react-transition-group/CSSTransitionGroup` instead of `react-addons...` (thanks @ali) (#45)
 
