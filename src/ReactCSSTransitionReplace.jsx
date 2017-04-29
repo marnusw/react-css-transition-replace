@@ -19,6 +19,16 @@ const reactCSSTransitionGroupChild = React.createFactory(ReactCSSTransitionGroup
 const TICK = 17
 
 
+// Filter out nulls before looking for an only child
+function getChildMapping(children) {
+  if (!Array.isArray(children)) {
+    return children
+  }
+  const childArray = React.Children.toArray(children).filter(c => c)
+  return childArray.length === 1 ? childArray[0] : React.Children.only(childArray)
+}
+
+
 export default class ReactCSSTransitionReplace extends React.Component {
 
   static displayName = 'ReactCSSTransitionReplace'
@@ -53,7 +63,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
     this.state = {
       currentKey: '1',
-      currentChild: this.props.children ? React.Children.only(this.props.children) : undefined,
+      currentChild: getChildMapping(this.props.children),
       prevChildren: {},
       height: null,
     }
@@ -76,7 +86,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const nextChild = nextProps.children ? React.Children.only(nextProps.children) : null
+    const nextChild = getChildMapping(nextProps.children)
     const {currentChild} = this.state
 
     if ((!currentChild && !nextChild) || (currentChild && nextChild && currentChild.key === nextChild.key)) {
