@@ -33,6 +33,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionEnterTimeout: transitionTimeout('Enter'),
     transitionLeaveTimeout: transitionTimeout('Leave'),
     overflowHidden: PropTypes.bool,
+    notifyLeaving: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -40,6 +41,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionEnter: true,
     transitionLeave: true,
     overflowHidden: true,
+    notifyLeaving: false,
     component: 'span',
     childComponent: 'span',
   }
@@ -210,7 +212,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     const childrenToRender = []
 
     const {
-      overflowHidden, transitionName, component, childComponent,
+      overflowHidden, transitionName, component, childComponent, notifyLeaving,
       transitionAppear, transitionEnter, transitionLeave,
       transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
       ...containerProps
@@ -254,7 +256,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
             },
           },
           this.wrapChild(
-            typeof child.type !== 'string'
+            notifyLeaving && typeof child.type !== 'string'
               ? React.cloneElement(child, {isLeaving: true})
               : child,
             {
