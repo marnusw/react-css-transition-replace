@@ -9,60 +9,27 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import ReactCSSTransitionGroupChild from 'react-transition-group/CSSTransitionGroupChild'
+import { nameShape, transitionTimeout } from 'react-transition-group/utils/PropTypes'
+
 
 const reactCSSTransitionGroupChild = React.createFactory(ReactCSSTransitionGroupChild)
 
 const TICK = 17
 
 
-function createTransitionTimeoutPropValidator(transitionType) {
-  const timeoutPropName = 'transition' + transitionType + 'Timeout'
-  const enabledPropName = 'transition' + transitionType
-
-  return function(props) {
-    // If the transition is enabled
-    if (props[enabledPropName]) {
-      // If no timeout duration is provided
-      if (!props[timeoutPropName]) {
-        return new Error(timeoutPropName + ' wasn\'t supplied to ReactCSSTransitionReplace: '
-          + 'this can cause unreliable animations and won\'t be supported in '
-          + 'a future version of React. See '
-          + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.')
-
-        // If the duration isn't a number
-      } else if (typeof props[timeoutPropName] != 'number') {
-        return new Error(timeoutPropName + ' must be a number (in milliseconds)')
-      }
-    }
-  }
-}
-
 export default class ReactCSSTransitionReplace extends React.Component {
 
   static displayName = 'ReactCSSTransitionReplace'
 
   static propTypes = {
-    transitionName: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
-      enter: PropTypes.string,
-      leave: PropTypes.string,
-      active: PropTypes.string,
-      height: PropTypes.string,
-    }), PropTypes.shape({
-      enter: PropTypes.string,
-      enterActive: PropTypes.string,
-      leave: PropTypes.string,
-      leaveActive: PropTypes.string,
-      appear: PropTypes.string,
-      appearActive: PropTypes.string,
-      height: PropTypes.string,
-    })]).isRequired,
+    transitionName: nameShape.isRequired,
 
     transitionAppear: PropTypes.bool,
     transitionEnter: PropTypes.bool,
     transitionLeave: PropTypes.bool,
-    transitionAppearTimeout: createTransitionTimeoutPropValidator('Appear'),
-    transitionEnterTimeout: createTransitionTimeoutPropValidator('Enter'),
-    transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave'),
+    transitionAppearTimeout: transitionTimeout('Appear'),
+    transitionEnterTimeout: transitionTimeout('Enter'),
+    transitionLeaveTimeout: transitionTimeout('Leave'),
     overflowHidden: PropTypes.bool,
   }
 
