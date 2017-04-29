@@ -7,6 +7,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import chain from 'chain-function'
+import warning from 'warning'
 
 import ReactCSSTransitionGroupChild from 'react-transition-group/CSSTransitionGroupChild'
 import { nameShape, transitionTimeout } from 'react-transition-group/utils/PropTypes'
@@ -42,11 +44,17 @@ export default class ReactCSSTransitionReplace extends React.Component {
     childComponent: 'span',
   }
 
-  state = {
-    currentKey: '1',
-    currentChild: this.props.children ? React.Children.only(this.props.children) : undefined,
-    prevChildren: {},
-    height: null,
+  constructor(props, context) {
+    super(props, context)
+
+    this.childRefs = Object.create(null)
+
+    this.state = {
+      currentKey: '1',
+      currentChild: this.props.children ? React.Children.only(this.props.children) : undefined,
+      prevChildren: {},
+      height: null,
+    }
   }
 
   componentWillMount() {
@@ -73,8 +81,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       return
     }
 
-    const {state} = this
-    const {currentKey} = state
+    const {currentKey, prevChildren} = this.state
 
     const nextState = {
       currentKey: String(Number(currentKey) + 1),
@@ -87,9 +94,9 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
 
     if (currentChild) {
-      nextState.height = ReactDOM.findDOMNode(this.refs[currentKey]).offsetHeight
+      nextState.height = ReactDOM.findDOMNode(this.childRefs[currentKey]).offsetHeight
       nextState.prevChildren = {
-        ...state.prevChildren,
+        ...prevChildren,
         [currentKey]: currentChild,
       }
       if (!this.transitioningKeys[currentKey]) {
@@ -113,7 +120,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   performAppear(key) {
     this.transitioningKeys[key] = true
-    this.refs[key].componentWillAppear(this.handleDoneAppearing.bind(this, key))
+    this.childRefs[key].componentWillAppear(this.handleDoneAppearing.bind(this, key))
   }
 
   handleDoneAppearing = (key) => {
@@ -126,7 +133,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   performEnter(key) {
     this.transitioningKeys[key] = true
-    this.refs[key].componentWillEnter(this.handleDoneEntering.bind(this, key))
+    this.childRefs[key].componentWillEnter(this.handleDoneEntering.bind(this, key))
     this.enqueueHeightTransition()
   }
 
@@ -143,7 +150,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   performLeave = (key) => {
     this.transitioningKeys[key] = true
-    this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key))
+    this.childRefs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key))
     if (!this.state.currentChild) {
       // The enter transition dominates, but if there is no
       // entering component the height is set to zero.
@@ -156,6 +163,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
     const nextState = {prevChildren: {...this.state.prevChildren}}
     delete nextState.prevChildren[key]
+    delete this.childRefs[key]
 
     if (!this.state.currentChild) {
       nextState.height = null
@@ -170,14 +178,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
       if (!state.currentChild) {
         return this.setState({height: 0})
       }
-      this.setState({height: ReactDOM.findDOMNode(this.refs[state.currentKey]).offsetHeight})
+      this.setState({height: ReactDOM.findDOMNode(this.childRefs[state.currentKey]).offsetHeight})
     }, TICK)
   }
 
   wrapChild(child, moreProps) {
     let transitionName = this.props.transitionName
 
-    if (typeof transitionName == 'object' && transitionName !== null) {
+    if (typeof transitionName === 'object' && transitionName !== null) {
       transitionName = {...transitionName}
       delete transitionName.height
     }
@@ -209,7 +217,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     } = this.props
 
     if (height !== null) {
-      const heightClassName = (typeof transitionName == 'object' && transitionName !== null)
+      const heightClassName = (typeof transitionName === 'object' && transitionName !== null)
         ? transitionName.height || ''
         : `${transitionName}-height`
 
@@ -227,6 +235,12 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
 
     Object.keys(prevChildren).forEach(key => {
+      const child = prevChildren[key]
+      const isCallbackRef = typeof child.ref !== 'string'
+      warning(isCallbackRef,
+        'string refs are not supported on children of ReactCSSTransitionReplace and will be ignored. ' +
+        'Please use a callback ref instead: https://facebook.github.io/react/docs/refs-and-the-dom.html#the-ref-callback-attribute')
+
       childrenToRender.push(
         React.createElement(childComponent,
           {
@@ -240,19 +254,38 @@ export default class ReactCSSTransitionReplace extends React.Component {
             },
           },
           this.wrapChild(
-            typeof prevChildren[key].type == 'string'
-              ? prevChildren[key]
-              : React.cloneElement(prevChildren[key], {isLeaving: true}),
-            {ref: key})
+            typeof child.type !== 'string'
+              ? React.cloneElement(child, {isLeaving: true})
+              : child,
+            {
+              ref: chain(
+                isCallbackRef ? child.ref : null,
+                (r) => {this.childRefs[key] = r}
+              ),
+            }
+          )
         )
       )
     })
 
     if (currentChild) {
+      const isCallbackRef = typeof currentChild.ref !== 'string'
+      warning(isCallbackRef,
+        'string refs are not supported on children of ReactCSSTransitionReplace and will be ignored. ' +
+        'Please use a callback ref instead: https://facebook.github.io/react/docs/refs-and-the-dom.html#the-ref-callback-attribute')
+
       childrenToRender.push(
         React.createElement(childComponent,
           {key: currentKey},
-          this.wrapChild(currentChild, {ref: currentKey})
+          this.wrapChild(
+            currentChild,
+            {
+              ref: chain(
+                isCallbackRef ? currentChild.ref : null,
+                (r) => {this.childRefs[currentKey] = r}
+              ),
+            }
+          )
         )
       )
     }
