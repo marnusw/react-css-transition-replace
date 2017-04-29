@@ -1,3 +1,8 @@
+### v2.2.1 (29 April 2017)
+
+* [UPGRADE] Use `prop-types` instead of `React.PropTypes` for React `15.5.0`.
+* [UPGRADE] Use `react-transition-group/CSSTransitionGroup` instead of `react-addons...` (thanks @ali) (#45)
+
 ### v2.2.0 (27 February 2017)
 
 * [FEATURE] Remove element at once when transitionLeave is false. (thanks @wifilinker) (#34)
