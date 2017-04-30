@@ -1,3 +1,15 @@
+### v3.0.0 (x May 2017)
+
+* [ENHANCEMENT] Maintain component callback refs by not overwriting with string refs similar to `react-transition-group`.
+* [FEATURE] Only add the `isLeaving` prop to children if opted in with `notifyLeaving={true}` since it's 
+            a departure from `react-transition-group` features.
+* [ENHANCEMENT] Use `requestAnimationFrame` to queue the height transition rather than a timeout.
+* [ENHANCEMENT] Handle the enter and leave animation of changes due to successive child updates before the current transition ends.
+  * Clear the selection after transitions to avoid the child being selected after multiple clicks.
+  * Entering child renders with absolute positioning since switching from relative to abs on a premature leave cancels the active enter animation.
+  * Fix enter animation of absolutely positioned elements in Chrome not working by skipping one animation frame in the Child component.
+  * Fix Edge glitch when render starts by always applying container `position`, `display` (use a `div`) and `overflow` styles.
+
 ### v2.2.1 (29 April 2017)
 
 * [UPGRADE] Add a `yarn` lock file.
