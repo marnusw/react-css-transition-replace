@@ -13,11 +13,11 @@ import warning from 'warning'
 import raf from 'dom-helpers/util/requestAnimationFrame'
 import { clearSelection } from './utils/dom-helpers'
 
-import ReactCSSTransitionGroupChild from 'react-transition-group/CSSTransitionGroupChild'
+import ReactCSSTransitionReplaceChild from './ReactCSSTransitionReplaceChild'
 import { transitionTimeout } from 'react-transition-group/utils/PropTypes'
 import { nameShape } from './utils/PropTypes'
 
-const reactCSSTransitionGroupChild = React.createFactory(ReactCSSTransitionGroupChild)
+const reactCSSTransitionReplaceChild = React.createFactory(ReactCSSTransitionReplaceChild)
 
 
 // Filter out nulls before looking for an only child
@@ -219,7 +219,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     // We need to provide this childFactory so that
     // ReactCSSTransitionReplaceChild can receive updates to name,
     // enter, and leave while it is leaving.
-    return reactCSSTransitionGroupChild({
+    return reactCSSTransitionReplaceChild({
       name: transitionName,
       appear: this.props.transitionAppear,
       enter: this.props.transitionEnter,
