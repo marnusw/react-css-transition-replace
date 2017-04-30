@@ -15,6 +15,10 @@ h3 {
   margin-top: 50px;
 }
 
+p {
+  margin-bottom: 0;
+}
+
 .examples > p {
   margin-bottom: 20px;
 }
