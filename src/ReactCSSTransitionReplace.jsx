@@ -7,16 +7,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import raf from 'dom-helpers/util/requestAnimationFrame'
 import chain from 'chain-function'
 import warning from 'warning'
 
 import ReactCSSTransitionGroupChild from 'react-transition-group/CSSTransitionGroupChild'
 import { nameShape, transitionTimeout } from 'react-transition-group/utils/PropTypes'
 
-
 const reactCSSTransitionGroupChild = React.createFactory(ReactCSSTransitionGroupChild)
-
-const TICK = 17
 
 
 // Filter out nulls before looking for an only child
@@ -82,7 +80,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeout)
+    this.unmounted = true
   }
 
   componentWillReceiveProps(nextProps) {
@@ -185,13 +183,21 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   enqueueHeightTransition() {
-    const {state} = this
-    this.timeout = setTimeout(() => {
-      if (!state.currentChild) {
-        return this.setState({height: 0})
-      }
-      this.setState({height: ReactDOM.findDOMNode(this.childRefs[state.currentKey]).offsetHeight})
-    }, TICK)
+    if (!this.rafHandle) {
+      this.rafHandle = raf(this.performHeightTransition)
+    }
+  }
+
+  performHeightTransition = () => {
+    if (!this.unmounted) {
+      const {state} = this
+      this.setState({
+        height: state.currentChild
+          ? ReactDOM.findDOMNode(this.childRefs[state.currentKey]).offsetHeight
+          : 0,
+      })
+    }
+    this.rafHandle = null
   }
 
   wrapChild(child, moreProps) {
