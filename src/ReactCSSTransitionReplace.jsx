@@ -53,7 +53,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionLeave: true,
     overflowHidden: true,
     notifyLeaving: false,
-    component: 'span',
+    component: 'div',
     childComponent: 'span',
   }
 
@@ -254,17 +254,15 @@ export default class ReactCSSTransitionReplace extends React.Component {
       ...containerProps
     } = this.props
 
+    // In edge there is a glitch as the container switches from not positioned
+    // to a positioned element at the start of a transition which is solved
+    // by applying the position and overflow style rules at all times.
     containerProps.style = {
       ...containerProps.style,
+      position: 'relative',
     }
-
-    if (Object.keys(this.transitioningKeys).length) {
-      containerProps.style.position = 'relative'
-      containerProps.style.display = 'block'
-
-      if (overflowHidden) {
-        containerProps.style.overflow = 'hidden'
-      }
+    if (overflowHidden) {
+      containerProps.style.overflow = 'hidden'
     }
 
     if (height !== null) {
