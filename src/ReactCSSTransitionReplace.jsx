@@ -12,7 +12,8 @@ import chain from 'chain-function'
 import warning from 'warning'
 
 import ReactCSSTransitionGroupChild from 'react-transition-group/CSSTransitionGroupChild'
-import { nameShape, transitionTimeout } from 'react-transition-group/utils/PropTypes'
+import { transitionTimeout } from 'react-transition-group/utils/PropTypes'
+import { nameShape } from './utils/PropTypes'
 
 const reactCSSTransitionGroupChild = React.createFactory(ReactCSSTransitionGroupChild)
 
