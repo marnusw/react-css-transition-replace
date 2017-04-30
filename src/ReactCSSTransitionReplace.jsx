@@ -231,6 +231,18 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }, child)
   }
 
+  storeChildRef(child, key) {
+    const isCallbackRef = typeof child.ref !== 'string'
+    warning(isCallbackRef,
+      'string refs are not supported on children of ReactCSSTransitionReplace and will be ignored. ' +
+      'Please use a callback ref instead: https://facebook.github.io/react/docs/refs-and-the-dom.html#the-ref-callback-attribute')
+
+    return chain(
+      isCallbackRef ? child.ref : null,
+      (r) => {this.childRefs[key] = r}
+    )
+  }
+
   render() {
     const {currentKey, currentChild, prevChildren, height} = this.state
     const childrenToRender = []
@@ -242,75 +254,63 @@ export default class ReactCSSTransitionReplace extends React.Component {
       ...containerProps
     } = this.props
 
-    if (height !== null) {
-      const heightClassName = (typeof transitionName === 'object' && transitionName !== null)
-        ? transitionName.height || ''
-        : `${transitionName}-height`
+    containerProps.style = {
+      ...containerProps.style,
+    }
 
-      containerProps.className = `${containerProps.className || ''} ${heightClassName}`
-      containerProps.style = {
-        ...containerProps.style,
-        position: 'relative',
-        display: 'block',
-        height,
-      }
+    if (Object.keys(this.transitioningKeys).length) {
+      containerProps.style.position = 'relative'
+      containerProps.style.display = 'block'
 
       if (overflowHidden) {
         containerProps.style.overflow = 'hidden'
       }
     }
 
+    if (height !== null) {
+      const heightClassName = typeof transitionName === 'string'
+        ? `${transitionName}-height`
+        : (transitionName && transitionName.height) || ''
+
+      containerProps.className = `${containerProps.className || ''} ${heightClassName}`
+      containerProps.style.height = height
+    }
+
+    const positionAbsolute = {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    }
+
     Object.keys(prevChildren).forEach(key => {
       const child = prevChildren[key]
-      const isCallbackRef = typeof child.ref !== 'string'
-      warning(isCallbackRef,
-        'string refs are not supported on children of ReactCSSTransitionReplace and will be ignored. ' +
-        'Please use a callback ref instead: https://facebook.github.io/react/docs/refs-and-the-dom.html#the-ref-callback-attribute')
-
       childrenToRender.push(
         React.createElement(childComponent,
-          {
-            key,
-            style: {
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-            },
-          },
+          {key, style: positionAbsolute},
           this.wrapChild(
             notifyLeaving && typeof child.type !== 'string'
               ? React.cloneElement(child, {isLeaving: true})
               : child,
-            {
-              ref: chain(
-                isCallbackRef ? child.ref : null,
-                (r) => {this.childRefs[key] = r}
-              ),
-            }
+            {ref: this.storeChildRef(child, key)}
           )
         )
       )
     })
 
     if (currentChild) {
-      const isCallbackRef = typeof currentChild.ref !== 'string'
-      warning(isCallbackRef,
-        'string refs are not supported on children of ReactCSSTransitionReplace and will be ignored. ' +
-        'Please use a callback ref instead: https://facebook.github.io/react/docs/refs-and-the-dom.html#the-ref-callback-attribute')
-
       childrenToRender.push(
         React.createElement(childComponent,
-          {key: currentKey},
+          {
+            key: currentKey,
+            // Positioning must always be specified to keep the
+            // current child on top of the leaving children
+            style: this.transitioningKeys[currentKey] ? positionAbsolute : {position: 'relative'},
+          },
           this.wrapChild(
             currentChild,
-            {
-              ref: chain(
-                isCallbackRef ? currentChild.ref : null,
-                (r) => {this.childRefs[currentKey] = r}
-              ),
-            }
+            {ref: this.storeChildRef(currentChild, currentKey)}
           )
         )
       )
