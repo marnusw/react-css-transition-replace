@@ -66,6 +66,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave'),
     overflowHidden: PropTypes.bool,
     changeWidth: PropTypes.bool,
+    component: PropTypes.string
   }
 
   static defaultProps = {
@@ -281,7 +282,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     if (currentChild && !nextChild && !transitionLeave || currentChild && transitionLeave) {
       childrenToRender.push(
         React.createElement(
-          'span',
+          component,
           {key: currentChildKey},
           this._wrapChild(
             typeof currentChild.type == 'string' ? currentChild : React.cloneElement(currentChild, {isLeaving}),
@@ -322,7 +323,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
     if (nextChild) {
       childrenToRender.push(
-        React.createElement('span',
+        React.createElement(
+          component,
           {
             style: {
               position: 'absolute',
