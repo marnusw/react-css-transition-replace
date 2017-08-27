@@ -91,8 +91,12 @@ class Demo extends React.Component {
               <img key="img1" src="img/vista1.jpg" width="600" height="235"/>
             </ContentAddRemove>
 
-            <h3 id="roll-up">Height and Width animation</h3>
-            <p></p>
+            <h3 id="height-and-width">Height and Width animation</h3>
+            <p>By setting the <code>changeWidth</code> prop the container width is managed along with the height.
+              This example realizes the same effect as above using this property and just a fade CSS animation.
+              In this case the <code>height</code> class should configure the transition of both the height
+              and width properties: <code>transition: height .5s ease-in-out, width .5s ease-in-out;</code>
+            </p>
 
             <ContentAddRemove
               transitionName="fade-fast" transitionEnterTimeout={500} transitionLeaveTimeout={500} changeWidth
@@ -100,10 +104,12 @@ class Demo extends React.Component {
               <img key="img1" src="img/vista1.jpg" width="600" height="235"/>
             </ContentAddRemove>
 
-            <h3 id="react-router">React Router v4</h3>
-            <p></p>
+            <h3 id="react-router-v4">React Router v4</h3>
+            <p>Animating React-Router v4 transitions is supported. See the <a
+              href="https://github.com/marnusw/react-css-transition-replace#cross-fading-two-components"
+              target="_blank">example</a> for details.</p>
 
-            <AnimatedRouter />
+            <AnimatedRouter/>
           </div>
         </Grid>
       </div>

@@ -1,14 +1,17 @@
 # Upgrade Guide
 
+## 2.2.1 -> 3.0.0
+
+Applying the `isLeaving` prop on leaving children is now an opt-in behaviour controlled
+by the `notifyLeaving` prop.
+
+
 ## 2.1.0 -> 2.2.0
 
 The library has always had a bug causing subsequent changes while an animation is in 
 progress to be ignored. This has been fixed in v2.2.0. While the functioning of the 
 library is now technically more correct, this but may have been a feature used to 
 smooth over multiple transitions by some which will no longer be the case.
-
-If this causes problems it might be worthwhile to introduce a flag that could direct
-the component to ignore changes during transitions to restore the previous behaviour.
 
 
 ## 1.3.0 -> 2.0.0
@@ -20,7 +23,7 @@ You can pass `transitionName={{ height: 'my-height-className' }}` now, if
 you need to use a custom className (useful for `css-modules`).
 
 The leaving component will receive `isLeaving={true}` prop during it's leaving transition.
-You can use it in your child components to prevent their rerendering during that period, for example.
+You can use it in your child components to prevent their re-rendering during that period, for example.
 
 
 ## 1.0.x -> 1.1.0
