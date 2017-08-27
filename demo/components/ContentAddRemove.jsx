@@ -19,7 +19,7 @@ class ContentAddRemove extends React.Component {
       <div style={style} onClick={this.handleClick}>
         <a>Click to {this.state.added ? 'remove' : 'add'} content</a><br/>
         <br/>
-        <ReactCSSTransitionReplace {...this.props} onClick={this.handleClick}>
+        <ReactCSSTransitionReplace {...this.props}>
           {this.state.added ? this.props.children : null}
         </ReactCSSTransitionReplace>
       </div>

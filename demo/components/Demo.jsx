@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navbar, Nav, NavItem, Grid } from 'react-bootstrap'
+
 const NavbarBrand = Navbar.Brand
 
 import PageHead from './PageHead.jsx'
@@ -36,7 +37,7 @@ class Demo extends React.Component {
         </Navbar>
 
         <Grid>
-          <PageHead />
+          <PageHead/>
 
           <div className="examples">
             <h2>Examples</h2>
@@ -89,6 +90,14 @@ class Demo extends React.Component {
               <img key="img1" src="img/vista1.jpg" width="600" height="235"/>
             </ContentAddRemove>
 
+            <h3 id="roll-up">Height and Width animation</h3>
+            <p></p>
+
+            <ContentAddRemove
+              transitionName="fade-width" transitionEnterTimeout={500} transitionLeaveTimeout={500} changeWidth
+            >
+              <img key="img1" src="img/vista1.jpg" width="600" height="235"/>
+            </ContentAddRemove>
           </div>
         </Grid>
       </div>

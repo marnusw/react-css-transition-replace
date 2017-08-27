@@ -49,7 +49,7 @@
 /* Carousel-like transition */
 
 .carousel-swap-leave {
-  transition: transform 2s ease-in-out;
+  transition: transform 1s ease-in-out;
   transform: translate(0, 0);
 }
 .carousel-swap-leave-active {
@@ -57,7 +57,7 @@
 }
 
 .carousel-swap-enter {
-  transition: transform 2s ease-in-out;
+  transition: transform 1s ease-in-out;
   transform: translate(100%, 0);
 }
 .carousel-swap-enter-active {
@@ -65,7 +65,7 @@
 }
 
 .carousel-swap-height {
-  transition: height 2s ease-in-out;
+  transition: height 1s ease-in-out;
 }
 
 
@@ -93,4 +93,27 @@
 
 .roll-up-height {
   transition: height .8s ease-in-out;
+}
+
+
+/* Fade with width transition */
+
+.fade-width-leave {
+  opacity: 1;
+}
+.fade-width-leave.fade-width-leave-active {
+  opacity: 0;
+  transition: opacity .5s ease-in-out;
+}
+
+.fade-width-enter {
+  opacity: 0;
+}
+.fade-width-enter.fade-width-enter-active {
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+}
+
+.fade-width-height {
+  transition: height .5s ease-in-out, width .5s ease-in-out;
 }

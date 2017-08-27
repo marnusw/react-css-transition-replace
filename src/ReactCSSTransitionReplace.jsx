@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
 import chain from 'chain-function'
 import warning from 'warning'
@@ -34,6 +34,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionEnterTimeout: transitionTimeout('Enter'),
     transitionLeaveTimeout: transitionTimeout('Leave'),
     overflowHidden: PropTypes.bool,
+    changeWidth: PropTypes.bool,
     notifyLeaving: PropTypes.bool,
   }
 
@@ -42,6 +43,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     transitionEnter: true,
     transitionLeave: true,
     overflowHidden: true,
+    changeWidth: false,
     notifyLeaving: false,
     component: 'div',
     childComponent: 'span',
@@ -57,6 +59,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       currentChild: this.props.children ? React.Children.only(this.props.children) : undefined,
       prevChildren: {},
       height: null,
+      width: null,
     }
   }
 
@@ -90,6 +93,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       currentKey: String(Number(currentKey) + 1),
       currentChild: nextChild,
       height: 0,
+      width: this.props.changeWidth ? 0 : null,
     }
 
     if (nextChild) {
@@ -97,7 +101,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
 
     if (currentChild) {
-      nextState.height = ReactDOM.findDOMNode(this.childRefs[currentKey]).offsetHeight
+      nextState.height = findDOMNode(this.childRefs[currentKey]).offsetHeight
+      nextState.width = this.props.changeWidth ? findDOMNode(this.childRefs[currentKey]).offsetWidth : null
       nextState.prevChildren = {
         ...prevChildren,
         [currentKey]: currentChild,
@@ -190,9 +195,10 @@ export default class ReactCSSTransitionReplace extends React.Component {
     if (!this.unmounted) {
       const {state} = this
       this.setState({
-        height: state.currentChild
-          ? ReactDOM.findDOMNode(this.childRefs[state.currentKey]).offsetHeight
-          : 0,
+        height: state.currentChild ? findDOMNode(this.childRefs[state.currentKey]).offsetHeight : 0,
+        width: this.props.changeWidth
+          ? (state.currentChild ? findDOMNode(this.childRefs[state.currentKey]).offsetWidth : 0)
+          : null,
       })
     }
     this.rafHandle = null
@@ -234,12 +240,12 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   render() {
-    const {currentKey, currentChild, prevChildren, height} = this.state
+    const {currentKey, currentChild, prevChildren, height, width} = this.state
     const childrenToRender = []
 
     const {
       overflowHidden, transitionName, component, childComponent, notifyLeaving,
-      transitionAppear, transitionEnter, transitionLeave,
+      transitionAppear, transitionEnter, transitionLeave, changeWidth,
       transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
       ...containerProps
     } = this.props
@@ -262,6 +268,10 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
       containerProps.className = `${containerProps.className || ''} ${heightClassName}`
       containerProps.style.height = height
+    }
+
+    if (width !== null) {
+      containerProps.style.width = width
     }
 
     const positionAbsolute = {

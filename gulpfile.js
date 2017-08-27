@@ -53,6 +53,7 @@ gulp.task('demo:bundleAndWatch', function() {
 
 gulp.task('demo', ['demo:bundleAndWatch'], function() {
   browserSync.init({
+    port: 3010,
     browser: ['google chrome'],
     open: false,
     notify: false,
