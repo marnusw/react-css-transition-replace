@@ -39,8 +39,9 @@ follows the exact same API as `ReactCSSTransitionGroup`, with support for `trans
 and `transitionAppear`. When the `key` of the child component changes, the previous component is animated out 
 and the new component animated in. During this process:
 
- - The leaving component continues to be rendered as usual with `static` positioning.
- - The entering component is positioned on top of the leaving component with `absolute` positioning.
+ - All leaving components continue to be rendered; if the animation is slow there may be multiple components
+   in the process of leaving.
+ - The entering component is positioned on top of the leaving component(s) with `absolute` positioning.
  - The height of the container is set to that of the leaving component, and then immediately to that of the 
    entering component. If the `transitionName` is a `String` the `{animation-name}-height` class name is applied 
    to it, and if `transitionName` is an `Object` the `transitionName.height` class will be used if present.
@@ -143,6 +144,47 @@ the duration of the transition. In this case:
 ```
 
 See the live example [here](http://marnusw.github.io/react-css-transition-replace#fade-wait).
+
+
+### React-Router v4
+
+Animated transitions of react-router v4 routes is supported with two caveats shown in the example below:
+
+1. The current `location` must be applied to the `Switch` to force it to maintain the previous matched route on 
+   the leaving component.
+2. If the `Switch` might render `null`, i.e. there is no catch-all `"*"` route, the `Switch` must be wrapped in a 
+   `div` or similar for the leave transition to work; if not the previous component will disappear instantaneously
+   when there is no match.
+
+```javascript
+<Router>
+  <div className="router-example">
+    <ul>
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/one">One</Link></li>
+      <li><Link to="/two">Two</Link></li>
+      <li><Link to="/three">Three (no match)</Link></li>
+    </ul>
+    <Route render={({location}) => (
+      <ReactCSSTransitionReplace
+        transitionName="fade"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={500}
+      >
+        <div key={location.pathname}>
+          <Switch location={location}>
+            <Route path="/" exact component={Home}/>
+            <Route path="/one" component={One}/>
+            <Route path="/two" component={Two}/>
+          </Switch>
+        </div>
+      </ReactCSSTransitionReplace>
+    )}/>
+  </div>
+</Router>
+```
+
+See the live example [here](http://marnusw.github.io/react-css-transition-replace#react-router-v4).
 
 
 ### Hardware acceleration for smoother transitions

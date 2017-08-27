@@ -42,11 +42,13 @@ const AnimatedRouter = () => (
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}
         >
-          <Switch key={location.pathname} location={location}>
-            <Route path="/" exact component={Home}/>
-            <Route path="/one" component={One}/>
-            <Route path="/two" component={Two}/>
-          </Switch>
+          <div key={location.pathname}>
+            <Switch location={location}>
+              <Route path="/" exact component={Home}/>
+              <Route path="/one" component={One}/>
+              <Route path="/two" component={Two}/>
+            </Switch>
+          </div>
         </ReactCSSTransitionReplace>
       )}/>
 
