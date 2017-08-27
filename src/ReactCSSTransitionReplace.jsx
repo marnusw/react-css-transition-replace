@@ -170,9 +170,9 @@ export default class ReactCSSTransitionReplace extends React.Component {
   performLeave = (key) => {
     this.transitioningKeys[key] = true
     this.childRefs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key))
-    if (!this.state.currentChild) {
-      // The enter transition dominates, but if there is no
-      // entering component the height is set to zero.
+    if (!this.state.currentChild || !findDOMNode(this.childRefs[this.state.currentKey])) {
+      // The enter transition dominates, but if there is no entering
+      // component or it renders null the height is set to zero.
       this.enqueueHeightTransition()
     }
   }
@@ -184,7 +184,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     delete nextState.prevChildren[key]
     delete this.childRefs[key]
 
-    if (!this.state.currentChild) {
+    if (!this.state.currentChild || !findDOMNode(this.childRefs[this.state.currentKey])) {
       nextState.height = null
     }
 
