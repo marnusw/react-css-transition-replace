@@ -98,22 +98,22 @@
 
 /* Fade with width transition */
 
-.fade-width-leave {
+.fade-fast-leave {
   opacity: 1;
 }
-.fade-width-leave.fade-width-leave-active {
+.fade-fast-leave.fade-fast-leave-active {
   opacity: 0;
   transition: opacity .5s ease-in-out;
 }
 
-.fade-width-enter {
+.fade-fast-enter {
   opacity: 0;
 }
-.fade-width-enter.fade-width-enter-active {
+.fade-fast-enter.fade-fast-enter-active {
   opacity: 1;
   transition: opacity .5s ease-in-out;
 }
 
-.fade-width-height {
+.fade-fast-height {
   transition: height .5s ease-in-out, width .5s ease-in-out;
 }

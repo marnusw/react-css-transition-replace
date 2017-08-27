@@ -22,3 +22,7 @@ p {
 .examples > p {
   margin-bottom: 20px;
 }
+
+.router-example h2 {
+  margin-top: 0;
+}

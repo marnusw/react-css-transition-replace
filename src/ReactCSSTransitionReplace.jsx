@@ -101,8 +101,11 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
 
     if (currentChild) {
-      nextState.height = findDOMNode(this.childRefs[currentKey]).offsetHeight
-      nextState.width = this.props.changeWidth ? findDOMNode(this.childRefs[currentKey]).offsetWidth : null
+      const currentChildNode = findDOMNode(this.childRefs[currentKey])
+      nextState.height = currentChildNode ? currentChildNode.offsetHeight : 0
+      nextState.width = this.props.changeWidth
+        ? (currentChildNode ? currentChildNode.offsetWidth : 0)
+        : null
       nextState.prevChildren = {
         ...prevChildren,
         [currentKey]: currentChild,
@@ -118,7 +121,10 @@ export default class ReactCSSTransitionReplace extends React.Component {
   componentDidUpdate() {
     if (this.shouldEnterCurrent) {
       this.shouldEnterCurrent = false
-      this.performEnter(this.state.currentKey)
+      // If the current child renders null there is nothing to enter
+      if (findDOMNode(this.childRefs[this.state.currentKey])) {
+        this.performEnter(this.state.currentKey)
+      }
     }
 
     const keysToLeave = this.keysToLeave
@@ -194,10 +200,11 @@ export default class ReactCSSTransitionReplace extends React.Component {
   performHeightTransition = () => {
     if (!this.unmounted) {
       const {state} = this
+      const currentChildNode = state.currentChild ? findDOMNode(this.childRefs[state.currentKey]) : null
       this.setState({
-        height: state.currentChild ? findDOMNode(this.childRefs[state.currentKey]).offsetHeight : 0,
+        height: currentChildNode ? currentChildNode.offsetHeight : 0,
         width: this.props.changeWidth
-          ? (state.currentChild ? findDOMNode(this.childRefs[state.currentKey]).offsetWidth : 0)
+          ? (currentChildNode ? currentChildNode.offsetWidth : 0)
           : null,
       })
     }

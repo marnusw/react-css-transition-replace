@@ -75,6 +75,7 @@
     "react": "^15.3.2",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.3.2",
+    "react-router-dom": "^4.1.1",
     "rimraf": "^2.5.4",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",

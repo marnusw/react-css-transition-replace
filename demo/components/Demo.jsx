@@ -6,6 +6,7 @@ const NavbarBrand = Navbar.Brand
 import PageHead from './PageHead.jsx'
 import ContentSwapper from './ContentSwapper.jsx'
 import ContentAddRemove from './ContentAddRemove.jsx'
+import AnimatedRouter from './AnimatedRouter.jsx'
 
 import ContentLong from './ContentLong.jsx'
 import ContentShort from './ContentShort.jsx'
@@ -94,10 +95,15 @@ class Demo extends React.Component {
             <p></p>
 
             <ContentAddRemove
-              transitionName="fade-width" transitionEnterTimeout={500} transitionLeaveTimeout={500} changeWidth
+              transitionName="fade-fast" transitionEnterTimeout={500} transitionLeaveTimeout={500} changeWidth
             >
               <img key="img1" src="img/vista1.jpg" width="600" height="235"/>
             </ContentAddRemove>
+
+            <h3 id="react-router">React Router v4</h3>
+            <p></p>
+
+            <AnimatedRouter />
           </div>
         </Grid>
       </div>
