@@ -24,25 +24,33 @@
 
 /* Fade out, then fade in transition */
 
-.fade-wait-leave {
+.fade-wait-leave,
+.fade-wait-delay-leave {
   opacity: 1;
 }
-.fade-wait-leave.fade-wait-leave-active {
+.fade-wait-leave.fade-wait-leave-active,
+.fade-wait-delay-leave.fade-wait-delay-leave-active {
   opacity: 0;
   transition: opacity .4s ease-in;
 }
 
-.fade-wait-enter {
+.fade-wait-enter,
+.fade-wait-delay-enter {
   opacity: 0;
 }
-.fade-wait-enter.fade-wait-enter-active {
+.fade-wait-enter.fade-wait-enter-active,
+.fade-wait-delay-enter.fade-wait-delay-enter-active {
   opacity: 1;
   /* Delay the enter animation until the leave completes */
-  transition: opacity .4s ease-in .6s;
+  transition: opacity .4s ease-in .4s;
 }
 
 .fade-wait-height {
-  transition: height .6s ease-in-out;
+  transition: height .8s ease-in-out;
+}
+.fade-wait-delay-height {
+  /* Delay the height animation until the leave completes */
+  transition: height .4s ease-in-out .4s;
 }
 
 
