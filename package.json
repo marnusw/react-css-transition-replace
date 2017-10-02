@@ -1,6 +1,6 @@
 {
   "name": "react-css-transition-replace",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A React component to animate replacing one element with another.",
   "main": "lib/ReactCSSTransitionReplace.js",
   "repository": {
