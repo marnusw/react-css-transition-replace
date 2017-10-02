@@ -1,6 +1,8 @@
 ### v3.0.1 (2 October 2017)
 
 * [BUGFIX] Prevent animating child selection with CSS rather than clearing with JS so form inputs don't lose focus on each update. (#50)
+* [BUGFIX] Switch the container to relative positioning on the render before the transitions start to avoid the glitch 
+           in Edge without using permanent relative positioning which is not an option. (#52)
 
 ### v3.0.0 (27 August 2017)
 

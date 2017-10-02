@@ -251,15 +251,17 @@ export default class ReactCSSTransitionReplace extends React.Component {
       ...containerProps
     } = this.props
 
-    // In edge there is a glitch as the container switches from not positioned
-    // to a positioned element at the start of a transition which is solved
-    // by applying the position and overflow style rules at all times.
+    const transitioning = this.shouldEnterCurrent || this.keysToLeave.length || Object.keys(this.transitioningKeys).length
+
     containerProps.style = {
       ...containerProps.style,
-      position: 'relative',
     }
-    if (overflowHidden) {
-      containerProps.style.overflow = 'hidden'
+
+    if (transitioning) {
+      containerProps.style.position = 'relative'
+      if (overflowHidden) {
+        containerProps.style.overflow = 'hidden'
+      }
     }
 
     if (height !== null) {
@@ -306,9 +308,11 @@ export default class ReactCSSTransitionReplace extends React.Component {
         React.createElement(childComponent,
           {
             key: currentKey,
-            // Positioning must always be specified to keep the
-            // current child on top of the leaving children
-            style: this.transitioningKeys[currentKey] ? positionAbsolute : {position: 'relative'},
+            // While there are leaving children positioning must always be specified to keep the current
+            // child on top; the current child can switch to relative positioning after entering though.
+            style: this.transitioningKeys[currentKey]
+              ? positionAbsolute
+              : (transitioning ? {position: 'relative'} : null),
           },
           this.wrapChild(
             currentChild,
