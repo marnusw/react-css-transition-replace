@@ -24,7 +24,6 @@ var buffer = require('vinyl-buffer')
 var browserify = require('browserify')
 var watchify = require('watchify')
 var babelify = require('babelify')
-var assign = require('lodash.assign')
 var browserSync = require('browser-sync').create()
 var reload = browserSync.reload
 
@@ -43,7 +42,7 @@ gulp.task('demo:bundle', function() {
 })
 
 gulp.task('demo:bundleAndWatch', function() {
-  var bundler = watchify(browserify('./demo/app.js', assign({debug: true}, watchify.args)))
+  var bundler = watchify(browserify('./demo/app.js', Object.assign({debug: true}, watchify.args)))
     .transform(babelify)
 
   bundler.on('update', bundleJs.bind(null, bundler))
