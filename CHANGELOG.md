@@ -1,6 +1,6 @@
 ### v3.0.1 (2 October 2017)
 
-* [BUGFIX] Stop clearing the selection after an animation since it causes child form inputs to lose focus on each update. (#50)
+* [BUGFIX] Prevent animating child selection with CSS rather than clearing with JS so form inputs don't lose focus on each update. (#50)
 
 ### v3.0.0 (27 August 2017)
 

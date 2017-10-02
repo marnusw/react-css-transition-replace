@@ -281,6 +281,9 @@ export default class ReactCSSTransitionReplace extends React.Component {
       left: 0,
       right: 0,
       bottom: 0,
+      // In Chrome a selection on a child due to multiple clicks often transfers to the final child after
+      // the transitions completes. This prevents selection of the child without other side-effects.
+      userSelect: 'none',
     }
 
     Object.keys(prevChildren).forEach(key => {
