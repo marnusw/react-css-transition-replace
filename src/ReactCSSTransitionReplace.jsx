@@ -11,7 +11,6 @@ import chain from 'chain-function'
 import warning from 'warning'
 
 import raf from 'dom-helpers/util/requestAnimationFrame'
-import { clearSelection } from './utils/dom-helpers'
 
 import ReactCSSTransitionReplaceChild from './ReactCSSTransitionReplaceChild'
 import { transitionTimeout } from 'react-transition-group/utils/PropTypes'
@@ -130,11 +129,6 @@ export default class ReactCSSTransitionReplace extends React.Component {
     const keysToLeave = this.keysToLeave
     this.keysToLeave = []
     keysToLeave.forEach(this.performLeave)
-
-    // When the enter completes and the component switches to relative positioning the
-    // child often gets selected after multiple clicks (at least in Chrome). To compensate
-    // the current selection is cleared whenever the component updates.
-    clearSelection()
   }
 
   performAppear(key) {

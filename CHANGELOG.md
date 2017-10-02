@@ -1,9 +1,18 @@
+### v3.0.1 (2 October 2017)
+
+* [BUGFIX] Stop clearing the selection after an animation since it causes child form inputs to lose focus on each update. (#50)
+
 ### v3.0.0 (27 August 2017)
+
+##### Breaking change
+
+* [FEATURE] The `isLeaving` prop is only added to children if opted in with `notifyLeaving={true}` since it's 
+            a departure from `react-transition-group` features.
+
+##### Non-breaking changes
 
 * [ENHANCEMENT] Treat a child rendering `null` as if there is no child; specifically helps avoid errors with RR4.
 * [ENHANCEMENT] Maintain component callback refs by not overwriting with string refs similar to `react-transition-group`.
-* [FEATURE] Only add the `isLeaving` prop to children if opted in with `notifyLeaving={true}` since it's 
-            a departure from `react-transition-group` features.
 * [ENHANCEMENT] Use `requestAnimationFrame` to queue the height transition rather than a timeout.
 * [ENHANCEMENT] Handle the enter and leave animation of changes due to successive child updates before the current transition ends.
 * [ENHANCEMENT] Clear the selection after transitions to avoid the child being selected after multiple clicks.
