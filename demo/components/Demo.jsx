@@ -56,12 +56,20 @@ class Demo extends React.Component {
             </ContentSwapper>
 
             <h3 id="fade-wait">Fade out, then fade in transition</h3>
-            <p>The <code>opacity</code> transition for <code>enter</code> animation is delayed until after
-              the <code>leave</code> transition completes. View the <a
+            <p>For the first paragraph the <code>opacity</code> transition for <code>enter</code> animation is delayed
+              until after the <code>leave</code> transition completes. View the <a
                 href="https://github.com/marnusw/react-css-transition-replace#fade-out-then-fade-in"
-                target="_blank">CSS</a>.</p>
+                target="_blank">CSS</a>.<br/>For the second paragraph both the enter and height transitions
+              are delayed.</p>
 
             <ContentSwapper transitionName="fade-wait" transitionEnterTimeout={1000} transitionLeaveTimeout={400}>
+              <ContentLong key="long"/>
+              <ContentShort key="short"/>
+            </ContentSwapper>
+
+            <br/>
+
+            <ContentSwapper transitionName="fade-wait-delay" transitionEnterTimeout={1000} transitionLeaveTimeout={400}>
               <ContentLong key="long"/>
               <ContentShort key="short"/>
             </ContentSwapper>
