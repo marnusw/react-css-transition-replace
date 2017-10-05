@@ -125,7 +125,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     // transitioned into existence. When another child is set for this component at the point
     // where only refs.next exists, we want to use the width/height of refs.next instead of
     // refs.curr.
-    const ref = this.refs.curr || this.refs.next
+    const ref = this.curr || this.next
 
     // Set the next child to start the transition, and set the current height.
     this.setState({
@@ -163,7 +163,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
         })
       }
 
-      const nextNode = ReactDOM.findDOMNode(this.refs.next)
+      const nextNode = ReactDOM.findDOMNode(this.next)
       if (nextNode) {
         this.setState({
           activeHeightTransition: true,
@@ -182,7 +182,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   appearCurrent() {
-    this.refs.curr.componentWillAppear(this._handleDoneAppearing)
+    this.curr.componentWillAppear(this._handleDoneAppearing)
     this.isTransitioning = true
   }
 
@@ -191,7 +191,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   enterNext() {
-    this.refs.next.componentWillEnter(this._handleDoneEntering)
+    this.next.componentWillEnter(this._handleDoneEntering)
     this.isTransitioning = true
   }
 
@@ -211,7 +211,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   }
 
   leaveCurrent() {
-    this.refs.curr.componentWillLeave(this._handleDoneLeaving)
+    this.curr.componentWillLeave(this._handleDoneLeaving)
     this.isTransitioning = true
     this.setState({isLeaving: true})
   }
@@ -267,6 +267,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }, child)
   }
 
+  setCurrRef = (ref) => {
+    this.curr = ref
+  }
+
+  setNextRef = (ref) => {
+    this.next = ref
+  }
+
   render() {
     const {currentChild, currentChildKey, nextChild, nextChildKey, height, width, isLeaving, activeHeightTransition} = this.state
     const childrenToRender = []
@@ -285,7 +293,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
           {key: currentChildKey},
           this._wrapChild(
             typeof currentChild.type == 'string' ? currentChild : React.cloneElement(currentChild, {isLeaving}),
-            {ref: 'curr'})
+            {ref: this.setCurrRef})
         )
       )
     }
@@ -333,7 +341,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
             },
             key: nextChildKey,
           },
-          this._wrapChild(nextChild, {ref: 'next'})
+          this._wrapChild(nextChild, {ref: this.setNextRef})
         )
       )
     }
