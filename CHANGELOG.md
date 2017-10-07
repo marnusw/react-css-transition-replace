@@ -1,3 +1,11 @@
+### v3.0.2 (7 October 2017)
+
+* [BUGFIX] Fix updating children when the current child re-renders itself. (#53)
+
+### v2.2.2 (6 October 2017)
+
+* [UPGRADE] Support React 16 in v2. (#55 thanks @GeKrom)
+
 ### v3.0.1 (2 October 2017)
 
 * [BUGFIX] Prevent animating child selection with CSS rather than clearing with JS so form inputs don't lose focus on each update. (#50)
