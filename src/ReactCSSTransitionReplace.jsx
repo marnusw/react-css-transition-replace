@@ -82,8 +82,11 @@ export default class ReactCSSTransitionReplace extends React.Component {
     const nextChild = nextProps.children ? React.Children.only(nextProps.children) : undefined
     const {currentChild} = this.state
 
-    if ((!currentChild && !nextChild) || (currentChild && nextChild && currentChild.key === nextChild.key)) {
-      return
+    if (currentChild && nextChild && nextChild.key === currentChild.key && !this.state.nextChild) {
+      // This is the same child, but receiving new props means the child itself has re-rendered
+      return this.setState({
+        currentChild: nextChild,
+      })
     }
 
     const {currentKey, prevChildren} = this.state
