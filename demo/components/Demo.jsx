@@ -114,7 +114,7 @@ class Demo extends React.Component {
 
             <h3 id="react-router-v4">React Router v4</h3>
             <p>Animating React-Router v4 transitions is supported. See the <a
-              href="https://github.com/marnusw/react-css-transition-replace#cross-fading-two-components"
+              href="https://github.com/marnusw/react-css-transition-replace#react-router-v4"
               target="_blank">example</a> for details.</p>
 
             <AnimatedRouter/>

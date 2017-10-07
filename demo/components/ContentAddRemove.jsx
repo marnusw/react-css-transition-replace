@@ -13,10 +13,13 @@ class ContentAddRemove extends React.Component {
   render() {
     const {style = {}} = this.props
 
-    style.cursor = 'pointer'
+    const newStyle = {
+      ...style,
+      cursor: 'pointer',
+    }
 
     return (
-      <div style={style} onClick={this.handleClick}>
+      <div style={newStyle} onClick={this.handleClick}>
         <a>Click to {this.state.added ? 'remove' : 'add'} content</a><br/>
         <br/>
         <ReactCSSTransitionReplace {...this.props}>
