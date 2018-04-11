@@ -1,9 +1,3 @@
-/**
- * Adapted from ReactCSSTransitionGroup.js by Facebook
- *
- * @providesModule ReactCSSTransitionReplace
- */
-
 import React from 'react'
 import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
@@ -13,8 +7,7 @@ import warning from 'warning'
 import raf from 'dom-helpers/util/requestAnimationFrame'
 
 import ReactCSSTransitionReplaceChild from './ReactCSSTransitionReplaceChild'
-import { transitionTimeout } from 'react-transition-group/utils/PropTypes'
-import { nameShape } from './utils/PropTypes'
+import { nameShape, transitionTimeout } from './utils/PropTypes'
 
 const reactCSSTransitionReplaceChild = React.createFactory(ReactCSSTransitionReplaceChild)
 

@@ -8,6 +8,7 @@
     "url": "https://github.com/marnusw/react-css-transition-replace.git"
   },
   "scripts": {
+    "start": "gulp demo",
     "test": "echo \"No test implemented\" && exit 0",
     "prebuild": "./node_modules/.bin/rimraf lib && gulp lint",
     "build": "./node_modules/.bin/babel ./src --out-dir ./lib",
@@ -17,7 +18,6 @@
     "chain-function": "^1.0.0",
     "dom-helpers": "^3.2.0",
     "prop-types": "^15.6.0",
-    "react-transition-group": "^1.2.1",
     "warning": "^3.0.0"
   },
   "peerDependencies": {
