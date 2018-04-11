@@ -17,7 +17,6 @@ gulp.task('lint', function() {
 
 // Demo related tasks
 
-var notify = require('gulp-notify')
 var flatten = require('gulp-flatten')
 var stream = require('vinyl-source-stream')
 var buffer = require('vinyl-buffer')
@@ -29,7 +28,6 @@ var reload = browserSync.reload
 
 function bundleJs(bundler) {
   return bundler.bundle()
-    .on('error', notify.onError({title: 'Browserify'}))
     .pipe(stream('demo/app.js'))
     .pipe(buffer())
     .pipe(flatten())
