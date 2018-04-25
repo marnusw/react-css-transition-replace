@@ -1,5 +1,8 @@
 ### Next
 
+
+### v3.0.3 (25 April 2017)
+
 * [UPGRADE] Update dependencies to latest stable versions.
 * [ENHANCEMENT] Remove the `react-transition-group` dependency. (#56)
 

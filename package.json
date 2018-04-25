@@ -1,6 +1,6 @@
 {
   "name": "react-css-transition-replace",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A React component to animate replacing one element with another.",
   "main": "lib/ReactCSSTransitionReplace.js",
   "repository": {
@@ -10,9 +10,10 @@
   "scripts": {
     "start": "gulp demo",
     "test": "echo \"No test implemented\" && exit 0",
-    "prebuild": "./node_modules/.bin/rimraf lib && gulp lint",
+    "prebuild": "./node_modules/.bin/rimraf lib",
     "build": "./node_modules/.bin/babel ./src --out-dir ./lib",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "build:docs": "gulp gh-pages"
   },
   "dependencies": {
     "chain-function": "^1.0.0",
