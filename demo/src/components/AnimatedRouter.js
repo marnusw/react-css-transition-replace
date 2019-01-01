@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import ReactCSSTransitionReplace from '../../src/ReactCSSTransitionReplace.jsx'
+import ReactCSSTransitionReplace from '../../../src/ReactCSSTransitionReplace.jsx'
 
 const Home = () => (
   <div>

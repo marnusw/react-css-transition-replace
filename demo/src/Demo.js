@@ -3,13 +3,13 @@ import { Navbar, Nav, NavItem, Grid } from 'react-bootstrap'
 
 const NavbarBrand = Navbar.Brand
 
-import PageHead from './PageHead.jsx'
-import ContentSwapper from './ContentSwapper.jsx'
-import ContentAddRemove from './ContentAddRemove.jsx'
-import AnimatedRouter from './AnimatedRouter.jsx'
+import PageHead from './components/PageHead'
+import ContentSwapper from './components/ContentSwapper'
+import ContentAddRemove from './components/ContentAddRemove'
+import AnimatedRouter from './components/AnimatedRouter'
 
-import ContentLong from './ContentLong.jsx'
-import ContentShort from './ContentShort.jsx'
+import ContentLong from './components/ContentLong'
+import ContentShort from './components/ContentShort'
 
 class Demo extends React.Component {
 

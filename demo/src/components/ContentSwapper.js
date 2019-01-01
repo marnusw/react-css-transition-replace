@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactCSSTransitionReplace from '../../src/ReactCSSTransitionReplace.jsx'
+import ReactCSSTransitionReplace from '../../../src/ReactCSSTransitionReplace.jsx'
 
 
 class ContentSwapper extends React.Component {
