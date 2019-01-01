@@ -1,0 +1,29 @@
+{
+  "name": "react-css-transition-replace-demo",
+  "version": "3.0.3",
+  "private": true,
+  "homepage": "https://marnusw.github.io/react-css-transition-replace",
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "build": "react-scripts build",
+    "postbuild": "cp -r build/* ../../gh-pages && rimraf build"
+  },
+  "dependencies": {
+    "react": "^16.7.0",
+    "react-bootstrap": "^0.32.1",
+    "react-css-transition-replace": "^3.0.3",
+    "react-dom": "^16.7.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "2.1.2"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

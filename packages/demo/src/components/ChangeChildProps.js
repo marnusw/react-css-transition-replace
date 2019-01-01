@@ -1,9 +1,7 @@
 import React from 'react'
-import ReactCSSTransitionReplace from '../../src/ReactCSSTransitionReplace.jsx'
-
+import ReactCSSTransitionReplace from 'react-css-transition-replace'
 
 class ChangeChildProps extends React.Component {
-
   state = {
     text: 'one',
     key: 1,
@@ -28,15 +26,14 @@ class ChangeChildProps extends React.Component {
 
   render() {
     return (
-      <div style={{cursor: 'pointer'}}>
+      <div style={{ cursor: 'pointer' }}>
         <a onClick={this.handleAnimate}>Click to animate</a>
         {' | '}
-        <a onClick={this.handleToggleText}>Change child props</a><br/>
-        <br/>
+        <a onClick={this.handleToggleText}>Change child props</a>
+        <br />
+        <br />
         <ReactCSSTransitionReplace {...this.props}>
-          <p key={this.state.key}>
-            {this.state.text}
-          </p>
+          <p key={this.state.key}>{this.state.text}</p>
         </ReactCSSTransitionReplace>
       </div>
     )

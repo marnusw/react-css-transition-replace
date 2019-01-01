@@ -1,9 +1,7 @@
 import React from 'react'
-import ReactCSSTransitionReplace from '../../src/ReactCSSTransitionReplace.jsx'
-
+import ReactCSSTransitionReplace from 'react-css-transition-replace'
 
 class ContentSwapper extends React.Component {
-
   state = {
     count: React.Children.count(this.props.children),
     index: 0,
@@ -11,7 +9,7 @@ class ContentSwapper extends React.Component {
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      this.setState({index: this.state.index + 1 >= this.state.count ? 0 : this.state.index + 1})
+      this.setState({ index: this.state.index + 1 >= this.state.count ? 0 : this.state.index + 1 })
     }, 4000)
   }
 

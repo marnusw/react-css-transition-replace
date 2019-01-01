@@ -2,7 +2,6 @@ import React from 'react'
 import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
 import chain from 'chain-function'
-import warning from 'warning'
 
 import raf from 'dom-helpers/util/requestAnimationFrame'
 
@@ -11,9 +10,7 @@ import { nameShape, transitionTimeout } from './utils/PropTypes'
 
 const reactCSSTransitionReplaceChild = React.createFactory(ReactCSSTransitionReplaceChild)
 
-
 export default class ReactCSSTransitionReplace extends React.Component {
-
   static displayName = 'ReactCSSTransitionReplace'
 
   static propTypes = {
@@ -53,9 +50,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       height: null,
       width: null,
     }
-  }
 
-  componentWillMount() {
     this.shouldEnterCurrent = false
     this.keysToLeave = []
     this.transitioningKeys = {}
@@ -73,7 +68,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const nextChild = nextProps.children ? React.Children.only(nextProps.children) : undefined
-    const {currentChild} = this.state
+    const { currentChild } = this.state
 
     if (currentChild && nextChild && nextChild.key === currentChild.key && !this.state.nextChild) {
       // This is the same child, but receiving new props means the child itself has re-rendered
@@ -82,7 +77,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       })
     }
 
-    const {currentKey, prevChildren} = this.state
+    const { currentKey, prevChildren } = this.state
 
     const nextState = {
       currentKey: String(Number(currentKey) + 1),
@@ -99,7 +94,9 @@ export default class ReactCSSTransitionReplace extends React.Component {
       const currentChildNode = findDOMNode(this.childRefs[currentKey])
       nextState.height = currentChildNode ? currentChildNode.offsetHeight : 0
       nextState.width = this.props.changeWidth
-        ? (currentChildNode ? currentChildNode.offsetWidth : 0)
+        ? currentChildNode
+          ? currentChildNode.offsetWidth
+          : 0
         : null
       nextState.prevChildren = {
         ...prevChildren,
@@ -132,7 +129,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     this.childRefs[key].componentWillAppear(this.handleDoneAppearing.bind(this, key))
   }
 
-  handleDoneAppearing = (key) => {
+  handleDoneAppearing = key => {
     delete this.transitioningKeys[key]
     if (key !== this.state.currentKey) {
       // This child was removed before it had fully appeared. Remove it.
@@ -150,14 +147,14 @@ export default class ReactCSSTransitionReplace extends React.Component {
     delete this.transitioningKeys[key]
     if (key === this.state.currentKey) {
       // The current child has finished entering so the height transition is also cleared.
-      this.setState({height: null})
+      this.setState({ height: null })
     } else {
       // This child was removed before it had fully appeared. Remove it.
       this.performLeave(key)
     }
   }
 
-  performLeave = (key) => {
+  performLeave = key => {
     this.transitioningKeys[key] = true
     this.childRefs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key))
     if (!this.state.currentChild || !findDOMNode(this.childRefs[this.state.currentKey])) {
@@ -170,7 +167,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
   handleDoneLeaving(key) {
     delete this.transitioningKeys[key]
 
-    const nextState = {prevChildren: {...this.state.prevChildren}}
+    const nextState = { prevChildren: { ...this.state.prevChildren } }
     delete nextState.prevChildren[key]
     delete this.childRefs[key]
 
@@ -189,12 +186,16 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   performHeightTransition = () => {
     if (!this.unmounted) {
-      const {state} = this
-      const currentChildNode = state.currentChild ? findDOMNode(this.childRefs[state.currentKey]) : null
+      const { state } = this
+      const currentChildNode = state.currentChild
+        ? findDOMNode(this.childRefs[state.currentKey])
+        : null
       this.setState({
         height: currentChildNode ? currentChildNode.offsetHeight : 0,
         width: this.props.changeWidth
-          ? (currentChildNode ? currentChildNode.offsetWidth : 0)
+          ? currentChildNode
+            ? currentChildNode.offsetWidth
+            : 0
           : null,
       })
     }
@@ -205,49 +206,59 @@ export default class ReactCSSTransitionReplace extends React.Component {
     let transitionName = this.props.transitionName
 
     if (typeof transitionName === 'object' && transitionName !== null) {
-      transitionName = {...transitionName}
+      transitionName = { ...transitionName }
       delete transitionName.height
     }
 
     // We need to provide this childFactory so that
     // ReactCSSTransitionReplaceChild can receive updates to name,
     // enter, and leave while it is leaving.
-    return reactCSSTransitionReplaceChild({
-      name: transitionName,
-      appear: this.props.transitionAppear,
-      enter: this.props.transitionEnter,
-      leave: this.props.transitionLeave,
-      appearTimeout: this.props.transitionAppearTimeout,
-      enterTimeout: this.props.transitionEnterTimeout,
-      leaveTimeout: this.props.transitionLeaveTimeout,
-      ...moreProps,
-    }, child)
+    return reactCSSTransitionReplaceChild(
+      {
+        name: transitionName,
+        appear: this.props.transitionAppear,
+        enter: this.props.transitionEnter,
+        leave: this.props.transitionLeave,
+        appearTimeout: this.props.transitionAppearTimeout,
+        enterTimeout: this.props.transitionEnterTimeout,
+        leaveTimeout: this.props.transitionLeaveTimeout,
+        ...moreProps,
+      },
+      child,
+    )
   }
 
   storeChildRef(child, key) {
     const isCallbackRef = typeof child.ref !== 'string'
-    warning(isCallbackRef,
-      'string refs are not supported on children of ReactCSSTransitionReplace and will be ignored. ' +
-      'Please use a callback ref instead: https://facebook.github.io/react/docs/refs-and-the-dom.html#the-ref-callback-attribute')
-
-    return chain(
-      isCallbackRef ? child.ref : null,
-      (r) => {this.childRefs[key] = r}
-    )
+    return chain(isCallbackRef ? child.ref : null, r => {
+      this.childRefs[key] = r
+    })
   }
 
   render() {
-    const {currentKey, currentChild, prevChildren, height, width} = this.state
+    const { currentKey, currentChild, prevChildren, height, width } = this.state
     const childrenToRender = []
 
     const {
-      overflowHidden, transitionName, component, childComponent, notifyLeaving,
-      transitionAppear, transitionEnter, transitionLeave, changeWidth,
-      transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout,
+      overflowHidden,
+      transitionName,
+      component,
+      childComponent,
+      notifyLeaving,
+      transitionAppear,
+      transitionEnter,
+      transitionLeave,
+      changeWidth,
+      transitionAppearTimeout,
+      transitionEnterTimeout,
+      transitionLeaveTimeout,
       ...containerProps
     } = this.props
 
-    const transitioning = this.shouldEnterCurrent || this.keysToLeave.length || Object.keys(this.transitioningKeys).length
+    const transitioning =
+      this.shouldEnterCurrent ||
+      this.keysToLeave.length ||
+      Object.keys(this.transitioningKeys).length
 
     containerProps.style = {
       ...containerProps.style,
@@ -261,9 +272,10 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
 
     if (height !== null) {
-      const heightClassName = typeof transitionName === 'string'
-        ? `${transitionName}-height`
-        : (transitionName && transitionName.height) || ''
+      const heightClassName =
+        typeof transitionName === 'string'
+          ? `${transitionName}-height`
+          : (transitionName && transitionName.height) || ''
 
       containerProps.className = `${containerProps.className || ''} ${heightClassName}`
       containerProps.style.height = height
@@ -287,34 +299,35 @@ export default class ReactCSSTransitionReplace extends React.Component {
     Object.keys(prevChildren).forEach(key => {
       const child = prevChildren[key]
       childrenToRender.push(
-        React.createElement(childComponent,
-          {key, style: positionAbsolute},
+        React.createElement(
+          childComponent,
+          { key, style: positionAbsolute },
           this.wrapChild(
             notifyLeaving && typeof child.type !== 'string'
-              ? React.cloneElement(child, {isLeaving: true})
+              ? React.cloneElement(child, { isLeaving: true })
               : child,
-            {ref: this.storeChildRef(child, key)}
-          )
-        )
+            { ref: this.storeChildRef(child, key) },
+          ),
+        ),
       )
     })
 
     if (currentChild) {
       childrenToRender.push(
-        React.createElement(childComponent,
+        React.createElement(
+          childComponent,
           {
             key: currentKey,
             // While there are leaving children positioning must always be specified to keep the current
             // child on top; the current child can switch to relative positioning after entering though.
             style: this.transitioningKeys[currentKey]
               ? positionAbsolute
-              : (transitioning ? {position: 'relative'} : null),
+              : transitioning
+              ? { position: 'relative' }
+              : null,
           },
-          this.wrapChild(
-            currentChild,
-            {ref: this.storeChildRef(currentChild, currentKey)}
-          )
-        )
+          this.wrapChild(currentChild, { ref: this.storeChildRef(currentChild, currentKey) }),
+        ),
       )
     }
 

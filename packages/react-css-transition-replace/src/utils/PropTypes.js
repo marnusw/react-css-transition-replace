@@ -1,20 +1,21 @@
 import PropTypes from 'prop-types'
 
 export function transitionTimeout(transitionType) {
-  let timeoutPropName = 'transition' + transitionType + 'Timeout'
-  let enabledPropName = 'transition' + transitionType
+  const timeoutPropName = 'transition' + transitionType + 'Timeout'
+  const enabledPropName = 'transition' + transitionType
 
-  return (props) => {
+  return props => {
     // If the transition is enabled
     if (props[enabledPropName]) {
       // If no timeout duration is provided
-      if (props[timeoutPropName] == null) {
+      if (!props[timeoutPropName]) {
         return new Error(
-          timeoutPropName + ' wasn\'t supplied to CSSTransitionGroup: ' +
-          'this can cause unreliable animations and won\'t be supported in ' +
-          'a future version of React. See ' +
-          'https://fb.me/react-animation-transition-group-timeout for more ' +
-          'information.',
+          timeoutPropName +
+            " wasn't supplied to CSSTransitionGroup: " +
+            "this can cause unreliable animations and won't be supported in " +
+            'a future version of React. See ' +
+            'https://fb.me/react-animation-transition-group-timeout for more ' +
+            'information.',
         )
 
         // If the duration isn't a number
