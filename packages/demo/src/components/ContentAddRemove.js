@@ -1,17 +1,16 @@
 import React from 'react'
-import ReactCSSTransitionReplace from '../../../src/ReactCSSTransitionReplace.jsx'
-
+import Button from 'react-bootstrap/es/Button'
+import ReactCSSTransitionReplace from 'react-css-transition-replace'
 
 class ContentAddRemove extends React.Component {
-
-  state = {added: false}
+  state = { added: false }
 
   handleClick = () => {
-    this.setState({added: !this.state.added})
+    this.setState({ added: !this.state.added })
   }
 
   render() {
-    const {style = {}} = this.props
+    const { style = {} } = this.props
 
     const newStyle = {
       ...style,
@@ -20,8 +19,11 @@ class ContentAddRemove extends React.Component {
 
     return (
       <div style={newStyle} onClick={this.handleClick}>
-        <a>Click to {this.state.added ? 'remove' : 'add'} content</a><br/>
-        <br/>
+        <Button bsStyle="link" style={{ outline: 'none', paddingLeft: 0 }}>
+          Click to {this.state.added ? 'remove' : 'add'} content
+        </Button>
+        <br />
+        <br />
         <ReactCSSTransitionReplace {...this.props}>
           {this.state.added ? this.props.children : null}
         </ReactCSSTransitionReplace>

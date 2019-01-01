@@ -14,7 +14,7 @@ import { findDOMNode } from 'react-dom'
 
 import { nameShape } from './utils/PropTypes'
 
-let events = []
+const events = []
 if (transitionEnd) {
   events.push(transitionEnd)
 }
@@ -24,8 +24,7 @@ if (animationEnd) {
 
 function addEndListener(node, listener) {
   if (events.length) {
-    events.forEach(e =>
-      node.addEventListener(e, listener, false))
+    events.forEach(e => node.addEventListener(e, listener, false))
   } else {
     setTimeout(listener, 0)
   }
@@ -54,7 +53,6 @@ const propTypes = {
 }
 
 class CSSTransitionGroupChild extends React.Component {
-
   static displayName = 'CSSTransitionGroupChild'
 
   componentWillMount() {
@@ -68,7 +66,7 @@ class CSSTransitionGroupChild extends React.Component {
     if (this.timeout) {
       clearTimeout(this.timeout)
     }
-    this.transitionTimeouts.forEach((timeout) => {
+    this.transitionTimeouts.forEach(timeout => {
       clearTimeout(timeout)
     })
 
@@ -76,7 +74,7 @@ class CSSTransitionGroupChild extends React.Component {
   }
 
   transition(animationType, finishCallback, timeout) {
-    let node = findDOMNode(this)
+    const node = findDOMNode(this)
 
     if (!node) {
       if (finishCallback) {
@@ -85,8 +83,8 @@ class CSSTransitionGroupChild extends React.Component {
       return
     }
 
-    let className = this.props.name[animationType] || this.props.name + '-' + animationType
-    let activeClassName = this.props.name[animationType + 'Active'] || className + '-active'
+    const className = this.props.name[animationType] || this.props.name + '-' + animationType
+    const activeClassName = this.props.name[animationType + 'Active'] || className + '-active'
     let timer = null
     let removeListeners
 
@@ -96,7 +94,7 @@ class CSSTransitionGroupChild extends React.Component {
     this.queueClassAndNode(activeClassName, node)
 
     // Clean-up the animation after the specified delay
-    let finish = (e) => {
+    const finish = e => {
       if (e && e.target !== node) {
         return
       }
@@ -147,7 +145,7 @@ class CSSTransitionGroupChild extends React.Component {
 
   flushClassNameAndNodeQueue() {
     if (!this.unmounted) {
-      this.classNameAndNodeQueue.forEach((obj) => {
+      this.classNameAndNodeQueue.forEach(obj => {
         // This is for to force a repaint,
         // which is necessary in order to transition styles when adding a class name.
         /* eslint-disable no-unused-expressions */
@@ -160,7 +158,7 @@ class CSSTransitionGroupChild extends React.Component {
     this.rafHandle = null
   }
 
-  componentWillAppear = (done) => {
+  componentWillAppear = done => {
     if (this.props.appear) {
       this.transition('appear', done, this.props.appearTimeout)
     } else {
@@ -168,7 +166,7 @@ class CSSTransitionGroupChild extends React.Component {
     }
   }
 
-  componentWillEnter = (done) => {
+  componentWillEnter = done => {
     if (this.props.enter) {
       this.transition('enter', done, this.props.enterTimeout)
     } else {
@@ -176,7 +174,7 @@ class CSSTransitionGroupChild extends React.Component {
     }
   }
 
-  componentWillLeave = (done) => {
+  componentWillLeave = done => {
     if (this.props.leave) {
       this.transition('leave', done, this.props.leaveTimeout)
     } else {
@@ -185,7 +183,7 @@ class CSSTransitionGroupChild extends React.Component {
   }
 
   render() {
-    const props = {...this.props}
+    const props = { ...this.props }
     delete props.name
     delete props.appear
     delete props.enter

@@ -1,0 +1,147 @@
+{
+  "name": "react-css-transition-replace",
+  "version": "3.0.3",
+  "description": "A React component to animate replacing one element with another.",
+  "main": "lib/ReactCSSTransitionReplace.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marnusw/react-css-transition-replace.git"
+  },
+  "scripts": {
+    "test": "echo \"No test implemented\" && exit 0",
+    "prebuild": "rimraf lib",
+    "build": "babel ./src --out-dir ./lib",
+    "watch": "babel ./src --out-dir ./lib --watch",
+    "prepublish": "yarn build && cp ../../*.md .",
+    "postpublish": "rm *.md"
+  },
+  "dependencies": {
+    "chain-function": "^1.0.0",
+    "dom-helpers": "^3.3.1",
+    "prop-types": "^15.6.1",
+    "warning": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-check-es2015-constants": "^6.8.0",
+    "babel-plugin-syntax-trailing-function-commas": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.8.0",
+    "babel-plugin-transform-es2015-block-scoped-functions": "^6.8.0",
+    "babel-plugin-transform-es2015-block-scoping": "^6.26.0",
+    "babel-plugin-transform-es2015-classes": "^6.24.1",
+    "babel-plugin-transform-es2015-computed-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.16.0",
+    "babel-plugin-transform-es2015-duplicate-keys": "^6.24.1",
+    "babel-plugin-transform-es2015-for-of": "^6.8.0",
+    "babel-plugin-transform-es2015-function-name": "^6.24.1",
+    "babel-plugin-transform-es2015-literals": "^6.8.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-es2015-object-super": "^6.24.1",
+    "babel-plugin-transform-es2015-parameters": "^6.24.1",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-spread": "^6.8.0",
+    "babel-plugin-transform-es2015-sticky-regex": "^6.24.1",
+    "babel-plugin-transform-es2015-template-literals": "^6.8.0",
+    "babel-plugin-transform-es2015-typeof-symbol": "^6.8.0",
+    "babel-plugin-transform-es2015-unicode-regex": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-object-set-prototype-of-to-assign": "^6.8.0",
+    "babel-plugin-transform-proto-to-assign": "^6.26.0",
+    "babel-plugin-transform-react-constant-elements": "^6.9.1",
+    "babel-plugin-transform-react-display-name": "^6.25.0",
+    "babel-plugin-transform-react-inline-elements": "^6.8.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-react-pure-class-to-function": "^1.0.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
+    "rimraf": "^2.6.2"
+  },
+  "author": "Marnus Weststrate <marnusw@gmail.com>",
+  "keywords": [
+    "react",
+    "transition",
+    "replace"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marnusw/react-css-transition-replace/issues"
+  },
+  "homepage": "https://github.com/marnusw/react-css-transition-replace",
+  "babel": {
+    "compact": false,
+    "ast": false,
+    "plugins": [
+      "transform-decorators-legacy",
+      "transform-proto-to-assign",
+      "transform-object-set-prototype-of-to-assign",
+      "transform-object-rest-spread",
+      "transform-class-properties",
+      [
+        "transform-es2015-classes",
+        {
+          "loose": true
+        }
+      ],
+      [
+        "transform-es2015-spread",
+        {
+          "loose": true
+        }
+      ],
+      "transform-es2015-parameters",
+      "syntax-trailing-function-commas",
+      [
+        "transform-es2015-destructuring",
+        {
+          "loose": true
+        }
+      ],
+      [
+        "transform-es2015-template-literals",
+        {
+          "loose": true,
+          "spec": true
+        }
+      ],
+      "transform-es2015-literals",
+      "transform-es2015-function-name",
+      "transform-es2015-arrow-functions",
+      "transform-es2015-block-scoped-functions",
+      "transform-es2015-object-super",
+      "transform-es2015-shorthand-properties",
+      "transform-es2015-duplicate-keys",
+      [
+        "transform-es2015-computed-properties",
+        {
+          "loose": true
+        }
+      ],
+      [
+        "transform-es2015-for-of",
+        {
+          "loose": true
+        }
+      ],
+      "transform-es2015-sticky-regex",
+      "transform-es2015-unicode-regex",
+      "check-es2015-constants",
+      "transform-es2015-block-scoping",
+      "transform-es2015-typeof-symbol",
+      "transform-react-jsx",
+      "transform-react-display-name",
+      "transform-react-constant-elements",
+      "transform-react-inline-elements",
+      "transform-react-remove-prop-types",
+      "transform-react-pure-class-to-function",
+      "add-module-exports",
+      "transform-es2015-modules-commonjs"
+    ]
+  }
+}

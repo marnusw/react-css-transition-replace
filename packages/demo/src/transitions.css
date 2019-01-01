@@ -1,4 +1,3 @@
-
 /* Cross-fade transition */
 
 .cross-fade-leave {
@@ -18,9 +17,8 @@
 }
 
 .cross-fade-height {
-  transition: height .5s ease-in-out;
+  transition: height 0.5s ease-in-out;
 }
-
 
 /* Fade out, then fade in transition */
 
@@ -31,7 +29,7 @@
 .fade-wait-leave.fade-wait-leave-active,
 .fade-wait-delay-leave.fade-wait-delay-leave-active {
   opacity: 0;
-  transition: opacity .4s ease-in;
+  transition: opacity 0.4s ease-in;
 }
 
 .fade-wait-enter,
@@ -42,17 +40,16 @@
 .fade-wait-delay-enter.fade-wait-delay-enter-active {
   opacity: 1;
   /* Delay the enter animation until the leave completes */
-  transition: opacity .4s ease-in .4s;
+  transition: opacity 0.4s ease-in 0.4s;
 }
 
 .fade-wait-height {
-  transition: height .8s ease-in-out;
+  transition: height 0.8s ease-in-out;
 }
 .fade-wait-delay-height {
   /* Delay the height animation until the leave completes */
-  transition: height .4s ease-in-out .4s;
+  transition: height 0.4s ease-in-out 0.4s;
 }
-
 
 /* Carousel-like transition */
 
@@ -76,7 +73,6 @@
   transition: height 1s ease-in-out;
 }
 
-
 /* Roll-up transition */
 
 .roll-up-leave {
@@ -86,7 +82,7 @@
 .roll-up-leave.roll-up-leave-active {
   transform: translate(-100%, 0);
   opacity: 0;
-  transition: opacity .8s ease-in-out, transform .8s ease-in-out;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
 }
 
 .roll-up-enter {
@@ -96,13 +92,12 @@
 .roll-up-enter.roll-up-enter-active {
   transform: translate(0, 0);
   opacity: 1;
-  transition: opacity .8s ease-in-out, transform .8s ease-in-out;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
 }
 
 .roll-up-height {
-  transition: height .8s ease-in-out;
+  transition: height 0.8s ease-in-out;
 }
-
 
 /* Fade with width transition */
 
@@ -111,7 +106,7 @@
 }
 .fade-fast-leave.fade-fast-leave-active {
   opacity: 0;
-  transition: opacity .5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .fade-fast-enter {
@@ -119,9 +114,9 @@
 }
 .fade-fast-enter.fade-fast-enter-active {
   opacity: 1;
-  transition: opacity .5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .fade-fast-height {
-  transition: height .5s ease-in-out, width .5s ease-in-out;
+  transition: height 0.5s ease-in-out, width 0.5s ease-in-out;
 }
