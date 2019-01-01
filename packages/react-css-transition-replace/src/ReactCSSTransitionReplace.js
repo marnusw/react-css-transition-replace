@@ -2,7 +2,6 @@ import React from 'react'
 import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
 import chain from 'chain-function'
-import warning from 'warning'
 
 import raf from 'dom-helpers/util/requestAnimationFrame'
 
@@ -233,12 +232,6 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   storeChildRef(child, key) {
     const isCallbackRef = typeof child.ref !== 'string'
-    warning(
-      isCallbackRef,
-      'string refs are not supported on children of ReactCSSTransitionReplace and will be ignored. ' +
-        'Please use a callback ref instead: https://facebook.github.io/react/docs/refs-and-the-dom.html#the-ref-callback-attribute',
-    )
-
     return chain(isCallbackRef ? child.ref : null, r => {
       this.childRefs[key] = r
     })
