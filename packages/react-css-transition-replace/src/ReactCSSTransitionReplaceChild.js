@@ -55,7 +55,8 @@ const propTypes = {
 class CSSTransitionGroupChild extends React.Component {
   static displayName = 'CSSTransitionGroupChild'
 
-  componentWillMount() {
+  constructor(props) {
+    super(props)
     this.classNameAndNodeQueue = []
     this.transitionTimeouts = []
   }

@@ -50,9 +50,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       height: null,
       width: null,
     }
-  }
 
-  componentWillMount() {
     this.shouldEnterCurrent = false
     this.keysToLeave = []
     this.transitioningKeys = {}
