@@ -1,5 +1,6 @@
 ### Next
 
+- [UPGRADE] Rename to `UNSAFE_componentWillReceiveProps`; requires `react@>=16.3.0.
 - [UPGRADE] Remove the use of `componentWillMount` which is unsafe.
 - [UPGRADE] Update dependencies to latest stable versions.
 - [DEPENDENCY] Remove the `warning` dependency since function refs are now standard practice.

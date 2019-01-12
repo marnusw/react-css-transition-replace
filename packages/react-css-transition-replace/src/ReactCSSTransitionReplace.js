@@ -38,8 +38,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
     childComponent: 'span',
   }
 
-  constructor(props, context) {
-    super(props, context)
+  constructor(props) {
+    super(props)
 
     this.childRefs = Object.create(null)
 
@@ -66,7 +66,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     this.unmounted = true
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const nextChild = nextProps.children ? React.Children.only(nextProps.children) : undefined
     const { currentChild } = this.state
 
