@@ -104,7 +104,7 @@ class Demo extends React.Component {
             <h3 id="carousel-swap">Carousel transition</h3>
             <p>
               The slide animation is realised with a 2D CSS <code>transform</code>. View the{' '}
-              <a href="transitions.css" target="_blank">
+              <a href="https://github.com/marnusw/react-css-transition-replace/blob/master/packages/demo/src/transitions.css" target="_blank">
                 CSS source
               </a>
               . To ensure the entering/leaving images are properly hidden the carousel width can be
@@ -134,7 +134,7 @@ class Demo extends React.Component {
               with no children) which will animate the <code>height</code> going to zero along with
               the <code>leave</code> transition. A single child can subsequently be added again,
               triggering the inverse animation. View the{' '}
-              <a href="transitions.css" target="_blank">
+              <a href="https://github.com/marnusw/react-css-transition-replace/blob/master/packages/demo/src/transitions.css" target="_blank">
                 CSS source
               </a>{' '}
               of the `roll-up` transition.
