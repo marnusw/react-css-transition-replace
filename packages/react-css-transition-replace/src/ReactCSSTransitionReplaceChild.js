@@ -61,7 +61,7 @@ class CSSTransitionGroupChild extends React.Component {
     this.transitionTimeouts = []
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     this.unmounted = true
 
     if (this.timeout) {

@@ -62,7 +62,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     this.unmounted = true
   }
 
