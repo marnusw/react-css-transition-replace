@@ -8,6 +8,7 @@ node_modules
 coverage
 
 # production
+es
 lib
 build
 gh-pages
