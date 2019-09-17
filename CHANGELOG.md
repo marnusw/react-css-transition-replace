@@ -1,8 +1,9 @@
-### Next
+### v4.0.0 (17 September 2019)
 
-- [UPGRADE] Rename to `UNSAFE_componentWillReceiveProps`; requires `react@>=16.3.0.
+- [BREAKING] Rename to `UNSAFE_componentWillReceiveProps`; requires `react@>=16.3.0`.
 - [UPGRADE] Remove the use of `componentWillMount` which is unsafe.
-- [UPGRADE] Update dependencies to latest stable versions.
+- [UPGRADE] Update dependencies; switch to Babel v7.
+- [ENHANCEMENT] Add ESM build output.
 - [DEPENDENCY] Remove the `warning` dependency since function refs are now standard practice.
 - [CHORE] Switch to a monorepo for the lib and demo and use CRA for the demo app.
 - [CHORE] Use Prettier.
