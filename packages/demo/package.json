@@ -10,12 +10,12 @@
     "postbuild": "cp -r build/* ../../gh-pages && rimraf build"
   },
   "dependencies": {
-    "react": "^16.7.0",
-    "react-bootstrap": "^0.32.1",
-    "react-css-transition-replace": "^3.0.3",
-    "react-dom": "^16.7.0",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "^2.1.2"
+    "react": "^16.9.0",
+    "react-bootstrap": "^0.32.4",
+    "react-css-transition-replace": "*",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "^3.1.1"
   },
   "eslintConfig": {
     "extends": "react-app"
