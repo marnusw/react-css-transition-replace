@@ -1,3 +1,8 @@
+### v4.0.1 (11 October 2019)
+
+- [UPGRADE] Minor and patch dependency upgrades.
+- [BUGFIX] revert `dom-helpers` to `v3`. (#65,#66)
+
 ### v4.0.0 (17 September 2019)
 
 - [BREAKING] Rename to `UNSAFE_componentWillReceiveProps`; requires `react@>=16.3.0`.
