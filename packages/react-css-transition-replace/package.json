@@ -14,7 +14,7 @@
     "build:es": "babel ./src --out-dir ./es",
     "build:cjs": "cross-env MODULES=cjs babel ./src --out-dir ./lib",
     "build": "yarn build:es && yarn build:cjs",
-    "watch": "babel ./src --out-dir ./lib --watch",
+    "watch": "babel ./src --out-dir ./es --watch",
     "prepublish": "yarn build && cp ../../*.md .",
     "postpublish": "rm *.md"
   },
@@ -33,7 +33,7 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
-    "cross-env": "^5.2.1",
+    "cross-env": "^6.0.3",
     "rimraf": "^3.0.0"
   },
   "author": "Marnus Weststrate <marnusw@gmail.com>",
