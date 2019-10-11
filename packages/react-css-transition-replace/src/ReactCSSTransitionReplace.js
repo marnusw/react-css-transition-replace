@@ -1,7 +1,6 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
-import chain from 'chain-function'
 
 import raf from 'dom-helpers/util/requestAnimationFrame'
 
@@ -228,13 +227,6 @@ export default class ReactCSSTransitionReplace extends React.Component {
     )
   }
 
-  storeChildRef(child, key) {
-    const isCallbackRef = typeof child.ref !== 'string'
-    return chain(isCallbackRef ? child.ref : null, r => {
-      this.childRefs[key] = r
-    })
-  }
-
   render() {
     const { currentKey, currentChild, prevChildren, height, width } = this.state
     const childrenToRender = []
@@ -306,7 +298,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
             notifyLeaving && typeof child.type !== 'string'
               ? React.cloneElement(child, { isLeaving: true })
               : child,
-            { ref: this.storeChildRef(child, key) },
+            { ref: r => (this.childRefs[key] = r) },
           ),
         ),
       )
@@ -326,7 +318,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
               ? { position: 'relative' }
               : null,
           },
-          this.wrapChild(currentChild, { ref: this.storeChildRef(currentChild, currentKey) }),
+          this.wrapChild(currentChild, { ref: r => (this.childRefs[currentKey] = r) }),
         ),
       )
     }
