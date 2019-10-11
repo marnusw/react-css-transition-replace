@@ -1,9 +1,15 @@
+### v4.0.2 (11 October 2019)
+
+- [BUGFIX] Fix child ref function called a second time with CSSTransitionGroupChild. (#61)
+
 ### v4.0.1 (11 October 2019)
 
 - [UPGRADE] Minor and patch dependency upgrades.
 - [BUGFIX] revert `dom-helpers` to `v3`. (#65,#66)
 
 ### v4.0.0 (17 September 2019)
+
+**BROKEN RELEASE**
 
 - [BREAKING] Rename to `UNSAFE_componentWillReceiveProps`; requires `react@>=16.3.0`.
 - [UPGRADE] Remove the use of `componentWillMount` which is unsafe.
