@@ -22,6 +22,13 @@ that the transition duration must be specified in JavaScript as well as CSS.
 [Change Log](/CHANGELOG.md) |
 [Upgrade Guide](/UPGRADE_GUIDE.md)
 
+<div align="center">
+  <i>ReactCSSTransitionReplace is sponsored by the following partner, please help to support us by taking a look.</i>
+  <a href="https://tracking.gitads.io/?repo=react-css-transition-replace">
+    <img src="https://images.gitads.io/react-css-transition-replace" alt="" />
+  </a>
+</div>
+
 ## Installation
 
 Install via `npm`:
