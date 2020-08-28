@@ -7,7 +7,10 @@ import raf from 'dom-helpers/util/requestAnimationFrame'
 import ReactCSSTransitionReplaceChild from './ReactCSSTransitionReplaceChild'
 import { nameShape, transitionTimeout } from './utils/PropTypes'
 
-const reactCSSTransitionReplaceChild = React.createFactory(ReactCSSTransitionReplaceChild)
+const reactCSSTransitionReplaceChild = React.createElement.bind(
+  null,
+  ReactCSSTransitionReplaceChild,
+)
 
 export default class ReactCSSTransitionReplace extends React.Component {
   static displayName = 'ReactCSSTransitionReplace'
