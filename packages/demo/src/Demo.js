@@ -16,7 +16,7 @@ class Demo extends React.Component {
   componentDidMount() {
     const images = ['img/vista1.jpg', 'img/vista2.jpg', 'img/vista3.jpg', 'img/vista4.jpg']
 
-    images.forEach(src => {
+    images.forEach((src) => {
       const img = new window.Image()
       img.src = src
     })

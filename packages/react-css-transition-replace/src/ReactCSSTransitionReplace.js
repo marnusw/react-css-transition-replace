@@ -126,7 +126,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     this.childRefs[key].componentWillAppear(this.handleDoneAppearing.bind(this, key))
   }
 
-  handleDoneAppearing = key => {
+  handleDoneAppearing = (key) => {
     delete this.transitioningKeys[key]
     if (key !== this.state.currentKey) {
       // This child was removed before it had fully appeared. Remove it.
@@ -151,7 +151,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
   }
 
-  performLeave = key => {
+  performLeave = (key) => {
     this.transitioningKeys[key] = true
     this.childRefs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key))
     if (!this.state.currentChild || !findDOMNode(this.childRefs[this.state.currentKey])) {
@@ -284,7 +284,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
       userSelect: 'none',
     }
 
-    Object.keys(prevChildren).forEach(key => {
+    Object.keys(prevChildren).forEach((key) => {
       const child = prevChildren[key]
       childrenToRender.push(
         React.createElement(
@@ -294,7 +294,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
             notifyLeaving && typeof child.type !== 'string'
               ? React.cloneElement(child, { isLeaving: true })
               : child,
-            { ref: r => (this.childRefs[key] = r) },
+            { ref: (r) => (this.childRefs[key] = r) },
           ),
         ),
       )
@@ -314,7 +314,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
               ? { position: 'relative' }
               : null,
           },
-          this.wrapChild(currentChild, { ref: r => (this.childRefs[currentKey] = r) }),
+          this.wrapChild(currentChild, { ref: (r) => (this.childRefs[currentKey] = r) }),
         ),
       )
     }

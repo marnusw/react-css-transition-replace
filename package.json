@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start": "cd packages/demo && npm run start",
-    "test": "echo \"No test implemented\" && exit 0"
+    "test": "echo \"No test implemented\" && exit 0",
+    "lint": "eslint .",
+    "prettier": "prettier . --write"
   },
   "workspaces": [
     "packages/*"

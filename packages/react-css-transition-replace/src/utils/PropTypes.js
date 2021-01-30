@@ -4,7 +4,7 @@ export function transitionTimeout(transitionType) {
   const timeoutPropName = 'transition' + transitionType + 'Timeout'
   const enabledPropName = 'transition' + transitionType
 
-  return props => {
+  return (props) => {
     // If the transition is enabled
     if (props[enabledPropName]) {
       // If no timeout duration is provided

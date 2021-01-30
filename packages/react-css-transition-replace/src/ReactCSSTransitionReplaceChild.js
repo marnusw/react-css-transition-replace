@@ -24,7 +24,7 @@ if (animationEnd) {
 
 function addEndListener(node, listener) {
   if (events.length) {
-    events.forEach(e => node.addEventListener(e, listener, false))
+    events.forEach((e) => node.addEventListener(e, listener, false))
   } else {
     setTimeout(listener, 0)
   }
@@ -33,7 +33,7 @@ function addEndListener(node, listener) {
     if (!events.length) {
       return
     }
-    events.forEach(e => node.removeEventListener(e, listener, false))
+    events.forEach((e) => node.removeEventListener(e, listener, false))
   }
 }
 
@@ -67,7 +67,7 @@ class CSSTransitionGroupChild extends React.Component {
     if (this.timeout) {
       clearTimeout(this.timeout)
     }
-    this.transitionTimeouts.forEach(timeout => {
+    this.transitionTimeouts.forEach((timeout) => {
       clearTimeout(timeout)
     })
 
@@ -95,7 +95,7 @@ class CSSTransitionGroupChild extends React.Component {
     this.queueClassAndNode(activeClassName, node)
 
     // Clean-up the animation after the specified delay
-    const finish = e => {
+    const finish = (e) => {
       if (e && e.target !== node) {
         return
       }
@@ -146,7 +146,7 @@ class CSSTransitionGroupChild extends React.Component {
 
   flushClassNameAndNodeQueue() {
     if (!this.unmounted) {
-      this.classNameAndNodeQueue.forEach(obj => {
+      this.classNameAndNodeQueue.forEach((obj) => {
         // This is for to force a repaint,
         // which is necessary in order to transition styles when adding a class name.
         /* eslint-disable no-unused-expressions */
@@ -159,7 +159,7 @@ class CSSTransitionGroupChild extends React.Component {
     this.rafHandle = null
   }
 
-  componentWillAppear = done => {
+  componentWillAppear = (done) => {
     if (this.props.appear) {
       this.transition('appear', done, this.props.appearTimeout)
     } else {
@@ -167,7 +167,7 @@ class CSSTransitionGroupChild extends React.Component {
     }
   }
 
-  componentWillEnter = done => {
+  componentWillEnter = (done) => {
     if (this.props.enter) {
       this.transition('enter', done, this.props.enterTimeout)
     } else {
@@ -175,7 +175,7 @@ class CSSTransitionGroupChild extends React.Component {
     }
   }
 
-  componentWillLeave = done => {
+  componentWillLeave = (done) => {
     if (this.props.leave) {
       this.transition('leave', done, this.props.leaveTimeout)
     } else {

@@ -8,13 +8,13 @@ class ChangeChildProps extends React.Component {
   }
 
   handleToggleText = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       text: this.getToggledText(state),
     }))
   }
 
   handleAnimate = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       text: this.getToggledText(state),
       key: state.key + 1,
     }))

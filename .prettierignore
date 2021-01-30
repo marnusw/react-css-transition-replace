@@ -1,0 +1,4 @@
+gh-pages
+node_modules
+**/es
+**/lib
