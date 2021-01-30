@@ -7,8 +7,6 @@ import raf from 'dom-helpers/util/requestAnimationFrame'
 import ReactCSSTransitionReplaceChild from './ReactCSSTransitionReplaceChild'
 import { nameShape, transitionTimeout } from './utils/PropTypes'
 
-const reactCSSTransitionReplaceChild = React.createFactory(ReactCSSTransitionReplaceChild)
-
 export default class ReactCSSTransitionReplace extends React.Component {
   static displayName = 'ReactCSSTransitionReplace'
 
@@ -209,10 +207,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
       delete transitionName.height
     }
 
-    // We need to provide this childFactory so that
-    // ReactCSSTransitionReplaceChild can receive updates to name,
-    // enter, and leave while it is leaving.
-    return reactCSSTransitionReplaceChild(
+    return React.createElement(
+      ReactCSSTransitionReplaceChild,
       {
         name: transitionName,
         appear: this.props.transitionAppear,
