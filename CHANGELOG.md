@@ -1,3 +1,7 @@
+### v4.0.3 (30 January 2020)
+
+- [CHORE] Remove deprecated `React.createFactory`.
+
 ### v4.0.2 (11 October 2019)
 
 - [BUGFIX] Fix child ref function called a second time with CSSTransitionGroupChild. (#61)

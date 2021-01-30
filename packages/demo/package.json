@@ -1,13 +1,13 @@
 {
   "name": "react-css-transition-replace-demo",
-  "version": "3.0.3",
+  "version": "4.0.3",
   "private": true,
   "homepage": "https://marnusw.github.io/react-css-transition-replace",
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test",
     "build": "react-scripts build",
-    "postbuild": "cp -r build/* ../../gh-pages && rimraf build"
+    "postbuild": "rimraf ../../gh-pages/static && cp -r build/* ../../gh-pages && rimraf build"
   },
   "dependencies": {
     "react": "^16.9.0",
