@@ -1,3 +1,7 @@
+### v4.0.4 (30 January 2020)
+
+- [UPGRADE] Upgrade `dom-helpers@5`.
+
 ### v4.0.3 (30 January 2020)
 
 - [CHORE] Remove deprecated `React.createFactory`.
