@@ -32,7 +32,7 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
-    "cross-env": "^6.0.3",
+    "cross-env": "^7.0.3",
     "rimraf": "^3.0.0"
   },
   "author": "Marnus Weststrate <marnusw@gmail.com>",

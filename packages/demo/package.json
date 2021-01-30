@@ -15,7 +15,7 @@
     "react-css-transition-replace": "*",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.1.1"
+    "react-scripts": "3.1.2"
   },
   "eslintConfig": {
     "extends": "react-app"
