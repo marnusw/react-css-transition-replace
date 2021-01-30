@@ -2,7 +2,7 @@ import React from 'react'
 import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
 
-import raf from 'dom-helpers/util/requestAnimationFrame'
+import { request as raf } from 'dom-helpers/animationFrame'
 
 import ReactCSSTransitionReplaceChild from './ReactCSSTransitionReplaceChild'
 import { nameShape, transitionTimeout } from './utils/PropTypes'

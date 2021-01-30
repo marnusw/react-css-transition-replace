@@ -4,10 +4,10 @@
  * In addition, the first animation frame is skipped when starting new transitions since
  * entering absolutely positioned elements in Chrome does not animate otherwise.
  */
-import addClass from 'dom-helpers/class/addClass'
-import removeClass from 'dom-helpers/class/removeClass'
-import raf from 'dom-helpers/util/requestAnimationFrame'
-import { transitionEnd, animationEnd } from 'dom-helpers/transition/properties'
+import addClass from 'dom-helpers/addClass'
+import removeClass from 'dom-helpers/removeClass'
+import transitionEnd from 'dom-helpers/transitionEnd'
+import { request as raf } from 'dom-helpers/animationFrame'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { findDOMNode } from 'react-dom'
@@ -17,9 +17,6 @@ import { nameShape } from './utils/PropTypes'
 const events = []
 if (transitionEnd) {
   events.push(transitionEnd)
-}
-if (animationEnd) {
-  events.push(animationEnd)
 }
 
 function addEndListener(node, listener) {
