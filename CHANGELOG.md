@@ -1,3 +1,7 @@
+### v4.0.5 (6 September 2021)
+
+- [UPGRADE] Add React 17 to peer dependencies.
+
 ### v4.0.4 (30 January 2020)
 
 - [UPGRADE] Upgrade `dom-helpers@5`.
