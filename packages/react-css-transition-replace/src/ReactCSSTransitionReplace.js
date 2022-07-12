@@ -1,4 +1,5 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
 
 import { request as raf } from 'dom-helpers/animationFrame'
@@ -87,7 +88,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     }
 
     if (currentChild) {
-      const currentChildNode = this.childRefs[currentKey].current?.getNode()
+      const currentChildNode = findDOMNode(this.childRefs[currentKey])
       nextState.height = currentChildNode ? currentChildNode.offsetHeight : 0
       nextState.width = this.props.changeWidth
         ? currentChildNode
@@ -110,7 +111,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     if (this.shouldEnterCurrent) {
       this.shouldEnterCurrent = false
       // If the current child renders null there is nothing to enter
-      if (this.childRefs[this.state.currentKey].current?.getNode()) {
+      if (findDOMNode(this.childRefs[this.state.currentKey])) {
         this.performEnter(this.state.currentKey)
       }
     }
@@ -122,7 +123,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   performAppear(key) {
     this.transitioningKeys[key] = true
-    this.childRefs[key].current?.componentWillAppear(this.handleDoneAppearing.bind(this, key))
+    this.childRefs[key].componentWillAppear(this.handleDoneAppearing.bind(this, key))
   }
 
   handleDoneAppearing = (key) => {
@@ -135,7 +136,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   performEnter(key) {
     this.transitioningKeys[key] = true
-    this.childRefs[key].current?.componentWillEnter(this.handleDoneEntering.bind(this, key))
+    this.childRefs[key].componentWillEnter(this.handleDoneEntering.bind(this, key))
     this.enqueueHeightTransition()
   }
 
@@ -152,8 +153,8 @@ export default class ReactCSSTransitionReplace extends React.Component {
 
   performLeave = (key) => {
     this.transitioningKeys[key] = true
-    this.childRefs[key].current?.componentWillLeave(this.handleDoneLeaving.bind(this, key))
-    if (!this.state.currentChild || !this.childRefs[this.state.currentKey].current?.getNode()) {
+    this.childRefs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key))
+    if (!this.state.currentChild || !findDOMNode(this.childRefs[this.state.currentKey])) {
       // The enter transition dominates, but if there is no entering
       // component or it renders null the height is set to zero.
       this.enqueueHeightTransition()
@@ -167,7 +168,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     delete nextState.prevChildren[key]
     delete this.childRefs[key]
 
-    if (!this.state.currentChild || !this.childRefs[this.state.currentKey].current?.getNode()) {
+    if (!this.state.currentChild || !findDOMNode(this.childRefs[this.state.currentKey])) {
       nextState.height = null
     }
 
@@ -184,7 +185,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
     if (!this.unmounted) {
       const { state } = this
       const currentChildNode = state.currentChild
-        ? this.childRefs[state.currentKey].current?.getNode()
+        ? findDOMNode(this.childRefs[state.currentKey])
         : null
       this.setState({
         height: currentChildNode ? currentChildNode.offsetHeight : 0,
@@ -220,16 +221,6 @@ export default class ReactCSSTransitionReplace extends React.Component {
       },
       child,
     )
-  }
-
-  setChildRef = (id, node) => {
-    if (node) {
-      const ref = React.createRef()
-      ref.current = node
-      this.childRefs[id] = ref
-    } else {
-      delete this.childRefs[id]
-    }
   }
 
   render() {
@@ -303,7 +294,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
             notifyLeaving && typeof child.type !== 'string'
               ? React.cloneElement(child, { isLeaving: true })
               : child,
-            { ref: (r) => this.setChildRef(key, r) },
+            { ref: (r) => (this.childRefs[key] = r) },
           ),
         ),
       )
@@ -323,7 +314,7 @@ export default class ReactCSSTransitionReplace extends React.Component {
               ? { position: 'relative' }
               : null,
           },
-          this.wrapChild(currentChild, { ref: (r) => this.setChildRef(currentKey, r) }),
+          this.wrapChild(currentChild, { ref: (r) => (this.childRefs[currentKey] = r) }),
         ),
       )
     }
