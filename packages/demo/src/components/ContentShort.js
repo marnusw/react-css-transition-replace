@@ -1,8 +1,9 @@
 import React from 'react'
 
-function ContentShort({ className }) {
+const ContentShort = React.forwardRef((props, ref) => {
+  const { className } = props
   return (
-    <div className={className}>
+    <div className={className} ref={ref}>
       <b>Some shorter content</b>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pulvinar pharetra magna ac
@@ -12,6 +13,6 @@ function ContentShort({ className }) {
       </p>
     </div>
   )
-}
+})
 
 export default ContentShort
