@@ -1,8 +1,9 @@
 import React from 'react'
 
-function ContentLong({ className }) {
+const ContentLong = React.forwardRef((props, ref) => {
+  const { className } = props
   return (
-    <div className={className}>
+    <div className={className} ref={ref}>
       <b>Some longer content</b>
       <p>
         Suspendisse non ante dui. Phasellus tempor sem non cursus feugiat. Pellentesque quis justo
@@ -16,6 +17,6 @@ function ContentLong({ className }) {
       </p>
     </div>
   )
-}
+})
 
 export default ContentLong
