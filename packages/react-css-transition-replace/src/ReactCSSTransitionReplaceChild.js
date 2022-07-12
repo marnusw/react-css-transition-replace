@@ -10,7 +10,6 @@ import transitionEnd from 'dom-helpers/transitionEnd'
 import { request as raf } from 'dom-helpers/animationFrame'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { findDOMNode } from 'react-dom'
 
 import { nameShape } from './utils/PropTypes'
 
@@ -51,6 +50,7 @@ const propTypes = {
 
 class CSSTransitionGroupChild extends React.Component {
   static displayName = 'CSSTransitionGroupChild'
+  refNode = React.createRef()
 
   constructor(props) {
     super(props)
@@ -71,8 +71,12 @@ class CSSTransitionGroupChild extends React.Component {
     this.classNameAndNodeQueue.length = 0
   }
 
+  getNode() {
+    return this.refNode.current
+  }
+
   transition(animationType, finishCallback, timeout) {
-    const node = findDOMNode(this)
+    const node = this.getNode()
 
     if (!node) {
       if (finishCallback) {
@@ -181,7 +185,7 @@ class CSSTransitionGroupChild extends React.Component {
   }
 
   render() {
-    const props = { ...this.props }
+    const props = { ...this.props, ref: this.refNode }
     delete props.name
     delete props.appear
     delete props.enter
