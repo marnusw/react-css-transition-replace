@@ -1,25 +1,28 @@
 import React from 'react'
 import ReactCSSTransitionReplace from 'react-css-transition-replace'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import vista2 from '../img/vista2.jpg'
+import vista3 from '../img/vista3.jpg'
+import vista4 from '../img/vista4.jpg'
 
 const Home = () => (
   <div>
     <h2>Home</h2>
-    <img src="img/vista3.jpg" width="600" height="255" alt="" />
+    <img src={vista3} width="600" height="255" alt="" />
   </div>
 )
 
 const One = () => (
   <div>
     <h2>One</h2>
-    <img src="img/vista4.jpg" width="600" height="280" alt="" />
+    <img src={vista4} width="600" height="280" alt="" />
   </div>
 )
 
 const Two = () => (
   <div>
     <h2>Two</h2>
-    <img src="img/vista2.jpg" width="600" height="290" alt="" />
+    <img src={vista2} width="600" height="290" alt="" />
   </div>
 )
 

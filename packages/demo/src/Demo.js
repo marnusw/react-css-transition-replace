@@ -12,9 +12,14 @@ import AnimatedRouter from './components/AnimatedRouter'
 import ContentLong from './components/ContentLong'
 import ContentShort from './components/ContentShort'
 
+import vista1 from './img/vista1.jpg'
+import vista2 from './img/vista2.jpg'
+import vista3 from './img/vista3.jpg'
+import vista4 from './img/vista4.jpg'
+
 class Demo extends React.Component {
   componentDidMount() {
-    const images = ['img/vista1.jpg', 'img/vista2.jpg', 'img/vista3.jpg', 'img/vista4.jpg']
+    const images = [vista1, vista2, vista3, vista4]
 
     images.forEach((src) => {
       const img = new window.Image()
@@ -66,8 +71,8 @@ class Demo extends React.Component {
               transitionEnterTimeout={1000}
               transitionLeaveTimeout={1000}
             >
-              <img key="img1" src="img/vista1.jpg" width="600" height="235" alt="" />
-              <img key="img2" src="img/vista2.jpg" width="600" height="280" alt="" />
+              <img key="img1" src={vista1} width="600" height="235" alt="" />
+              <img key="img2" src={vista2} width="600" height="280" alt="" />
             </ContentSwapper>
 
             <h3 id="fade-wait">Fade out, then fade in transition</h3>
@@ -131,9 +136,9 @@ class Demo extends React.Component {
               transitionLeaveTimeout={2000}
               style={{ width: 600 }}
             >
-              <img key="img1" src="img/vista3.jpg" width="600" height="255" alt="" />
-              <img key="img2" src="img/vista4.jpg" width="600" height="280" alt="" />
-              <img key="img3" src="img/vista2.jpg" width="600" height="290" alt="" />
+              <img key="img1" src={vista3} width="600" height="255" alt="" />
+              <img key="img2" src={vista4} width="600" height="280" alt="" />
+              <img key="img3" src={vista2} width="600" height="290" alt="" />
             </ContentSwapper>
 
             <h3 id="roll-up">Add/Remove Content</h3>
@@ -157,7 +162,7 @@ class Demo extends React.Component {
               transitionEnterTimeout={800}
               transitionLeaveTimeout={800}
             >
-              <img key="img1" src="img/vista1.jpg" width="600" height="235" alt="" />
+              <img key="img1" src={vista1} width="600" height="235" alt="" />
             </ContentAddRemove>
 
             <h3 id="height-and-width">Height and Width animation</h3>
@@ -175,7 +180,7 @@ class Demo extends React.Component {
               transitionLeaveTimeout={500}
               changeWidth
             >
-              <img key="img1" src="img/vista1.jpg" width="600" height="235" alt="" />
+              <img key="img1" src={vista1} width="600" height="235" alt="" />
             </ContentAddRemove>
 
             <h3 id="react-router-v4">React Router v4</h3>
