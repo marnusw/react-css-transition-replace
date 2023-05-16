@@ -106,8 +106,15 @@ class CSSTransitionGroupChild extends React.Component {
         removeListeners()
       }
 
-      removeClass(node, className)
-      removeClass(node, activeClassName)
+      // If we're leaving, removing the classes can result in a redraw before
+      // React has chance to actually remove the node, which results in a flash
+      // of both nodes being displayed at the same time with their default styles
+      // (ie, probably 100% opacity).
+      // Since the node is about to be removed, we don't actually need to clean up the classes on it.
+      if (animationType !== "leave") {
+        removeClass(node, className)
+        removeClass(node, activeClassName)
+      }
 
       if (removeListeners) {
         removeListeners()
