@@ -1,15 +1,17 @@
 {
   "files": {
-    "main.css": "/react-css-transition-replace/static/css/main.3d2baae9.chunk.css",
-    "main.js": "/react-css-transition-replace/static/js/main.878bf9cd.chunk.js",
-    "main.js.map": "/react-css-transition-replace/static/js/main.878bf9cd.chunk.js.map",
-    "runtime-main.js": "/react-css-transition-replace/static/js/runtime-main.60b912ab.js",
-    "runtime-main.js.map": "/react-css-transition-replace/static/js/runtime-main.60b912ab.js.map",
-    "static/js/2.13988dee.chunk.js": "/react-css-transition-replace/static/js/2.13988dee.chunk.js",
-    "static/js/2.13988dee.chunk.js.map": "/react-css-transition-replace/static/js/2.13988dee.chunk.js.map",
+    "main.css": "/react-css-transition-replace/static/css/main.368d9de1.css",
+    "main.js": "/react-css-transition-replace/static/js/main.04288a8e.js",
+    "static/media/vista4.jpg": "/react-css-transition-replace/static/media/vista4.bc57059c105c981f20d1.jpg",
+    "static/media/vista3.jpg": "/react-css-transition-replace/static/media/vista3.d6b10ed6913a5336038f.jpg",
+    "static/media/vista2.jpg": "/react-css-transition-replace/static/media/vista2.df1940dcb5ef7a195dbf.jpg",
+    "static/media/vista1.jpg": "/react-css-transition-replace/static/media/vista1.cb0e13b7eb07b0b64b6c.jpg",
     "index.html": "/react-css-transition-replace/index.html",
-    "precache-manifest.bc2d8a19541d3f45e0e7f80521567211.js": "/react-css-transition-replace/precache-manifest.bc2d8a19541d3f45e0e7f80521567211.js",
-    "service-worker.js": "/react-css-transition-replace/service-worker.js",
-    "static/css/main.3d2baae9.chunk.css.map": "/react-css-transition-replace/static/css/main.3d2baae9.chunk.css.map"
-  }
+    "main.368d9de1.css.map": "/react-css-transition-replace/static/css/main.368d9de1.css.map",
+    "main.04288a8e.js.map": "/react-css-transition-replace/static/js/main.04288a8e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.368d9de1.css",
+    "static/js/main.04288a8e.js"
+  ]
 }
