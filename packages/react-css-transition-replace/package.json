@@ -1,6 +1,6 @@
 {
   "name": "react-css-transition-replace",
-  "version": "4.0.5",
+  "version": "5.0.0",
   "description": "A React component to animate replacing one element with another.",
   "main": "lib/ReactCSSTransitionReplace.js",
   "module": "es/ReactCSSTransitionReplace.js",
@@ -19,12 +19,12 @@
     "postpublish": "rm *.md"
   },
   "dependencies": {
-    "dom-helpers": "^5.2.0",
-    "prop-types": "^15.7.2"
+    "dom-helpers": "^5.2.1",
+    "prop-types": "^15.8.1"
   },
   "peerDependencies": {
-    "react": "^16.3.0 || ^17.0.0",
-    "react-dom": "^16.3.0 || ^17.0.0"
+    "react": ">=16.3.0",
+    "react-dom": ">=16.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",

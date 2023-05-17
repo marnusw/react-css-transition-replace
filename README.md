@@ -30,6 +30,10 @@ Install via `npm`:
 npm install --save react-css-transition-replace
 ```
 
+## Important Note
+
+All functional child components must be wrapped in `forwardRef` to work correctly.
+
 ## Usage
 
 A `ReactCSSTransitionReplace` component can only have a single child. Other than that, the basic usage
@@ -49,7 +53,7 @@ This provides many possibilities for animating the replacement as illustrated in
 
 Additionally, the boolean property `changeWidth` can be used to animate changing the width of the component.
 This change will happen at the same time as changing the height. Animating this change should be done using
-the same class name as is used for animating the change in height.
+the same class name that is used for animating the change in height.
 
 It is also possible to remove the child component (i.e. leave `ReactCSSTransitionReplace` with no children)
 which will animate the `height` going to zero along with the `leave` transition. Similarly, a single child
