@@ -1,4 +1,4 @@
-### v5.0.0 (17 May 2023)
+### v5.0.1 (17 May 2023)
 
 - [BREAKING] Remove deprecated findDOMNode; now requires functional child components to use `forwardRef` (#101)
 - [BUGFIX] Avoid an occasional flicker when the exiting node is removed (#114)
